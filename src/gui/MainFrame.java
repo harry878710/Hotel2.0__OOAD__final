@@ -12,7 +12,6 @@ import bookAndUser.User;
 import bookAndUser.UserList;
 import bookAndUser.UserOperation;
 import operation.InputException;
-import operation.Operation;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;

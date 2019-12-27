@@ -72,6 +72,10 @@ public class EditOrderDate extends JPanel {
 		}
 		return checkOutDate;
 	}
+	
+	public int getNight() {
+		return night;
+	}
 
 	/**
 	 * Create the panel.

@@ -37,7 +37,7 @@ import bookAndUser.UserOperation;
 import gui.BookDeposit;
 import gui.PopFrame;
 import operation.InputException;
-import operation.Operation;
+
 import operation.SearchAndBook;
 
 public class SearchPanel extends JPanel {
@@ -57,7 +57,7 @@ public class SearchPanel extends JPanel {
 	final DatePicker datepick;
 
 	public String getDate() throws InputException {
-		new SearchAndBook().validCheckInDate(new SearchAndBook().stringToDate(datepick.getText()));
+		new SearchAndBook().validCheckInDate(stringToDate(datepick.getText()));
 		return datepick.getText();
 	}
 
@@ -318,16 +318,15 @@ public class SearchPanel extends JPanel {
 					ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), numOfNight,
 							roomCombination, city);
 					if (valid.size() > 0) {
-						textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), numOfNight, roomCombination,
-								city, sort));
+						textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), numOfNight,
+								roomCombination, city, sort));
 						textArea.setSelectionStart(0);
 						textArea.setSelectionEnd(0);
 						comboBox_ID.removeAllItems();
 						if (valid.size() > 0) {
 							hotelId = valid.get(1);
 							textHotelDetail.setText(
-									new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId)
-											.toString());
+									new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId).toString());
 						}
 						for (int i = 0; i < valid.size(); i++) {
 							comboBox_ID.addItem(valid.get(i));
@@ -347,9 +346,8 @@ public class SearchPanel extends JPanel {
 					try {
 						getDate();
 						hotelId = (Integer) e.getItem();
-						textHotelDetail
-								.setText(new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId)
-										.toString());
+						textHotelDetail.setText(
+								new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId).toString());
 						System.out.println("Select " + hotelId);
 					} catch (InputException e1) {
 						new PopFrame(e1.getMessage());
@@ -374,8 +372,9 @@ public class SearchPanel extends JPanel {
 								comboBox_ID.removeAllItems();
 								if (valid.size() > 0) {
 									hotelId = valid.get(1);
-									textHotelDetail.setText(new BookDeposit(city, roomCombination, getDate(),
-											numOfNight, hotelId).toString());
+									textHotelDetail.setText(
+											new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId)
+													.toString());
 								}
 								for (int i = 0; i < valid.size(); i++) {
 									comboBox_ID.addItem(valid.get(i));
@@ -428,7 +427,8 @@ public class SearchPanel extends JPanel {
 				if (hotelId != -1) {
 					try {
 						getDate();
-						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(getDate(), numOfNight, roomCombination, city);
+						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(getDate(), numOfNight,
+								roomCombination, city);
 						boolean hasRoom = false;
 						for (int i = 0; i < valid.size(); i++) {
 							if (valid.get(i) == hotelId) {
@@ -452,6 +452,11 @@ public class SearchPanel extends JPanel {
 			}
 		});
 		setVisible(true);
+	}
+	
+	private Date stringToDate(String str) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		return sdf.parse(str, new ParsePosition(0));
 	}
 
 }

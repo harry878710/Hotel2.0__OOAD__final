@@ -8,8 +8,6 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JFrame;
 
-import operation.Operation;
-
 public class TestSearch {
 
 	private JFrame frame;

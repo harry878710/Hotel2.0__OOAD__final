@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import hotelAndRoom.HotelList;
-import hotelAndRoom.RoomList;
 
 public class BookDeposit {
 	private int hotelId;
@@ -55,7 +54,7 @@ public class BookDeposit {
 		}
 		int price = 0;
 		for (int j = 0; j < 3; j++) {
-			price += RoomList.ALLROOM[hotelId][j].getPrice() * roomCombination[j];
+			price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 		}
 		return HotelList.ALLHOTEL[hotelId].toString() + "\nCheck-in date : " + checkInDate + "\nCheck-out date : "
 				+ checkOutDate + "\n" + "Stay nights : " + night + " nights\nTotal price : " + price + "\nRoom : \n"

@@ -7,7 +7,6 @@ import javax.swing.JTextArea;
 import bookAndUser.BookOperation;
 import bookAndUser.UserList;
 import bookAndUser.UserOperation;
-import operation.Operation;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -63,7 +62,7 @@ public class MyOrderPanel extends JPanel {
 		add(btnBack);
 
 	}
-	
+
 	public void activateMyOrderPanel(MainFrame mainframe) {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 		btnBack.addActionListener(new ActionListener() {

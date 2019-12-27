@@ -9,7 +9,6 @@ import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import operation.Operation;
 import operation.EditBook;
 
 import javax.swing.JButton;
@@ -103,7 +102,6 @@ public class EditOrderPanel extends JPanel {
 
 	}
 
-	
 	public void activateEditOrderPanel(MainFrame mainframe) {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 
@@ -143,9 +141,9 @@ public class EditOrderPanel extends JPanel {
 
 		mor.btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int[] newRoomCombination = {mor.single, mor.dual, mor.quad};
+				int[] newRoomCombination = { mor.single, mor.dual, mor.quad };
 				int op = (new EditBook()).editRoomCombination(mor.bookId, newRoomCombination);
-						//Operation.changeReservation(mor.bookId, mor.single, mor.dual, mor.quad);
+				// Operation.changeReservation(mor.bookId, mor.single, mor.dual, mor.quad);
 				if (op == 0) {
 					new PopFrame("Successfully Edited !");
 					mainframe.activateMyOrderPanel();
@@ -160,8 +158,7 @@ public class EditOrderPanel extends JPanel {
 
 		mod.btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int op = (new EditBook()).changeReservation(mod.bookId, mod.getCheckInDate(),mod.getCheckOutDate());
-						//Operation.changeReservation(mod.bookId, mod.getCheckInDate(),mod.getCheckOutDate());
+				int op = (new EditBook()).editCheckInDateAndNight(mod.bookId, mod.getCheckInDate(), mod.getNight());
 				if (op == 0) {
 					new PopFrame("Successfully Edited !");
 					mainframe.activateMyOrderPanel();
@@ -176,8 +173,8 @@ public class EditOrderPanel extends JPanel {
 
 		del.btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int op = (new EditBook()).changeReservation(del.bookId);
-						//Operation.changeReservation(del.bookId);
+				int op = (new EditBook()).deleteBook(del.bookId);
+				// Operation.changeReservation(del.bookId);
 				if (op == 0) {
 					new PopFrame("Successfully deleted !");
 					mainframe.activateMyOrderPanel();

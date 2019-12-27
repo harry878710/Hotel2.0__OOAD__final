@@ -10,7 +10,7 @@ import bookAndUser.BookList;
 import bookAndUser.BookOperation;
 import hotelAndRoom.HotelList;
 import hotelAndRoom.Room;
-import hotelAndRoom.RoomList;
+
 
 public class EditBook {
 
@@ -68,7 +68,7 @@ public class EditBook {
 	 * @return 0 if changed sucessfully.Return 1, or 2 if the change didn't
 	 *         succesfully.
 	 */
-	public int changeReservation(String bookId, String newCheckInDate, int night) {
+	public int editCheckInDateAndNight(String bookId, String newCheckInDate, int night) {
 		// check input.
 		try {
 			validCheckInDate(stringToDate(newCheckInDate));
@@ -110,7 +110,7 @@ public class EditBook {
 	 * @param bookId
 	 * @return 0 if deleted sucessfully.
 	 */
-	public int changeReservation(String bookId) {
+	public int deleteBook(String bookId) {
 		BookOperation.deleteBook(bookId);
 		BookList.bookList = BookOperation.uploadBookList();
 		System.out.println("\nDeleting success");

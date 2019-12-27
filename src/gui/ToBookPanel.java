@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
 
 import bookAndUser.UserList;
 import bookAndUser.UserOperation;
-import operation.Operation;
+import operation.SearchAndBook;
 
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -68,7 +68,7 @@ public class ToBookPanel extends JPanel {
 		add(titleLabel);
 
 	}
-	
+
 	public void activateToBookPanel(MainFrame mainframe, BookDeposit bd) {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 		textArea.setText(bd.toString());
@@ -81,10 +81,8 @@ public class ToBookPanel extends JPanel {
 		getBtnConfirm().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (UserOperation.anyoneLoggedin()) {
-					String bookId = Operation.reserve(UserOperation.whoIsLoggedin(), bd.getHotelId(),
-							bd.getCheckInDate(), bd.getNight(), bd.getRoomCombination()[0],
-							bd.getRoomCombination()[1],
-							bd.getRoomCombination()[2]);
+					String bookId = new SearchAndBook().commitBook(bd.getCheckInDate(), bd.getNight(), bd.getHotelId(),
+							UserOperation.whoIsLoggedin(), bd.getRoomCombination());
 					new PopFrame("BOOK SUCCESS!\nYour book ID is " + bookId);
 					mainframe.activateUserMenuPanel();
 					setVisible(false);
