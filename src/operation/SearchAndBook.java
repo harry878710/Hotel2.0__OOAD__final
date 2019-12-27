@@ -229,24 +229,24 @@ public class SearchAndBook {
 	 */
 	private int[][] remainingRoomNumber(Date checkIn, Date checkOut) {
 		// the vacancy of check-in date
-		int[][] remainRoomNumber = remainingRoomNumberOfThatDate(checkIn);
+		int[][] minRoomNumber = remainingRoomNumberOfThatDate(checkIn);
 		Date nextDate = nextDate(checkIn);
 		// if next date is not the check-out date, continue the loop.
 		while (!nextDate.equals(checkOut)) {
 			// the vacancy of next date
-			int[][] remainRoomNumber2 = remainingRoomNumberOfThatDate(nextDate);
+			int[][] roomNumberTomorrow = remainingRoomNumberOfThatDate(nextDate);
 			// compare remainRoomNumber with remainRoomNumber2
 			// store the less number
-			for (int i = 0; i < remainRoomNumber.length; i++) {
-				for (int j = 0; j < remainRoomNumber[i].length; j++) {
-					remainRoomNumber[i][j] = (remainRoomNumber[i][j] <= remainRoomNumber2[i][j])
-							? remainRoomNumber[i][j]
-							: remainRoomNumber2[i][j];
+			for (int i = 0; i < minRoomNumber.length; i++) {
+				for (int j = 0; j < minRoomNumber[i].length; j++) {
+					minRoomNumber[i][j] = (minRoomNumber[i][j] <= roomNumberTomorrow[i][j])
+							? minRoomNumber[i][j]
+							: roomNumberTomorrow[i][j];
 				}
 			}
 			nextDate = nextDate(nextDate);
 		}
-		return remainRoomNumber;
+		return minRoomNumber;
 	}
 
 	/**
@@ -258,33 +258,32 @@ public class SearchAndBook {
 	 */
 	private int[][] remainingRoomNumberOfThatDate(Date theDate) {
 		// initialize the array as all initial room number.
-		int[][] aa = new int[1500][3];
-		for (int i = 0; i < aa.length; i++) {
-			for (int j = 0; j < aa[i].length; j++) {
-				aa[i][j] = RoomList.totalRoomNumber[i][j];
+		int[][] totalRoom = new int[HotelList.TOTAL_NUMBER_OF_HOTEL][3];
+		for (int i = 0; i < totalRoom.length; i++) {
+			for (int j = 0; j < totalRoom[i].length; j++) {
+				totalRoom[i][j] = HotelList.ALLHOTEL[i].getRoomCombination()[j];
 			}
 		}
+		// Traverse the whole booklist
 		for (int i = 0; i < BookList.bookList.size(); i++) {
+			int myHotelId = BookList.bookList.get(i).getHotelId();
 			// check if the books in bookList is same date of theDate, too.
-			if (theDate.equals(BookList.bookList.get(i).getDate())) {
-				int hotelId = BookList.bookList.get(i).getRoom().getHotel().getId();
-				int type = -1;
-				switch (BookList.bookList.get(i).getRoom().getType()) {
-				case "Single":
-					type = 0;
-					break;
-				case "Double":
-					type = 1;
-					break;
-				case "Quad":
-					type = 2;
-					break;
+			Date currentDatePointer = new Date(BookList.bookList.get(i).getCheckInDate().getTime());
+			int thisBookNights = BookList.bookList.get(i).getNights();
+			// Traverse every dates occupied by the current Book(for "nights" times)
+			for (int j = 0; j < thisBookNights; j++) {
+				// For the date that matches with parameter(theDate) we subtract the number of
+				// each type of room
+				if (theDate.equals(currentDatePointer)) {
+					totalRoom[myHotelId][0] -= BookList.bookList.get(i).getRoomCombination()[0];
+					totalRoom[myHotelId][1] -= BookList.bookList.get(i).getRoomCombination()[1];
+					totalRoom[myHotelId][2] -= BookList.bookList.get(i).getRoomCombination()[2];
+
 				}
-				// decrease the booked hotel's room type's room number
-				aa[hotelId][type] -= 1;
+				currentDatePointer = nextDate(currentDatePointer);
 			}
 		}
-		return aa;
+		return totalRoom;
 	}
 
 	private String calculateCheckOutDate(String arg_checkIn, int arg_night) {

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 public class HotelList {
 
 	public static final Hotel[] ALLHOTEL;
+	public static int TOTAL_NUMBER_OF_HOTEL = 1500;
 	
 	static {
 		Scanner fileIn = null;

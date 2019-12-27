@@ -4,8 +4,11 @@ public class Hotel {
 
 	private int id;
 	private int star;
+	private int[] roomCombination = new int[3];
+
 	private String locality;
 	private String address;
+	private Room[] roomInfo = new Room[3];
 
 	public Hotel(int id, int star, String locality, String address) {
 		this.id = id;
@@ -13,11 +16,11 @@ public class Hotel {
 		this.locality = locality;
 		this.address = address;
 	}
-	
+
 	public String getLocality() {
 		return locality;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -32,10 +35,17 @@ public class Hotel {
 					&& address == ((Hotel) obj).address;
 		}
 	}
-	
-	public String toString() {
-		return "Hotel ID : " + id + "\nHotel star : " + star + " star\nAddress : " + locality +" "+ address;
+
+	public int[] getRoomCombination() {
+		int[] toReturn = new int[3];
+		for (int i = 0; i < 3; i++) {
+			toReturn[i] = roomCombination[i];
+		}
+		return toReturn;
 	}
 
-	
+	public String toString() {
+		return "Hotel ID : " + id + "\nHotel star : " + star + " star\nAddress : " + locality + " " + address;
+	}
+
 }

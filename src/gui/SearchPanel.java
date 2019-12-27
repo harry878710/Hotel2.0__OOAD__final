@@ -428,8 +428,7 @@ public class SearchPanel extends JPanel {
 				if (hotelId != -1) {
 					try {
 						getDate();
-						ArrayList<Integer> valid = Operation.vacancyHotels(getDate(), numOfNight, numOfPeople,
-								numOfRoom, city);
+						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(getDate(), numOfNight, roomCombination, city);
 						boolean hasRoom = false;
 						for (int i = 0; i < valid.size(); i++) {
 							if (valid.get(i) == hotelId) {

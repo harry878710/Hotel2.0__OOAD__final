@@ -218,55 +218,55 @@ public class Operation {
 	 * @return a list of hotel ID of vacancy hotels.
 	 * @throws InputException
 	 */
-	public static ArrayList<Integer> vacancyHotels(String checkInDate, int night, int numOfPeople, int numOfRoom,
-			String city) throws InputException {
-		Date checkIn = parseString(checkInDate);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		Date checkOut = sdf.parse(checkInDate, new ParsePosition(0));
-		String checkOutDate = null;
-		if (checkOut != null) {
-			for (int i = night; i > 0; i--) {
-				checkOut = nextDate(checkOut);
-			}
-			checkOutDate = sdf.format(checkOut);
-		}
-		checkInput(checkIn);
-		int[] roomType = numOfPeopleAndRoom(numOfPeople, numOfRoom);
-		int[][] remainRoomNumber = remainRoomNumber(checkIn, checkOut);
-		ArrayList<Integer> valid = new ArrayList<Integer>(1500);
-		for (int i = 0; i < remainRoomNumber.length; i++) {
-			if (remainRoomNumber[i][0] >= roomType[0] && remainRoomNumber[i][1] >= roomType[1]
-					&& remainRoomNumber[i][2] >= roomType[2]) {
-				valid.add(i);
-			}
-		}
-		ArrayList<Integer> validHotels = new ArrayList<Integer>();
-		if (city.equals("SomeWhere")) {
-			validHotels = valid;
-		} else if (city.equals("Taipei")) {
-			for (int i = 0; i < valid.size(); i++) {
-				String locality = HotelList.ALLHOTEL[valid.get(i)].getLocality();
-				if (locality.equals("����")) {
-					validHotels.add(valid.get(i));
-				}
-			}
-		} else if (city.equals("Taichung")) {
-			for (int i = 0; i < valid.size(); i++) {
-				String locality = HotelList.ALLHOTEL[valid.get(i)].getLocality();
-				if (locality.equals("�銝�")) {
-					validHotels.add(valid.get(i));
-				}
-			}
-		} else if (city.equals("Kaohsiung")) {
-			for (int i = 0; i < valid.size(); i++) {
-				String locality = HotelList.ALLHOTEL[valid.get(i)].getLocality();
-				if (locality.equals("擃��")) {
-					validHotels.add(valid.get(i));
-				}
-			}
-		}
-		return validHotels;
-	}
+//	public static ArrayList<Integer> vacancyHotels(String checkInDate, int night, int numOfPeople, int numOfRoom,
+//			String city) throws InputException {
+//		Date checkIn = parseString(checkInDate);
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//		Date checkOut = sdf.parse(checkInDate, new ParsePosition(0));
+//		String checkOutDate = null;
+//		if (checkOut != null) {
+//			for (int i = night; i > 0; i--) {
+//				checkOut = nextDate(checkOut);
+//			}
+//			checkOutDate = sdf.format(checkOut);
+//		}
+//		checkInput(checkIn);
+//		int[] roomType = numOfPeopleAndRoom(numOfPeople, numOfRoom);
+//		int[][] remainRoomNumber = remainRoomNumber(checkIn, checkOut);
+//		ArrayList<Integer> valid = new ArrayList<Integer>(1500);
+//		for (int i = 0; i < remainRoomNumber.length; i++) {
+//			if (remainRoomNumber[i][0] >= roomType[0] && remainRoomNumber[i][1] >= roomType[1]
+//					&& remainRoomNumber[i][2] >= roomType[2]) {
+//				valid.add(i);
+//			}
+//		}
+//		ArrayList<Integer> validHotels = new ArrayList<Integer>();
+//		if (city.equals("SomeWhere")) {
+//			validHotels = valid;
+//		} else if (city.equals("Taipei")) {
+//			for (int i = 0; i < valid.size(); i++) {
+//				String locality = HotelList.ALLHOTEL[valid.get(i)].getLocality();
+//				if (locality.equals("����")) {
+//					validHotels.add(valid.get(i));
+//				}
+//			}
+//		} else if (city.equals("Taichung")) {
+//			for (int i = 0; i < valid.size(); i++) {
+//				String locality = HotelList.ALLHOTEL[valid.get(i)].getLocality();
+//				if (locality.equals("�銝�")) {
+//					validHotels.add(valid.get(i));
+//				}
+//			}
+//		} else if (city.equals("Kaohsiung")) {
+//			for (int i = 0; i < valid.size(); i++) {
+//				String locality = HotelList.ALLHOTEL[valid.get(i)].getLocality();
+//				if (locality.equals("擃��")) {
+//					validHotels.add(valid.get(i));
+//				}
+//			}
+//		}
+//		return validHotels;
+//	}
 
 	/**
 	 * Book the specified order.

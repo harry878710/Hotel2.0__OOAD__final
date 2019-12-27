@@ -1,14 +1,13 @@
 package hotelAndRoom;
+
 public class Room {
 
 	private String type;
 	private int price;
-	private Hotel hotel;
 
-	public Room(String type, int price, Hotel hotel) {
+	public Room(String type, int price) {
 		this.type = type;
 		this.price = price;
-		this.hotel = hotel; // Hotel is an immutable class, no privacy leak exists.
 	}
 
 	public String getType() {
@@ -19,12 +18,8 @@ public class Room {
 		return price;
 	}
 
-	public Hotel getHotel() {
-		return hotel;
-	}
-
 	public String toString() {
-		return hotel.toString() + "\nRoom type: " + type + "\nRoom price: " + price;
+		return ("Room type: " + type + "\nRoom price: " + price);
 	}
 
 }
