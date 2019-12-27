@@ -5,7 +5,7 @@ public class Hotel {
 	private int id;
 	private int star;
 	private int[] roomCombination = new int[3];
-
+	
 	private String locality;
 	private String address;
 	private Room[] roomInfo = new Room[3];
