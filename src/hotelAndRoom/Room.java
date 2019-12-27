@@ -9,6 +9,11 @@ public class Room {
 		this.type = type;
 		this.price = price;
 	}
+	
+	public Room(Room originalRoom) {
+		type = originalRoom.getType();
+		price = originalRoom.getPrice();
+	}
 
 	public String getType() {
 		return type;

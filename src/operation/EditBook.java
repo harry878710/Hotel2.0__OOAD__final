@@ -151,36 +151,36 @@ public class EditBook {
 	 * @return an 2-d array. The first dimension indicates the hotel ID. The second
 	 *         dimension indicates the room type.
 	 */
-	private int[][] remainRoomNumberOfDate(Date theDate) {
-		// initialize the array as all initial room number.
-		int[][] aa = new int[1500][3];
-		for (int i = 0; i < aa.length; i++) {
-			for (int j = 0; j < aa[i].length; j++) {
-				aa[i][j] = RoomList.totalRoomNumber[i][j];
-			}
-		}
-		for (int i = 0; i < BookList.bookList.size(); i++) {
-			// check if the books in bookList is same date of theDate, too.
-			if (theDate.equals(BookList.bookList.get(i).getDate())) {
-				int hotelId = BookList.bookList.get(i).getRoom().getHotel().getId();
-				int type = -1;
-				switch (BookList.bookList.get(i).getRoom().getType()) {
-				case "Single":
-					type = 0;
-					break;
-				case "Double":
-					type = 1;
-					break;
-				case "Quad":
-					type = 2;
-					break;
-				}
-				// decrease the booked hotel's room type's room number
-				aa[hotelId][type] -= 1;
-			}
-		}
-		return aa;
-	}
+//	private int[][] remainRoomNumberOfDate(Date theDate) {
+//		// initialize the array as all initial room number.
+//		int[][] aa = new int[1500][3];
+//		for (int i = 0; i < aa.length; i++) {
+//			for (int j = 0; j < aa[i].length; j++) {
+//				aa[i][j] = RoomList.totalRoomNumber[i][j];
+//			}
+//		}
+//		for (int i = 0; i < BookList.bookList.size(); i++) {
+//			// check if the books in bookList is same date of theDate, too.
+//			if (theDate.equals(BookList.bookList.get(i).getDate())) {
+//				int hotelId = BookList.bookList.get(i).getRoom().getHotel().getId();
+//				int type = -1;
+//				switch (BookList.bookList.get(i).getRoom().getType()) {
+//				case "Single":
+//					type = 0;
+//					break;
+//				case "Double":
+//					type = 1;
+//					break;
+//				case "Quad":
+//					type = 2;
+//					break;
+//				}
+//				// decrease the booked hotel's room type's room number
+//				aa[hotelId][type] -= 1;
+//			}
+//		}
+//		return aa;
+//	}
 
 	/**
 	 * Find the remain room number of several days.

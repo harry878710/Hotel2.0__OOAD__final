@@ -29,45 +29,17 @@ public class HotelOperation {
 	 * stmt = c.createStatement(); String sql = "CREATE TABLE HOTEL " +
 	 * "(ID INT PRIMARY KEY UNIQUE    NOT NULL," +
 	 * " STAR           TEXT    NOT NULL, " + " LOCALITY       TEXT    NOT NULL, " +
-	 * " ADDRESS        CHAR(50), " + " LANDLORD           TEXT    NOT NULL) ";
-	 * stmt.executeUpdate(sql); stmt.close(); c.close(); } catch ( Exception e ) {
-	 * System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	 * " ADDRESS        CHAR(50), " +
+	 * "NUMBER1 INT NOT NULL, NUMBER2 INT NOT NULL, NUMBER4 INT NOT NULL," +
+	 * "PRICE1 INT NOT NULL,PRICE2 INT NOT NULL, PRICE4 INT NOT NULL," +
+	 * " LANDLORD           TEXT    NOT NULL) "; stmt.executeUpdate(sql);
+	 * stmt.close(); c.close(); } catch (Exception e) {
+	 * System.err.println(e.getClass().getName() + ": " + e.getMessage());
 	 * System.exit(0); } System.out.println("Table created successfully"); }
 	 */
 
-	// Create the room database
-
-	/*
-	 * static { Connection c = null; Statement stmt = null; try {
-	 * Class.forName("org.sqlite.JDBC"); c =
-	 * DriverManager.getConnection("jdbc:sqlite:room.db");
-	 * System.out.println("Opened database successfully");
-	 * 
-	 * stmt = c.createStatement(); String sql = "CREATE TABLE ROOM " +
-	 * "(KEY TEXT PRIMARY KEY UNIQUE ,HOTELID INT  NOT NULL," +
-	 * " TYPE      TEXT    NOT NULL, " + " PRICE       INT    NOT NULL, " +
-	 * " NUMBER    INT    NOT NULL) "; stmt.executeUpdate(sql); stmt.close();
-	 * c.close(); } catch (Exception e) { System.err.println(e.getClass().getName()
-	 * + ": " + e.getMessage()); System.exit(0); }
-	 * System.out.println("Table created successfully"); }
-	 */
-
-	// Load data from json to hotel.db
-	/*
-	 * static { Scanner fileIn = null; try { fileIn = new Scanner(new
-	 * FileInputStream("HotelList.json")); } catch (FileNotFoundException e) {
-	 * System.out.println("File not found."); System.exit(0); } StringBuffer tmp =
-	 * new StringBuffer(""); while (fileIn.hasNextLine()) {
-	 * tmp.append(fileIn.nextLine()); } fileIn.close(); String hotelString = new
-	 * String(tmp); JSONArray obj = new JSONArray(hotelString); for (int i = 0; i <
-	 * obj.length(); i++) { JSONObject hotelJSON = obj.getJSONObject(i);
-	 * addHotelToDB(hotelJSON.getInt("HotelID"), hotelJSON.getInt("HotelStar"),
-	 * hotelJSON.getString("Locality"), hotelJSON.getString("Street-Address"), 0); }
-	 * }
-	 */
-
-	// Load data from json to room.db
-	static {
+	// Load data from initial json to hotel.db
+	/*static {
 		Scanner fileIn = null;
 		try {
 			fileIn = new Scanner(new FileInputStream("HotelList.json"));
@@ -82,25 +54,27 @@ public class HotelOperation {
 		fileIn.close();
 		String hotelString = new String(tmp);
 		JSONArray obj = new JSONArray(hotelString);
-		for (int i = 0; i < 1500; i++) {
+		for (int i = 0; i < obj.length(); i++) {
 			JSONObject hotelJSON = obj.getJSONObject(i);
-			for (int j = 0; j < 3; j++) {
-				JSONObject hotelRoom = hotelJSON.getJSONArray("Rooms").getJSONObject(j);
-				addRoomToDB(hotelJSON.getInt("HotelID"), hotelRoom.getString("RoomType"), hotelRoom.getInt("RoomPrice"),
-						hotelRoom.getInt("Number"));
-			}
+			JSONObject hotelRoom1 = hotelJSON.getJSONArray("Rooms").getJSONObject(0);
+			JSONObject hotelRoom2 = hotelJSON.getJSONArray("Rooms").getJSONObject(1);
+			JSONObject hotelRoom4 = hotelJSON.getJSONArray("Rooms").getJSONObject(2);
+			int[] roomCombination = { hotelRoom1.getInt("Number"), hotelRoom2.getInt("Number"),
+					hotelRoom4.getInt("Number") };
+			int[] roomPrice = { hotelRoom1.getInt("RoomPrice"), hotelRoom2.getInt("RoomPrice"),
+					hotelRoom4.getInt("RoomPrice") };
+			addHotelToDB(hotelJSON.getInt("HotelID"), hotelJSON.getInt("HotelStar"), hotelJSON.getString("Locality"),
+					hotelJSON.getString("Street-Address"), roomCombination, roomPrice, 0);
 		}
-	}
+	}*/
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-//		addHotelToDB(2,5,"桃園","永安北路456巷789號10樓",0);
-//		addRoomToDB(50,"Single",588,15);
-//		System.out.println(sizeOfHotelList());
 	}
 
-	public static void addHotelToDB(int hotelID, int star, String locality, String address, int landlordID) {
+	public static void addHotelToDB(int hotelID, int star, String locality, String address, int[] roomCombination,
+			int[] roomPrice, int landlordID) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -110,8 +84,10 @@ public class HotelOperation {
 			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
-			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,LANDLORD) " + "VALUES (" + hotelID + "," + star
-					+ ", '" + locality + "','" + address + "'," + landlordID + ");";
+			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
+					+ "VALUES (" + hotelID + "," + star + ", '" + locality + "','" + address + "'," + roomCombination[0]
+					+ "," + roomCombination[1] + "," + roomCombination[2] + "," + roomPrice[0] + "," + roomPrice[1]
+					+ "," + roomPrice[2] + "," + landlordID + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.commit();
@@ -122,27 +98,21 @@ public class HotelOperation {
 		}
 		System.out.println("Records created successfully");
 	}
-
-	public static void addRoomToDB(int hotelID, String type, int price, int number) {
+	
+	public static void addHotelToDB(Hotel hotel) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:room.db");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
-			int key;
-			switch (type) {
-			case "Single": key = 1;break;
-			case "Double": key = 2; break;
-			case "Quad" : key = 4 ; break;
-			default: key = 0;break;
-			}
-			String sql = "INSERT INTO ROOM (KEY,HOTELID,TYPE,PRICE,NUMBER) "
-			+ "VALUES ('" +hotelID+"."+key+"',"+ hotelID + ", '" + type + "',"
-					+ price + "," + number + ");";
+			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
+					+ "VALUES (" + hotel.getId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','" + hotel.getAddress() + "'," + hotel.getRoomCombination()[0]
+					+ "," +hotel.getRoomCombination()[1] + "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + "," + hotel.getRoomInfo()[1].getPrice()
+					+ "," + hotel.getRoomInfo()[0].getPrice() + "," + 0 + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.commit();
@@ -180,7 +150,6 @@ public class HotelOperation {
 		return size;
 	}
 
-	// not yet done...
 	public static Hotel[] uploadHotelList() {
 		int newTotalNumberOfHotel = sizeOfHotelList();
 		Hotel[] newHotelList = new Hotel[newTotalNumberOfHotel];
@@ -200,8 +169,12 @@ public class HotelOperation {
 				int star = rs.getInt("STAR");
 				String locality = rs.getString("LOCALITY");
 				String address = rs.getString("ADDRESS");
-				int landlordID = rs.getInt("LANDLORD");
-//				newHotelList[i]=new Hotel(hotelID,star,locality,address);
+				int[] roomCombination = {rs.getInt("NUMBER1"),rs.getInt("NUMBER2"),rs.getInt("NUMBER4")};
+				Room[] roomInfo = new Room[3];
+				roomInfo[0] = new Room("Single",rs.getInt("PRICE1"));
+				roomInfo[1] = new Room("Double",rs.getInt("PRICE2"));
+				roomInfo[2] = new Room("Quad",rs.getInt("PRICE4"));
+				newHotelList[i]=new Hotel(hotelID,star,locality,address,roomCombination,roomInfo);
 				i++;
 			}
 			rs.close();

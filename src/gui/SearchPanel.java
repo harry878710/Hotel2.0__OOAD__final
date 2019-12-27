@@ -57,7 +57,7 @@ public class SearchPanel extends JPanel {
 	final DatePicker datepick;
 
 	public String getDate() throws InputException {
-		new SearchAndBook().validCheckInDate(new SearchAndBook().parseString(datepick.getText()));
+		new SearchAndBook().validCheckInDate(new SearchAndBook().stringToDate(datepick.getText()));
 		return datepick.getText();
 	}
 
