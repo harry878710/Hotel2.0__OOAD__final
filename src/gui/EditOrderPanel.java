@@ -144,7 +144,7 @@ public class EditOrderPanel extends JPanel {
 		mor.btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int[] newRoomCombination = {mor.single, mor.dual, mor.quad};
-				int op = (new EditBook()).changeReservation(mor.bookId, newRoomCombination);
+				int op = (new EditBook()).editRoomCombination(mor.bookId, newRoomCombination);
 						//Operation.changeReservation(mor.bookId, mor.single, mor.dual, mor.quad);
 				if (op == 0) {
 					new PopFrame("Successfully Edited !");

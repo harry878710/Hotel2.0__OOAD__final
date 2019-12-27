@@ -1,7 +1,9 @@
 package bookAndUser;
 
+import java.util.Calendar;
 import java.util.Date;
 import hotelAndRoom.*;
+import operation.SearchAndBook;
 
 public class Book {
 	private int hotelId;
@@ -12,7 +14,8 @@ public class Book {
 	private String bookId = "";
 	private String userId = "";
 
-	public Book(int hotelId, int[] roomCombination,int totalPrice,Date checkInDate, int nights,  String bookId, String userId) {
+	public Book(int hotelId, int[] roomCombination, int totalPrice, Date checkInDate, int nights, String bookId,
+			String userId) {
 		this.checkInDate = checkInDate;
 		this.nights = nights;
 		this.hotelId = hotelId;
@@ -48,6 +51,14 @@ public class Book {
 		return new Date(checkInDate.getTime());
 	}
 
+	public Date getCheckOutDate() {
+		Date toReturn = new Date(checkInDate.getTime());
+		for (int i = 0; i < nights; i++) {
+			toReturn = nextDate(toReturn);
+		}
+		return toReturn;
+	}
+
 	public int getNights() {
 		return nights;
 	}
@@ -65,4 +76,11 @@ public class Book {
 		return "Book ID: " + bookId + "\nUser ID: " + userId + "\n";
 	}
 
+	private Date nextDate(Date thisDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(thisDate);
+		c.add(Calendar.DATE, 1);
+		Date nextDate = c.getTime();
+		return nextDate;
+	}
 }
