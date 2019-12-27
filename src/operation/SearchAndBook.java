@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 import bookAndUser.BookList;
 import bookAndUser.BookOperation;
 import hotelAndRoom.HotelList;
+import hotelAndRoom.Room;
 import hotelAndRoom.RoomList;
 
 public class SearchAndBook {
@@ -160,7 +161,10 @@ public class SearchAndBook {
 		DecimalFormat decimal = new DecimalFormat("00000");
 		String bookId = decimal.format(BookList.bookedNumber);
 		String checkOutDate = dateToString(checkOut);
-		BookOperation.addBook(bookId, userId, checkInDate, checkOutDate, hotelId, singleRoom, doubleRoom, quadroRoom);
+		int price = calculateTotalPrice(hotelId, night, roomCombination);
+		BookOperation.addBook(bookId, hotelId, singleRoom, doubleRoom, quadroRoom, price, night, checkInDate,
+				checkOutDate, userId);
+
 		BookList.bookList = BookOperation.uploadBookList();
 		BookList.bookedNumber += 1;
 		return bookId;
@@ -173,7 +177,7 @@ public class SearchAndBook {
 	 * @return the Date obj according to the str.Return null if the String is not a
 	 *         valid date
 	 */
-	public Date stringToDate(String str) {
+	private Date stringToDate(String str) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		return sdf.parse(str, new ParsePosition(0));
 	}
@@ -185,7 +189,7 @@ public class SearchAndBook {
 	 * 
 	 * @return
 	 */
-	public String dateToString(Date date) {
+	private String dateToString(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		return sdf.format(date);
 	}
@@ -462,5 +466,14 @@ public class SearchAndBook {
 			sortMap.remove(keyOfMin);
 		}
 		return sortedList;
+	}
+
+	private int calculateTotalPrice(int hotelId, int nights, int[] newCombination) {
+		Room[] roomInfo = HotelList.ALLHOTEL[hotelId].getRoomInfo();
+		int priceToReturn = 0;
+		priceToReturn += nights * roomInfo[0].getPrice() * newCombination[0];
+		priceToReturn += nights * roomInfo[1].getPrice() * newCombination[1];
+		priceToReturn += nights * roomInfo[2].getPrice() * newCombination[2];
+		return priceToReturn;
 	}
 }

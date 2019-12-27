@@ -14,18 +14,18 @@ public class Book {
 	private String bookId = "";
 	private String userId = "";
 
-	public Book(int hotelId, int[] roomCombination, int totalPrice, Date checkInDate, int nights, String bookId,
-			String userId) {
+	public Book(int hotelId, int[] roomCombination, Date checkInDate, int nights, String bookId, String userId) {
 		this.checkInDate = checkInDate;
 		this.nights = nights;
 		this.hotelId = hotelId;
-		this.totalPrice = totalPrice;
+		this.totalPrice = calculateTotalPrice();
 		this.roomCombination[0] = roomCombination[0];
 		this.roomCombination[1] = roomCombination[1];
 		this.roomCombination[2] = roomCombination[2];
 		this.bookId = bookId;
 		this.userId = userId;
 	}
+
 
 	public int getHotelId() {
 		return hotelId;
@@ -82,5 +82,15 @@ public class Book {
 		c.add(Calendar.DATE, 1);
 		Date nextDate = c.getTime();
 		return nextDate;
+	}
+	
+
+	private int calculateTotalPrice() {
+		Room[] roomInfo = HotelList.ALLHOTEL[hotelId].getRoomInfo();
+		int priceToReturn = 0;
+		priceToReturn += nights * roomInfo[0].getPrice() * roomCombination[0];
+		priceToReturn += nights * roomInfo[1].getPrice() * roomCombination[1];
+		priceToReturn += nights * roomInfo[2].getPrice() * roomCombination[2];
+		return priceToReturn;
 	}
 }

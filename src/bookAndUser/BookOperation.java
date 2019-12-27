@@ -253,7 +253,7 @@ public class BookOperation {
 					int[] roomCombination = { rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad") };
 					int stayNight = rs.getInt("Night");
 					int price = rs.getInt("Price");
-					tmpBook = new Book(hotelId, roomCombination, price, new SearchAndBook().stringToDate(checkInDate),
+					tmpBook = new Book(hotelId, roomCombination,stringToDate(checkInDate),
 							stayNight, bookId, userId);
 				}
 			}
@@ -269,7 +269,7 @@ public class BookOperation {
 
 	}
 
-	public static void changeBook(String bookId, int newSingle, int newDouble, int newQuad) {
+	public static void changeBook(String bookId, int newSingle, int newDouble, int newQuad,int price) {
 		if (!hasBook(bookId)) {
 			System.out.println("The book ID is not existed.");
 			return;
@@ -297,6 +297,9 @@ public class BookOperation {
 					sql = "UPDATE BOOK set Quad = '" + newQuad + "' where BookId='" + bookId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
+					sql = "UPDATE BOOK set Price = '" + price + "' where BookId='" + bookId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
 					System.out.println("Changed book successfully.");
 					break;
 				}
@@ -311,7 +314,7 @@ public class BookOperation {
 		// System.out.println("Operation done successfully");
 	}
 
-	public static void changeBook(String bookId, int night, String checkInDate, String checkOutDate) {
+	public static void changeBook(String bookId, int night, String checkInDate, String checkOutDate,int price) {
 		if (!hasBook(bookId)) {
 			System.out.println("The book ID is not existed.");
 			return;
@@ -330,7 +333,7 @@ public class BookOperation {
 				String tmpId = rs.getString("BookId");
 				if (tmpId.equals(bookId)) {
 					String sql = "UPDATE BOOK set Night = '" + night + "',CheckInDate = '" + checkInDate
-							+ "',CheckOutDate = '" + checkOutDate + "' where BookId='" + bookId + "';";
+							+ "',CheckOutDate = '" + checkOutDate + "',Price = '"+price+"' where BookId='" + bookId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
 					System.out.println("Changed book successfully.");
@@ -423,7 +426,7 @@ public class BookOperation {
 				int hotelId = rs.getInt("HotelId");
 				int[] roomCombination = {rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad")};
 				int price = rs.getInt("Price");
-				Book newBook = new Book(hotelId, roomCombination,price,new SearchAndBook().stringToDate(checkInDate),night,bookId,userId);
+				Book newBook = new Book(hotelId, roomCombination,stringToDate(checkInDate),night,bookId,userId);
 				bookList.add(newBook);
 				
 			}
@@ -451,7 +454,7 @@ public class BookOperation {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
 				String bookId = rs.getString("BookId");
-				int id = new Integer(bookId);
+				int id = Integer.parseInt(bookId);
 				bookedId = (id > bookedId) ? id : bookedId;
 			}
 			rs.close();
@@ -463,6 +466,11 @@ public class BookOperation {
 		}
 
 		return bookedId + 1;
+	}
+	
+	private static Date stringToDate(String str) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		return sdf.parse(str, new ParsePosition(0));
 	}
 
 }

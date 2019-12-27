@@ -9,6 +9,7 @@ import bookAndUser.Book;
 import bookAndUser.BookList;
 import bookAndUser.BookOperation;
 import hotelAndRoom.HotelList;
+import hotelAndRoom.Room;
 import hotelAndRoom.RoomList;
 
 public class EditBook {
@@ -48,9 +49,9 @@ public class EditBook {
 				return 2;
 			}
 		}
-
+		int price = calculateTotalPrice(myBook.getHotelId(), myBook.getNights(), newRoomCombination);
 		// The order is valid, change the book.
-		BookOperation.changeBook(bookId, newRoomCombination[0], newRoomCombination[1], newRoomCombination[2]);
+		BookOperation.changeBook(bookId, newRoomCombination[0], newRoomCombination[1], newRoomCombination[2], price);
 		BookList.bookList = BookOperation.uploadBookList();
 		System.out.println("\nChange Succeeded");
 		return 0;
@@ -67,7 +68,7 @@ public class EditBook {
 	 * @return 0 if changed sucessfully.Return 1, or 2 if the change didn't
 	 *         succesfully.
 	 */
-	public int changeReservation(String bookId, String newCheckInDate, String newCheckOutDate) {
+	public int changeReservation(String bookId, String newCheckInDate, int night) {
 		// check input.
 		try {
 			validCheckInDate(stringToDate(newCheckInDate));
@@ -79,8 +80,7 @@ public class EditBook {
 		// check if the new order is valid
 		String userId = myBook.getUserId();
 		int hotelId = myBook.getHotelId();
-		Date newCheckIn = stringToDate(newCheckInDate), newCheckOut = stringToDate(newCheckOutDate);
-		// BookOperation.deleteBook(bookId);
+		Date newCheckIn = stringToDate(newCheckInDate), newCheckOut = calculateCheckOutDate(newCheckIn, night);
 		int[] remainRoomNumber = remainingRoomNumber(newCheckIn, newCheckOut, hotelId);
 		if (remainRoomNumber[0] < myBook.getRoomCombination()[0] || remainRoomNumber[1] < myBook.getRoomCombination()[1]
 				|| remainRoomNumber[2] < myBook.getRoomCombination()[2]) {
@@ -97,9 +97,8 @@ public class EditBook {
 			}
 		}
 		// the order is valid, change the order.
-		BookOperation.deleteBook(bookId);
-		BookOperation.addBook(bookId, userId, newCheckInDate, newCheckOutDate, hotelId, myBook.getRoomCombination()[0],
-				myBook.getRoomCombination()[1], myBook.getRoomCombination()[2]);
+		int price = calculateTotalPrice(myBook.getHotelId(), night, myBook.getRoomCombination());
+		BookOperation.changeBook(bookId, night, newCheckInDate, dateToString(newCheckOut), price);
 		BookList.bookList = BookOperation.uploadBookList();
 		System.out.println("\nChanging success");
 		return 0;
@@ -199,7 +198,7 @@ public class EditBook {
 	 * @return true if the input checkInDate is valid.
 	 * @throws InputException
 	 */
-	public boolean validCheckInDate(Date checkIn) throws InputException {
+	private boolean validCheckInDate(Date checkIn) throws InputException {
 		// check check-in and check-out date are not null
 		if (checkIn == null) {
 			throw new InputException("error: Input of date should be \"yyyy/mm/dd\"");
@@ -211,6 +210,28 @@ public class EditBook {
 			throw new InputException("Invalid date");
 		}
 		return true;
+	}
+
+	private Date calculateCheckOutDate(Date checkInDate, int night) {
+		Date toReturn = new Date(checkInDate.getTime());
+		for (int i = 0; i < night; i++) {
+			toReturn = nextDate(toReturn);
+		}
+		return toReturn;
+	}
+
+	private String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		return sdf.format(date);
+	}
+
+	private int calculateTotalPrice(int hotelId, int nights, int[] newCombination) {
+		Room[] roomInfo = HotelList.ALLHOTEL[hotelId].getRoomInfo();
+		int priceToReturn = 0;
+		priceToReturn += nights * roomInfo[0].getPrice() * newCombination[0];
+		priceToReturn += nights * roomInfo[1].getPrice() * newCombination[1];
+		priceToReturn += nights * roomInfo[2].getPrice() * newCombination[2];
+		return priceToReturn;
 	}
 
 }
