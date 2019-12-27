@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import hotelAndRoom.*;
+import operation.*;
 
 public class BookOperation {
 
@@ -260,12 +261,11 @@ public class BookOperation {
 
 	}
 
-	public static String[] getBook(String bookId) {
+	public static Book getBook(String bookId) {
 		if (!hasBook(bookId)) {
 			return null;
 		}
-		// BookId,UserId,CheckInDate,CheckOutDate,HotelId,Single,Double,Quad
-		String[] toReturn = new String[8];
+		Book tmpBook = null;
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -278,14 +278,23 @@ public class BookOperation {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
 				if (rs.getString("BookId").equals(bookId)) {
-					toReturn[0] = bookId;
-					toReturn[1] = rs.getString("UserId");
-					toReturn[2] = rs.getString("CheckInDate");
-					toReturn[3] = rs.getString("CheckOutDate");
-					toReturn[4] = new Integer(rs.getInt("HotelId")).toString();
-					toReturn[5] = new Integer(rs.getInt("Single")).toString();
-					toReturn[6] = new Integer(rs.getInt("Double")).toString();
-					toReturn[7] = new Integer(rs.getInt("Quad")).toString();
+					String userId = rs.getString("UserId");
+					String checkInDate = rs.getString("CheckInDate");
+					String checkOutDate = rs.getString("CheckOutDate");
+					int hotelId = rs.getInt("HotelId");
+					int[] roomCombination = {rs.getInt("Single"),rs.getInt("Double"),rs.getInt("Quad")};
+					int stayNight = 0;
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+					Date bookDate = sdf.parse(checkInDate, new ParsePosition(0));
+					while (!bookDate.equals(sdf.parse(checkOutDate, new ParsePosition(0)))) {// 嚙豌多嚙踝蕭
+						stayNight += 1;
+						bookDate = nextDate(bookDate); // checkInDate嚙罵嚙踝蕭嚙罵嚙瞋嚙踝掉???
+					}
+					int price = 0;
+					price += RoomList.ALLROOM[hotelId][0].getPrice() * roomCombination[0];
+					price += RoomList.ALLROOM[hotelId][1].getPrice() * roomCombination[1];
+					price += RoomList.ALLROOM[hotelId][2].getPrice() * roomCombination[2];
+					tmpBook = new Book(hotelId, roomCombination,price,new SearchAndBook().stringToDate(checkInDate), stayNight, bookId, userId);
 				}
 			}
 			rs.close();
@@ -295,7 +304,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		return toReturn;
+		return tmpBook;
 		// System.out.println("Operation done successfully");
 
 	}

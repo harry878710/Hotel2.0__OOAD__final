@@ -12,10 +12,11 @@ public class Book {
 	private String bookId = "";
 	private String userId = "";
 
-	public Book(Date checkInDate, int nights, int hotelId, int[] roomCombination, String bookId, String userId) {
+	public Book(int hotelId, int[] roomCombination,int totalPrice,Date checkInDate, int nights,  String bookId, String userId) {
 		this.checkInDate = checkInDate;
 		this.nights = nights;
 		this.hotelId = hotelId;
+		this.totalPrice = totalPrice;
 		this.roomCombination[0] = roomCombination[0];
 		this.roomCombination[1] = roomCombination[1];
 		this.roomCombination[2] = roomCombination[2];
