@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import hotelAndRoom.RoomList;
 
 public class UserOperation { 
 
@@ -38,10 +37,10 @@ public class UserOperation {
 //		System.out.println("Table created successfully");
 //	}
 
-	public static void main(String[] args) {
-		UserOperation.addUser("raiyray", "hoho", "hoho");
-
-	}
+//	public static void main(String[] args) {
+//		UserOperation.addUser("raiyray", "hoho", "hoho");
+//
+//	}
 
 	// Add an user with corresponding id and password.
 	// If the id has been used, it would cause an exception.
@@ -68,8 +67,6 @@ public class UserOperation {
 			stmt.close();
 			c.commit();
 			c.close();
-
-		
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);

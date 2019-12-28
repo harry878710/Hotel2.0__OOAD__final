@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import hotelAndRoom.*;
+import operation.*;
 
 public class BookOperation {
 
@@ -20,31 +21,25 @@ public class BookOperation {
 	// below,
 	// to make sure the table is created.
 
-//	static {
-//		Connection c = null;
-//		Statement stmt = null;
-//		try {
-//			Class.forName("org.sqlite.JDBC");
-//			c = DriverManager.getConnection("jdbc:sqlite:book.db");
-//			System.out.println("Opened database successfully");
-//			stmt = c.createStatement();
-//			String sql = "CREATE TABLE BOOK " + "(BookId TEXT PRIMARY KEY UNIQUE    NOT NULL,"
-//					+ " UserId   TEXT    NOT NULL, CheckInDate TEXT    NOT NULL, CheckOutDate TEXT    NOT NULL,"
-//					+ "HotelId INT NOT NULL, Single INT NOT NULL,Double INT NOT NULL,Quad INT NOT NULL)";
-//			stmt.executeUpdate(sql);
-//			stmt.close();
-//			c.close();
-//		} catch (Exception e) {
-//			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-//			System.exit(0);
-//		}
-//		System.out.println("Table created successfully");
-//	}
+	/*
+	 * static { Connection c = null; Statement stmt = null; try {
+	 * Class.forName("org.sqlite.JDBC"); c =
+	 * DriverManager.getConnection("jdbc:sqlite:book.db");
+	 * System.out.println("Opened database successfully"); stmt =
+	 * c.createStatement(); String sql = "CREATE TABLE BOOK " +
+	 * "(BookId TEXT PRIMARY KEY UNIQUE    NOT NULL," +
+	 * "HotelId INT NOT NULL, Single INT NOT NULL,Double INT NOT NULL,Quad INT NOT NULL,"
+	 * +
+	 * " Price INT NOT NULL, Night INT NOT NULL, CheckInDate TEXT    NOT NULL, CheckOutDate TEXT    NOT NULL,"
+	 * + "UserId   TEXT    NOT NULL)"; stmt.executeUpdate(sql); stmt.close();
+	 * c.close(); } catch (Exception e) { System.err.println(e.getClass().getName()
+	 * + ": " + e.getMessage()); System.exit(0); }
+	 * System.out.println("Table created successfully"); }
+	 */
 
 	public static void main(String[] args) {
-		addBook("00003", "hong", "2019/06/30", "2019/07/01", 99, 2, 0, 0);
-		showBook("00001");
-
+		// showBook("00001");
+		// addBook("0110", 50, 1, 2, 0, 1580, 10, "2019/12/25", "2020/01/03", "rayray");
 	}
 
 	public static ArrayList<String> bookIdListOfUser(String userId) {
@@ -92,20 +87,11 @@ public class BookOperation {
 					String checkInDate = rs.getString("CheckInDate");
 					String checkOutDate = rs.getString("CheckOutDate");
 					int hotelId = rs.getInt("HotelId");
+					int price = rs.getInt("Price");
 					int single = rs.getInt("Single");
 					int doub = rs.getInt("Double");
 					int quad = rs.getInt("Quad");
-					int stayNight = 0;
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-					Date bookDate = sdf.parse(checkInDate, new ParsePosition(0));
-					while (!bookDate.equals(sdf.parse(checkOutDate, new ParsePosition(0)))) {
-						stayNight += 1;
-						bookDate = nextDate(bookDate);
-					}
-					int price = 0;
-					price += RoomList.ALLROOM[hotelId][0].getPrice() * single;
-					price += RoomList.ALLROOM[hotelId][1].getPrice() * doub;
-					price += RoomList.ALLROOM[hotelId][2].getPrice() * quad;
+					int stayNight = rs.getInt("Night");
 					tmp.append("Book ID: " + bookId + "\n" + HotelList.ALLHOTEL[hotelId].toString() + "\n"
 							+ "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
 							+ "Stay nights: " + stayNight + " nights, Total price: " + price + "\n" + "Room:\n Single: "
@@ -127,8 +113,9 @@ public class BookOperation {
 	// Add an user with corresponding id and password.
 	// If the id has been used, it would cause an exception.
 	// We can turn it to a pop-up window later.
-	public static void addBook(String bookId, String userId, String checkInDate, String checkOutDate, int hotelId,
-			int single, int doub, int quad) {
+	// (BookId,HotelId,Single,Double,Quad,Price,Night,CheckInDate,CheckOutDate,UserId)
+	public static void addBook(String bookId, int hotelId, int single, int doub, int quad, int price, int night,
+			String checkInDate, String checkOutDate, String userId) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -138,9 +125,9 @@ public class BookOperation {
 			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
-			String sql = "INSERT INTO book (BookId,UserId,CheckInDate,CheckOutDate,HotelId,Single,Double,Quad)"
-					+ "VALUES ('" + bookId + "','" + userId + "','" + checkInDate + "','" + checkOutDate + "','"
-					+ hotelId + "','" + single + "','" + doub + "','" + quad + "');";
+			String sql = "INSERT INTO book (BookId,HotelId,Single,Double,Quad,Price,Night,CheckInDate,CheckOutDate,UserId)"
+					+ "VALUES ('" + bookId + "'," + hotelId + "," + single + "," + doub + "," + quad + "," + price + ","
+					+ night + ",'" + checkInDate + "','" + checkOutDate + "','" + userId + "');";
 			stmt.executeUpdate(sql);
 
 			stmt.close();
@@ -176,17 +163,8 @@ public class BookOperation {
 				int single = rs.getInt("Single");
 				int doub = rs.getInt("Double");
 				int quad = rs.getInt("Quad");
-				int stayNight = 0;
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-				Date bookDate = sdf.parse(checkInDate, new ParsePosition(0));
-				while (!bookDate.equals(sdf.parse(checkOutDate, new ParsePosition(0)))) {// 嚙豌多嚙踝蕭
-					stayNight += 1;
-					bookDate = nextDate(bookDate); // checkInDate嚙罵嚙踝蕭嚙罵嚙瞋嚙踝掉???
-				}
-				int price = 0;
-				price += RoomList.ALLROOM[hotelId][0].getPrice() * single;
-				price += RoomList.ALLROOM[hotelId][1].getPrice() * doub;
-				price += RoomList.ALLROOM[hotelId][2].getPrice() * quad;
+				int stayNight = rs.getInt("Night");
+				int price = rs.getInt("Price");
 				System.out.println(
 						"Book ID: " + bookId + ", User ID: " + userId + "\n" + HotelList.ALLHOTEL[hotelId].toString()
 								+ "\n" + "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
@@ -229,17 +207,8 @@ public class BookOperation {
 					int single = rs.getInt("Single");
 					int doub = rs.getInt("Double");
 					int quad = rs.getInt("Quad");
-					int stayNight = 0;
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-					Date bookDate = sdf.parse(checkInDate, new ParsePosition(0));
-					while (!bookDate.equals(sdf.parse(checkOutDate, new ParsePosition(0)))) {// 嚙豌多嚙踝蕭
-						stayNight += 1;
-						bookDate = nextDate(bookDate); // checkInDate嚙罵嚙踝蕭嚙罵嚙瞋嚙踝掉???
-					}
-					int price = 0;
-					price += RoomList.ALLROOM[hotelId][0].getPrice() * single;
-					price += RoomList.ALLROOM[hotelId][1].getPrice() * doub;
-					price += RoomList.ALLROOM[hotelId][2].getPrice() * quad;
+					int stayNight = rs.getInt("Night");
+					int price = rs.getInt("Price");
 					System.out.println("Book ID: " + bookId + ", User ID: " + userId + "\n"
 							+ HotelList.ALLHOTEL[hotelId].toString() + "\n" + "Check-in date: " + checkInDate
 							+ ", Check-out date: " + checkOutDate + "\n" + "Stay nights: " + stayNight
@@ -260,12 +229,11 @@ public class BookOperation {
 
 	}
 
-	public static String[] getBook(String bookId) {
+	public static Book getBook(String bookId) {
 		if (!hasBook(bookId)) {
 			return null;
 		}
-		// BookId,UserId,CheckInDate,CheckOutDate,HotelId,Single,Double,Quad
-		String[] toReturn = new String[8];
+		Book tmpBook = null;
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -278,14 +246,15 @@ public class BookOperation {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
 				if (rs.getString("BookId").equals(bookId)) {
-					toReturn[0] = bookId;
-					toReturn[1] = rs.getString("UserId");
-					toReturn[2] = rs.getString("CheckInDate");
-					toReturn[3] = rs.getString("CheckOutDate");
-					toReturn[4] = new Integer(rs.getInt("HotelId")).toString();
-					toReturn[5] = new Integer(rs.getInt("Single")).toString();
-					toReturn[6] = new Integer(rs.getInt("Double")).toString();
-					toReturn[7] = new Integer(rs.getInt("Quad")).toString();
+					String userId = rs.getString("UserId");
+					String checkInDate = rs.getString("CheckInDate");
+					String checkOutDate = rs.getString("CheckOutDate");
+					int hotelId = rs.getInt("HotelId");
+					int[] roomCombination = { rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad") };
+					int stayNight = rs.getInt("Night");
+					int price = rs.getInt("Price");
+					tmpBook = new Book(hotelId, roomCombination,stringToDate(checkInDate),
+							stayNight, bookId, userId);
 				}
 			}
 			rs.close();
@@ -295,12 +264,12 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		return toReturn;
+		return tmpBook;
 		// System.out.println("Operation done successfully");
 
 	}
 
-	public static void changeBook(String bookId, int newSingle, int newDouble, int newQuad) {
+	public static void changeBook(String bookId, int newSingle, int newDouble, int newQuad,int price) {
 		if (!hasBook(bookId)) {
 			System.out.println("The book ID is not existed.");
 			return;
@@ -328,6 +297,9 @@ public class BookOperation {
 					sql = "UPDATE BOOK set Quad = '" + newQuad + "' where BookId='" + bookId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
+					sql = "UPDATE BOOK set Price = '" + price + "' where BookId='" + bookId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
 					System.out.println("Changed book successfully.");
 					break;
 				}
@@ -342,7 +314,7 @@ public class BookOperation {
 		// System.out.println("Operation done successfully");
 	}
 
-	public static void changeBook(String bookId, String checkInDate, String checkOutDate) {
+	public static void changeBook(String bookId, int night, String checkInDate, String checkOutDate,int price) {
 		if (!hasBook(bookId)) {
 			System.out.println("The book ID is not existed.");
 			return;
@@ -360,8 +332,8 @@ public class BookOperation {
 			while (rs.next()) {
 				String tmpId = rs.getString("BookId");
 				if (tmpId.equals(bookId)) {
-					String sql = "UPDATE BOOK set CheckInDate = '" + checkInDate + "',CheckOutDate = '" + checkOutDate
-							+ "' where BookId='" + bookId + "';";
+					String sql = "UPDATE BOOK set Night = '" + night + "',CheckInDate = '" + checkInDate
+							+ "',CheckOutDate = '" + checkOutDate + "',Price = '"+price+"' where BookId='" + bookId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
 					System.out.println("Changed book successfully.");
@@ -450,28 +422,13 @@ public class BookOperation {
 				String userId = rs.getString("UserId");
 				String checkInDate = rs.getString("CheckInDate");
 				String checkOutDate = rs.getString("CheckOutDate");
+				int night = rs.getInt("Night");
 				int hotelId = rs.getInt("HotelId");
-				int single = rs.getInt("Single");
-				int doub = rs.getInt("Double");
-				int quad = rs.getInt("Quad");
-
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-				Date date = sdf.parse(checkInDate, new ParsePosition(0));
-				while (!date.equals(sdf.parse(checkOutDate, new ParsePosition(0)))) {// 嚙豌多嚙踝蕭
-					for (int i = single; i > 0; i--) {// 嚙豌多嚙踝蕭
-						Book book = new Book(date, RoomList.ALLROOM[hotelId][0], bookId, userId);
-						bookList.add(book);
-					}
-					for (int i = doub; i > 0; i--) {// 嚙豌多嚙踝蕭
-						Book book = new Book(date, RoomList.ALLROOM[hotelId][1], bookId, userId);
-						bookList.add(book);
-					}
-					for (int i = quad; i > 0; i--) {// 嚙豌多嚙踝蕭
-						Book book = new Book(date, RoomList.ALLROOM[hotelId][2], bookId, userId);
-						bookList.add(book);
-					}
-					date = nextDate(date); // checkInDate嚙罵嚙踝蕭嚙罵嚙瞋嚙踝掉???
-				}
+				int[] roomCombination = {rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad")};
+				int price = rs.getInt("Price");
+				Book newBook = new Book(hotelId, roomCombination,stringToDate(checkInDate),night,bookId,userId);
+				bookList.add(newBook);
+				
 			}
 			rs.close();
 			stmt.close();
@@ -481,15 +438,6 @@ public class BookOperation {
 			System.exit(0);
 		}
 		return bookList;
-	}
-
-	private static Date nextDate(Date thisDate) {
-		// https://stackoverflow.com/questions/1005523/how-to-add-one-day-to-a-date
-		Calendar c = Calendar.getInstance();
-		c.setTime(thisDate);
-		c.add(Calendar.DATE, 1);
-		Date nextDate = c.getTime();
-		return nextDate;
 	}
 
 	public static int uploadBookedNumber() {
@@ -506,7 +454,7 @@ public class BookOperation {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
 				String bookId = rs.getString("BookId");
-				int id = new Integer(bookId);
+				int id = Integer.parseInt(bookId);
 				bookedId = (id > bookedId) ? id : bookedId;
 			}
 			rs.close();
@@ -518,6 +466,11 @@ public class BookOperation {
 		}
 
 		return bookedId + 1;
+	}
+	
+	private static Date stringToDate(String str) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		return sdf.parse(str, new ParsePosition(0));
 	}
 
 }

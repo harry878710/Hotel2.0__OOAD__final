@@ -1,44 +1,96 @@
 package bookAndUser;
 
+import java.util.Calendar;
 import java.util.Date;
 import hotelAndRoom.*;
+import operation.SearchAndBook;
 
 public class Book {
-	
-	private Date date = null;
-	private Room room = null;
+	private int hotelId;
+	private int[] roomCombination = new int[3];
+	private int totalPrice;
+	private Date checkInDate = null;
+	private int nights;
 	private String bookId = "";
 	private String userId = "";
 
-	public Book(Date date, Room room, String bookId, String userId) {
-		this.date = date;
-		this.room = room;
+	public Book(int hotelId, int[] roomCombination, Date checkInDate, int nights, String bookId, String userId) {
+		this.checkInDate = checkInDate;
+		this.nights = nights;
+		this.hotelId = hotelId;
+		this.totalPrice = calculateTotalPrice();
+		this.roomCombination[0] = roomCombination[0];
+		this.roomCombination[1] = roomCombination[1];
+		this.roomCombination[2] = roomCombination[2];
 		this.bookId = bookId;
 		this.userId = userId;
 	}
-	
-	public Date getDate() {
-		return date;
+
+
+	public int getHotelId() {
+		return hotelId;
 	}
-	
-	public Room getRoom() {
-		return room;
+
+	public void setHotelId(int hotelId) {
+		this.hotelId = hotelId;
+	}
+
+	public int[] getRoomCombination() {
+		int[] toReturn = new int[3];
+		for (int i = 0; i < 3; i++) {
+			toReturn[i] = roomCombination[i];
+		}
+		return toReturn;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public Date getCheckInDate() {
+		return new Date(checkInDate.getTime());
+	}
+
+	public Date getCheckOutDate() {
+		Date toReturn = new Date(checkInDate.getTime());
+		for (int i = 0; i < nights; i++) {
+			toReturn = nextDate(toReturn);
+		}
+		return toReturn;
+	}
+
+	public int getNights() {
+		return nights;
 	}
 
 	public String getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(String bookId) {
-		this.bookId = bookId;
-	}
-	
 	public String getUserId() {
 		return userId;
 	}
 
+	// Append Hotel's toString & Room's toString at the end(to be modified)
 	public String toString() {
-		return "Book ID: " + bookId + "\nUser ID: " + userId + "\n" + room.toString();
+		return "Book ID: " + bookId + "\nUser ID: " + userId + "\n";
 	}
 
+	private Date nextDate(Date thisDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(thisDate);
+		c.add(Calendar.DATE, 1);
+		Date nextDate = c.getTime();
+		return nextDate;
+	}
+	
+
+	private int calculateTotalPrice() {
+		Room[] roomInfo = HotelList.ALLHOTEL[hotelId].getRoomInfo();
+		int priceToReturn = 0;
+		priceToReturn += nights * roomInfo[0].getPrice() * roomCombination[0];
+		priceToReturn += nights * roomInfo[1].getPrice() * roomCombination[1];
+		priceToReturn += nights * roomInfo[2].getPrice() * roomCombination[2];
+		return priceToReturn;
+	}
 }

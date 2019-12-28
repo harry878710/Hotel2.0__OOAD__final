@@ -1,4 +1,5 @@
 package operation;
+
 public class InputException extends Exception {
 
 	private String condition;

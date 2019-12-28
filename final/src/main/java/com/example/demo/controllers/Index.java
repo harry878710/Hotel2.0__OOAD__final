@@ -1,10 +1,10 @@
 package com.example.demo.controllers;
 
 public class Index {
-	private long id;
+	private Object id = null;
 	private String content;
 
-	public long getId() {
+	public Object getId() {
 		return id;
 	}
 
