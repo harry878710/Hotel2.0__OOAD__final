@@ -69,7 +69,7 @@ public class JoinFrame extends JFrame {
 
 		textField = new JTextField();
 		textField.setBackground(SystemColor.info);
-		textField.setFont(new Font("·L³n¥¿¶ÂÅé", Font.PLAIN, 30));
+		textField.setFont(new Font("ï¿½Lï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 30));
 		textField.setBounds(181, 81, 130, 26);
 		contentPane.add(textField);
 		textField.setColumns(10);
@@ -84,7 +84,7 @@ public class JoinFrame extends JFrame {
 
 		textField_1 = new JPasswordField();
 		textField_1.setBackground(SystemColor.info);
-		textField_1.setFont(new Font("·L³n¥¿¶ÂÅé", Font.PLAIN, 30));
+		textField_1.setFont(new Font("ï¿½Lï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 30));
 		textField_1.setBounds(181, 109, 130, 26);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
@@ -99,7 +99,7 @@ public class JoinFrame extends JFrame {
 
 		textField_2 = new JPasswordField();
 		textField_2.setBackground(SystemColor.info);
-		textField_2.setFont(new Font("·L³n¥¿¶ÂÅé", Font.PLAIN, 30));
+		textField_2.setFont(new Font("ï¿½Lï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 30));
 		textField_2.setBounds(181, 137, 130, 26);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
@@ -110,21 +110,28 @@ public class JoinFrame extends JFrame {
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int op = UserOperation.addUser(textField.getText(), new String(textField_1.getPassword()), new String(textField_2.getPassword()));
-				if (op == 3) {
-					new PopFrame("Incomplete data!");
-				} else if (op == 2) {
-					new PopFrame("Name's been used :((");
-					textField.setText("");
-					textField_1.setText("");
-					textField_2.setText("");
-				} else if (op == 1) {
-					new PopFrame("Password doesn't match.");
-					textField_1.setText("");
-					textField_2.setText("");
-				} else if (op == 0) {
+				switch (op) {
+				case 0:
 					UserList.userList = UserOperation.uploadUserList();
 					new PopFrame("Welcome!");
 					dispose();
+					break;
+				case 1:
+					new PopFrame("error: Password doesn't match.");
+					textField_1.setText("");
+					textField_2.setText("");
+					break;
+				case 2:
+					new PopFrame("error: This user name has been used.");
+					textField.setText("");
+					textField_1.setText("");
+					textField_2.setText("");
+					break;
+				case 3:
+					new PopFrame("error: Please fill all the blanks.");
+					break;
+				default:
+					break;	
 				}
 
 			}

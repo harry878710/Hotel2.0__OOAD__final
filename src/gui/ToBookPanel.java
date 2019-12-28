@@ -98,9 +98,9 @@ public class ToBookPanel extends JPanel {
 									if (UserOperation.checkPassword(loginpane.getName(), loginpane.getPassword())) {
 										for (int i = 0; i < UserList.userList.size(); i++) {
 											if (loginpane.getName().equals(UserList.userList.get(i).getName())) {
-												UserList.userList.get(i).setLoggin(true);
+												UserList.userList.get(i).setLogin(true);
 											} else {
-												UserList.userList.get(i).setLoggin(false);
+												UserList.userList.get(i).setLogin(false);
 											}
 										}
 										setVisible(true);

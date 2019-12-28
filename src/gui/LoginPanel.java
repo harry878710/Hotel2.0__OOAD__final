@@ -126,26 +126,24 @@ public class LoginPanel extends JPanel {
 		// click the Log in button
 		getBtnLogIn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!getName().equals("") && !getPassword().equals("")) {
-					if (UserOperation.hasUser(getName())) {
-						if (UserOperation.checkPassword(getName(), getPassword())) {
-							for (int i = 0; i < UserList.userList.size(); i++) {
-								if (getName().equals(UserList.userList.get(i).getName())) {
-									UserList.userList.get(i).setLoggin(true);
-								} else {
-									UserList.userList.get(i).setLoggin(false);
-								}
-							}
-							mainframe.activateUserMenuPanel();
-							setVisible(false);
-						} else {
-							new PopFrame("Wrong password!");
-						}
-					} else {
-						new PopFrame("U do not exist!");
-					}
-				} else {
-					new PopFrame("Fill all the blanks dude!");
+				int op = UserOperation.userLogin(getName(), getPassword());
+				switch(op) {
+				case 0:
+					mainframe.activateUserMenuPanel();
+					setVisible(false);
+					break;
+				case 1:
+					new PopFrame("error: Incorrect password.");
+					break;
+				case 2:
+					new PopFrame("error: Unable to find this. Please check your user name.");
+					break;
+				case 3:
+					new PopFrame("error: Please fill all the blanks.");
+					break;
+				default:
+					new PopFrame("error: Fatal error.");
+					
 				}
 			}
 		});

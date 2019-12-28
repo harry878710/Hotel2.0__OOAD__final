@@ -193,9 +193,9 @@ public class ChangePWFrame extends JFrame {
 						UserList.userList = UserOperation.uploadUserList();
 						for (int i = 0; i < UserList.userList.size(); i++) {
 							if (UserList.userList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
-								UserList.userList.get(i).setLoggin(true);
+								UserList.userList.get(i).setLogin(true);
 							} else {
-								UserList.userList.get(i).setLoggin(false);
+								UserList.userList.get(i).setLogin(false);
 							}
 						}
 						new PopFrame("Change success");
