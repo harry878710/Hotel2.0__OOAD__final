@@ -11,7 +11,6 @@ import bookAndUser.BookOperation;
 import hotelAndRoom.HotelList;
 import hotelAndRoom.Room;
 
-
 public class EditBook {
 
 	public EditBook() {
@@ -70,12 +69,11 @@ public class EditBook {
 	 */
 	public int editCheckInDateAndNight(String bookId, String newCheckInDate, int night) {
 		// check input.
-		try {
-			validCheckInDate(stringToDate(newCheckInDate));
-		} catch (InputException e) {
-			System.out.println(e.getMessage());
-			return -1;
+
+		if (validCheckInDate(stringToDate(newCheckInDate)) != 0) {
+			return validCheckInDate(stringToDate(newCheckInDate));
 		}
+
 		Book myBook = BookOperation.getBook(bookId);
 		// check if the new order is valid
 		String userId = myBook.getUserId();
@@ -198,18 +196,20 @@ public class EditBook {
 	 * @return true if the input checkInDate is valid.
 	 * @throws InputException
 	 */
-	private boolean validCheckInDate(Date checkIn) throws InputException {
+	private int validCheckInDate(Date checkIn) {
 		// check check-in and check-out date are not null
 		if (checkIn == null) {
-			throw new InputException("error: Input of date should be \"MM/dd/yyyy\"");
+			// error: Input of date should be "MM/dd/yyyy";
+			return 1;
 		}
 		// check check-in date is later than today
 		long currentTime = System.currentTimeMillis();
 		Date today = new Date(currentTime);
 		if (!today.before(checkIn)) {
-			throw new InputException("Invalid date");
+			// check in date should not be in the past
+			return 2;
 		}
-		return true;
+		return 0;
 	}
 
 	private Date calculateCheckOutDate(Date checkInDate, int night) {

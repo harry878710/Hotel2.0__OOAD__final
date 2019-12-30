@@ -31,11 +31,11 @@ public class SearchAndBook {
 	 * @return a string of all vacancy hotels' details.
 	 * @throws InputException
 	 */
-	public String checkVacancy(String checkInDate, int night, int[] roomCombination, String city, String sorting)
-			throws InputException {
+	public String checkVacancy(String checkInDate, int night, int[] roomCombination, String city, String sorting) {
 		Date checkIn = stringToDate(checkInDate);
-		// check input format, may throw an exception.
-		validCheckInDate(checkIn);
+		if (!validCheckInDate(checkIn).equals("Everything's Fine")) {
+			return validCheckInDate(checkIn);
+		}
 		Date checkOut = calculateCheckOutDate(checkIn, night);
 		String checkOutDate = dateToString(checkOut);
 
@@ -111,12 +111,13 @@ public class SearchAndBook {
 		return toReturn;
 	}
 
-	public ArrayList<Integer> vacancyHotels(String checkInDate, int night, int[] roomCombination, String city)
-			throws InputException {
+	public ArrayList<Integer> vacancyHotels(String checkInDate, int night, int[] roomCombination, String city) {
 		// turn the String object of date to a Date object
 		Date checkIn = stringToDate(checkInDate);
 		// check input format, may throw an exception.
-		validCheckInDate(checkIn);
+		if (!validCheckInDate(checkIn).equals("Everything's Fine")) {
+			return null;
+		}
 		Date checkOut = calculateCheckOutDate(checkIn, night);
 		// Date checkOut = parseString(checkOutDate_str);
 
@@ -147,7 +148,8 @@ public class SearchAndBook {
 		if (remainRoomNumber[hotelId][0] < singleRoom || remainRoomNumber[hotelId][1] < doubleRoom
 				|| remainRoomNumber[hotelId][2] < quadroRoom) {
 			// Room number is not enough.
-			if (singleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[0] || doubleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[1]
+			if (singleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[0]
+					|| doubleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[1]
 					|| quadroRoom >= HotelList.ALLHOTEL[hotelId].getRoomCombination()[2]) {
 				System.out.println("Room number is never enough.");
 				return null;
@@ -215,18 +217,18 @@ public class SearchAndBook {
 	 * @return true if the input checkInDate is valid.
 	 * @throws InputException
 	 */
-	public boolean validCheckInDate(Date checkIn) throws InputException {
+	public String validCheckInDate(Date checkIn) {
 		// check check-in and check-out date are not null
 		if (checkIn == null) {
-			throw new InputException("error: Input of date should be \"MM/dd/yyyy\"");
+			return ("error: Input of date should be \"MM/dd/yyyy\"");
 		}
 		// check check-in date is later than today
 		long currentTime = System.currentTimeMillis();
 		Date today = new Date(currentTime);
 		if (!today.before(checkIn)) {
-			throw new InputException("Invalid date");
+			return ("Invalid date");
 		}
-		return true;
+		return ("Everything's Fine");
 	}
 
 	/**

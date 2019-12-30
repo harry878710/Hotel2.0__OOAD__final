@@ -36,7 +36,6 @@ import com.eltima.components.ui.DatePicker;
 import bookAndUser.UserOperation;
 import gui.BookDeposit;
 import gui.PopFrame;
-import operation.InputException;
 
 import operation.SearchAndBook;
 
@@ -56,9 +55,26 @@ public class SearchPanel extends JPanel {
 	JTextPane textHotelDetail;
 	final DatePicker datepick;
 
-	public String getDate() throws InputException {
-		new SearchAndBook().validCheckInDate(stringToDate(datepick.getText()));
+	private String getDate() {
+		if (!checkInput(datepick.getText())) {
+			new PopFrame("error: check in date should not be in the past.");
+			return "error: check in date should not be in the past.";
+		}
 		return datepick.getText();
+
+	}
+
+	private static boolean checkInput(String checkIn) {
+		// check check-in and check-out date are not null
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date checkInDate = sdf.parse(checkIn, new ParsePosition(0));
+		// check check-in date is later than today
+		long currentTime = System.currentTimeMillis();
+		Date today = new Date(currentTime);
+		if (!today.before(checkInDate)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -314,9 +330,12 @@ public class SearchPanel extends JPanel {
 
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), numOfNight,
-							roomCombination, city);
+
+				ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), numOfNight,
+						roomCombination, city);
+				if (valid == null) {
+					new PopFrame("error: check in date should not be in the past");
+				} else {
 					if (valid.size() > 0) {
 						textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), numOfNight,
 								roomCombination, city, sort));
@@ -335,22 +354,19 @@ public class SearchPanel extends JPanel {
 					} else {
 						textArea.setText("Oops! No Room!");
 					}
-				} catch (InputException e1) {
-					new PopFrame(e1.getMessage());
 				}
+
 			}
 		});
 		comboBox_ID.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					try {
-						getDate();
+					if (!getDate().equals("error: check in date should not be in the past.")) {
+
 						hotelId = (Integer) e.getItem();
 						textHotelDetail.setText(
 								new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId).toString());
 						System.out.println("Select " + hotelId);
-					} catch (InputException e1) {
-						new PopFrame(e1.getMessage());
 					}
 				}
 			}
@@ -361,12 +377,17 @@ public class SearchPanel extends JPanel {
 					sort = (String) e.getItem();
 					System.out.println("Select " + sort);
 					if (hasSearch) {
-						try {
-							ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), numOfNight,
-									roomCombination, city);
+
+						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), numOfNight,
+								roomCombination, city);
+						if (valid == null) {
+
+							new PopFrame("error: check in date should not be in the past.");
+
+						} else {
 							if (valid.size() > 0) {
-								textArea.setText(new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId)
-										.toString());
+								textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), numOfNight,
+										roomCombination, city, sort));
 								textArea.setSelectionStart(0);
 								textArea.setSelectionEnd(0);
 								comboBox_ID.removeAllItems();
@@ -383,8 +404,6 @@ public class SearchPanel extends JPanel {
 							} else {
 								textArea.setText("Oops! No Room!");
 							}
-						} catch (InputException e1) {
-							new PopFrame(e1.getMessage());
 						}
 					}
 				}
@@ -425,8 +444,8 @@ public class SearchPanel extends JPanel {
 		btnBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (hotelId != -1) {
-					try {
-						getDate();
+
+					if (!getDate().equals("error: check in date should not be in the past.")) {
 						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(getDate(), numOfNight,
 								roomCombination, city);
 						boolean hasRoom = false;
@@ -443,8 +462,7 @@ public class SearchPanel extends JPanel {
 						} else {
 							new PopFrame("There's NO room");
 						}
-					} catch (InputException e1) {
-						new PopFrame(e1.getMessage());
+
 					}
 				} else {
 					new PopFrame("Make your choice = = ");
@@ -453,7 +471,7 @@ public class SearchPanel extends JPanel {
 		});
 		setVisible(true);
 	}
-	
+
 	private Date stringToDate(String str) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));

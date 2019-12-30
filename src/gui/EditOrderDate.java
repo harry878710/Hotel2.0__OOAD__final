@@ -25,7 +25,6 @@ import com.eltima.components.ui.DatePicker;
 import bookAndUser.BookOperation;
 import bookAndUser.UserList;
 import bookAndUser.UserOperation;
-import operation.InputException;
 
 import javax.swing.JComboBox;
 
@@ -35,18 +34,15 @@ public class EditOrderDate extends JPanel {
 	final DatePicker datepick;
 	int night = 1;
 
-	public String getCheckInDate() {
-		try {
-			checkInput(datepick.getText());
-
-		} catch (InputException e) {
+	String getCheckInDate() {
+		if (!checkInput(datepick.getText())) {
 			new PopFrame("Invalid date");
 		}
 		return datepick.getText();
 
 	}
 
-	private static boolean checkInput(String checkIn) throws InputException {
+	private static boolean checkInput(String checkIn) {
 		// check check-in and check-out date are not null
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date checkInDate = sdf.parse(checkIn, new ParsePosition(0));
@@ -54,7 +50,7 @@ public class EditOrderDate extends JPanel {
 		long currentTime = System.currentTimeMillis();
 		Date today = new Date(currentTime);
 		if (!today.before(checkInDate)) {
-			throw new InputException("The date of check-in should be after today");
+			return false;
 		}
 		return true;
 	}
@@ -72,7 +68,7 @@ public class EditOrderDate extends JPanel {
 		}
 		return checkOutDate;
 	}
-	
+
 	public int getNight() {
 		return night;
 	}

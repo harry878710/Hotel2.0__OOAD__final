@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 import bookAndUser.User;
 import bookAndUser.UserList;
 import bookAndUser.UserOperation;
-import operation.InputException;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
