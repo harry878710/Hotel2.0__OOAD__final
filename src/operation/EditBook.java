@@ -64,21 +64,21 @@ public class EditBook {
 	 * @param newSingle
 	 * @param newDoub
 	 * @param newQuad
-	 * @return 0 if changed sucessfully.Return 1, or 2 if the change didn't
-	 *         succesfully.
+	 * @return 0 if changed sucessfully.Return 4, or 5 if the change didn't
+	 *         succesfully.Return 1, 2, or 3 if input format has error.
 	 */
-	public int editCheckInDateAndNight(String bookId, String newCheckInDate, int night) {
+	public int editCheckInDateAndNight(String bookId, String newCheckInDate, String newCheckOutDate) {
 		// check input.
 
-		if (validCheckInDate(stringToDate(newCheckInDate)) != 0) {
-			return validCheckInDate(stringToDate(newCheckInDate));
+		if (validCheckInDate(stringToDate(newCheckInDate),stringToDate(newCheckOutDate)) != 0) {
+			return validCheckInDate(stringToDate(newCheckInDate),stringToDate(newCheckOutDate));
 		}
 
 		Book myBook = BookOperation.getBook(bookId);
 		// check if the new order is valid
-		String userId = myBook.getUserId();
 		int hotelId = myBook.getHotelId();
-		Date newCheckIn = stringToDate(newCheckInDate), newCheckOut = calculateCheckOutDate(newCheckIn, night);
+		Date newCheckIn = stringToDate(newCheckInDate), newCheckOut = stringToDate(newCheckOutDate);
+		int night = calculateNight(newCheckIn,newCheckOut);
 		int[] remainRoomNumber = remainingRoomNumber(newCheckIn, newCheckOut, hotelId);
 		if (remainRoomNumber[0] < myBook.getRoomCombination()[0] || remainRoomNumber[1] < myBook.getRoomCombination()[1]
 				|| remainRoomNumber[2] < myBook.getRoomCombination()[2]) {
@@ -88,10 +88,10 @@ public class EditBook {
 					|| myBook.getRoomCombination()[2] > HotelList.ALLHOTEL[myBook.getHotelId()]
 							.getRoomCombination()[2]) {
 				System.out.println("Room number is never enough.");
-				return 1;
+				return 4;
 			} else {
 				System.out.println("Room number is not enough.");
-				return 2;
+				return 5;
 			}
 		}
 		// the order is valid, change the order.
@@ -196,19 +196,24 @@ public class EditBook {
 	 * @return true if the input checkInDate is valid.
 	 * @throws InputException
 	 */
-	private int validCheckInDate(Date checkIn) {
+	private int validCheckInDate(Date checkIn,Date checkOut) {
 		// check check-in and check-out date are not null
-		if (checkIn == null) {
-			// error: Input of date should be "MM/dd/yyyy";
+		if (checkIn == null || checkOut == null) {
+			//("error: The format of date input should be \"MM/dd/yyyy\"");
 			return 1;
 		}
-		// check check-in date is later than today
+		// check check-in date is not before today
 		long currentTime = System.currentTimeMillis();
-		Date today = new Date(currentTime);
-		if (!today.before(checkIn)) {
-			// check in date should not be in the past
+		Date today = stringToDate(dateToString(new Date(currentTime)));
+		if (today.after(checkIn)) {
+			//("error: The check in date should not be in the past.");
 			return 2;
 		}
+		if (!checkOut.after(checkIn)) {
+			// ("error: The check out date should be after check in date.");
+			return 3;
+		}
+		// ("Everything's Fine");
 		return 0;
 	}
 
@@ -233,5 +238,13 @@ public class EditBook {
 		priceToReturn += nights * roomInfo[2].getPrice() * newCombination[2];
 		return priceToReturn;
 	}
-
+	private int calculateNight(Date checkIn, Date checkOut) {
+		int toReturn = 0;
+		Date datePointer = new Date(checkIn.getTime());
+		while (datePointer != checkOut) {
+			toReturn++;
+			datePointer = nextDate(datePointer);
+		}
+		return toReturn;
+	}
 }
