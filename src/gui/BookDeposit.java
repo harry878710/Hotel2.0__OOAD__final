@@ -43,7 +43,7 @@ public class BookDeposit {
 	}
 
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date checkOut = sdf.parse(checkInDate, new ParsePosition(0));
 		String checkOutDate = null;
 		if (checkOut != null) {
@@ -71,7 +71,7 @@ public class BookDeposit {
 	}
 
 	public int[] numOfPeopleAndRoom(int numOfPeople, int numOfRoom) {
-		int[] roomType = new int[3];// {number of ¤@¤H©Ð, ¤G¤H©Ð, ¥|¤H©Ð}
+		int[] roomType = new int[3];// {number of ï¿½@ï¿½Hï¿½ï¿½, ï¿½Gï¿½Hï¿½ï¿½, ï¿½|ï¿½Hï¿½ï¿½}
 		if (numOfPeople == 4 * numOfRoom - 1) {
 			numOfPeople += 1;
 		}

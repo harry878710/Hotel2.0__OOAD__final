@@ -12,7 +12,7 @@ import java.text.ParsePosition;
 public class TestTime {
 
 	public static void main(String[] args) {
-		// ¨ú±o²{¦b®É¶¡
+		// ï¿½ï¿½ï¿½oï¿½{ï¿½bï¿½É¶ï¿½
 		long currentTime = System.currentTimeMillis();
 		Date thisDay = new Date(currentTime);
 		System.out.println(thisDay);
@@ -26,11 +26,11 @@ public class TestTime {
 
 		SimpleDateFormat sdf0 = new SimpleDateFormat();// use default Locale
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy");
 
 		// ParsePosition p = new ParsePosition(0);
 		Date d = sdf1.parse("2019-05-20", new ParsePosition(0));
-		System.out.println(sdf0.parse("2019/5/20 ¤W¤È 00:01", new ParsePosition(0)));
+		System.out.println(sdf0.parse("2019/5/20 ï¿½Wï¿½ï¿½ 00:01", new ParsePosition(0)));
 		System.out.println(sdf1.parse("2019-05-08", new ParsePosition(0)));
 		System.out.println(sdf2.parse("2019/12/20", new ParsePosition(0)));
 		System.out.println(sdf2.parse("2019/5/2", new ParsePosition(0)));

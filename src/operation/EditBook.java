@@ -118,14 +118,14 @@ public class EditBook {
 	}
 
 	/**
-	 * To turn a String "yyyy/MM/dd" to a Date obj.
+	 * To turn a String "MM/dd/yyyy" to a Date obj.
 	 * 
 	 * @param str
 	 * @return the Date obj according to the str.Return null if the String is not a
 	 *         valid date
 	 */
 	private Date stringToDate(String str) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));
 	}
 
@@ -201,7 +201,7 @@ public class EditBook {
 	private boolean validCheckInDate(Date checkIn) throws InputException {
 		// check check-in and check-out date are not null
 		if (checkIn == null) {
-			throw new InputException("error: Input of date should be \"yyyy/mm/dd\"");
+			throw new InputException("error: Input of date should be \"MM/dd/yyyy\"");
 		}
 		// check check-in date is later than today
 		long currentTime = System.currentTimeMillis();
@@ -221,7 +221,7 @@ public class EditBook {
 	}
 
 	private String dateToString(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.format(date);
 	}
 

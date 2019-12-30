@@ -394,7 +394,7 @@ public class SearchPanel extends JPanel {
 
 	private static DatePicker getDatePicker() {
 		final DatePicker datepick;
-		String DefaultFormat = "yyyy/MM/dd";
+		String DefaultFormat = "MM/dd/yyyy";
 		Date date = new Date();
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
@@ -455,7 +455,7 @@ public class SearchPanel extends JPanel {
 	}
 	
 	private Date stringToDate(String str) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));
 	}
 

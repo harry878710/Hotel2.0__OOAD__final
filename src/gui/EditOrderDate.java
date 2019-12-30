@@ -48,7 +48,7 @@ public class EditOrderDate extends JPanel {
 
 	private static boolean checkInput(String checkIn) throws InputException {
 		// check check-in and check-out date are not null
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date checkInDate = sdf.parse(checkIn, new ParsePosition(0));
 		// check check-in date is later than today
 		long currentTime = System.currentTimeMillis();
@@ -61,7 +61,7 @@ public class EditOrderDate extends JPanel {
 
 	public String getCheckOutDate() {
 		setSize(540, 720);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date checkOut = sdf.parse(getCheckInDate(), new ParsePosition(0));
 		String checkOutDate = null;
 		if (checkOut != null) {
@@ -174,7 +174,7 @@ public class EditOrderDate extends JPanel {
 
 	private static DatePicker getDatePicker() {
 		final DatePicker datepick;
-		String DefaultFormat = "yyyy/MM/dd";
+		String DefaultFormat = "MM/dd/yyyy";
 		Date date = new Date();
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);

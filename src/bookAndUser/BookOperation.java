@@ -469,7 +469,7 @@ public class BookOperation {
 	}
 	
 	private static Date stringToDate(String str) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));
 	}
 

@@ -216,7 +216,7 @@ public class TestSearchPanel extends JPanel {
 	
 	private static DatePicker getDatePicker() {
 		final DatePicker datepick;
-		String DefaultFormat = "yyyy/MM/dd";
+		String DefaultFormat = "MM/dd/yyyy";
 		long currentTime = System.currentTimeMillis();
 		Date date = new Date(currentTime);
 //		Calendar c = Calendar.getInstance();
