@@ -36,7 +36,8 @@ public class EditOrderDate extends JPanel {
 
 	String getCheckInDate() {
 		if (!checkInput(datepick.getText())) {
-			new PopFrame("Invalid date");
+			new PopFrame("error: check in date should not be in the past.");
+			return "error: check in date should not be in the past.";
 		}
 		return datepick.getText();
 
@@ -47,9 +48,10 @@ public class EditOrderDate extends JPanel {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date checkInDate = sdf.parse(checkIn, new ParsePosition(0));
 		// check check-in date is later than today
-		long currentTime = System.currentTimeMillis();
-		Date today = new Date(currentTime);
-		if (!today.before(checkInDate)) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date today = calendar.getTime();
+		if (today.after(checkInDate)) {
 			return false;
 		}
 		return true;

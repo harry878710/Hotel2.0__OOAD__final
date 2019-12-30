@@ -169,9 +169,15 @@ public class EditOrderPanel extends JPanel {
 					new PopFrame("Successfully Edited !");
 					mainframe.activateMyOrderPanel();
 					setVisible(false);
-				} else if (op == 1) {
+				} else if(op==1) {
+					new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
+				}else if(op==2) {
+					new PopFrame("error: The check in date should not be in the past.");
+				}else if(op==3) {
+					new PopFrame("error: The check out date should be after check in date.");
+				} else if (op == 4) {
 					new PopFrame("Room never enough !");
-				} else if (op == 2) {
+				} else if (op == 5) {
 					new PopFrame("Room not enough !");
 				}
 			}
