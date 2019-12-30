@@ -69,9 +69,10 @@ public class SearchPanel extends JPanel {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date checkInDate = sdf.parse(checkIn, new ParsePosition(0));
 		// check check-in date is later than today
-		long currentTime = System.currentTimeMillis();
-		Date today = new Date(currentTime);
-		if (!today.before(checkInDate)) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date today = calendar.getTime();
+		if (today.after(checkInDate)) {
 			return false;
 		}
 		return true;
@@ -331,14 +332,23 @@ public class SearchPanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String checkOutDate = dateToString(calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
-				ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), checkOutDate,
-						roomCombination, city);
-				if (valid == null) {
-					new PopFrame("error: check in date should not be in the past");
-				} else {
+				String msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination, city,
+						sort);
+				switch (msg) {
+				case "error: The format of date input should be \"MM/dd/yyyy\"":
+					new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
+					break;
+				case "error: The check in date should not be in the past.":
+					new PopFrame("error: The check in date should not be in the past.");
+					break;
+				case "error: The check out date should be after check in date.":
+					new PopFrame("error: The check out date should be after check in date.");
+					break;
+				default:
+					ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), checkOutDate,
+							roomCombination, city);
 					if (valid.size() > 0) {
-						textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate,
-								roomCombination, city, sort));
+						textArea.setText(msg);
 						textArea.setSelectionStart(0);
 						textArea.setSelectionEnd(0);
 						comboBox_ID.removeAllItems();
@@ -357,8 +367,10 @@ public class SearchPanel extends JPanel {
 				}
 
 			}
+
 		});
 		comboBox_ID.addItemListener(new ItemListener() {
+
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					if (!getDate().equals("error: check in date should not be in the past.")) {
@@ -379,13 +391,21 @@ public class SearchPanel extends JPanel {
 					if (hasSearch) {
 						String checkOutDate = dateToString(
 								calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
-						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), checkOutDate,
-								roomCombination, city);
-						if (valid == null) {
-
-							new PopFrame("error: check in date should not be in the past.");
-
-						} else {
+						String msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination,
+								city, sort);
+						switch (msg) {
+						case "error: The format of date input should be \"MM/dd/yyyy\"":
+							new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
+							break;
+						case "error: The check in date should not be in the past.":
+							new PopFrame("error: The check in date should not be in the past.");
+							break;
+						case "error: The check out date should be after check in date.":
+							new PopFrame("error: The check out date should be after check in date.");
+							break;
+						default:
+							ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(),
+									checkOutDate, roomCombination, city);
 							if (valid.size() > 0) {
 								textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate,
 										roomCombination, city, sort));
@@ -457,14 +477,12 @@ public class SearchPanel extends JPanel {
 							}
 						}
 						if (hasRoom) {
-
 							mainframe.activateToBookPanel(
 									new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId));
 							setVisible(false);
 						} else {
 							new PopFrame("There's NO room");
 						}
-
 					}
 				} else {
 					new PopFrame("Make your choice = = ");

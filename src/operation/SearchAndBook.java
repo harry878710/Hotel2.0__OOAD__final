@@ -40,6 +40,7 @@ public class SearchAndBook {
 //		Date checkOut = calculateCheckOutDate(checkIn, night);
 //		String checkOutDate = dateToString(checkOut);
 		int night = calculateNight(checkIn, checkOut);
+		System.out.println(night);
 		// check if the room number of every hotel in array is enough for new book
 		// if the hotel has enough number, store its Id into the arrayList
 		// assign city
@@ -148,14 +149,15 @@ public class SearchAndBook {
 	 * 
 	 * @return the bookId if booked successfully.
 	 */
-	public String commitBook(String checkInDate, String checkOutDate, int hotelId, String userId, int[] roomCombination) {
+	public String commitBook(String checkInDate, String checkOutDate, int hotelId, String userId,
+			int[] roomCombination) {
 		int singleRoom = roomCombination[0];
 		int doubleRoom = roomCombination[1];
 		int quadroRoom = roomCombination[2];
 
 		Date checkIn = stringToDate(checkInDate);
 		Date checkOut = stringToDate(checkOutDate);
-		int night = calculateNight(checkIn,checkOut);
+		int night = calculateNight(checkIn, checkOut);
 		// check available of room again.
 		int[][] remainRoomNumber = remainingRoomNumber(checkIn, checkOut);
 		if (remainRoomNumber[hotelId][0] < singleRoom || remainRoomNumber[hotelId][1] < doubleRoom
@@ -235,8 +237,11 @@ public class SearchAndBook {
 			return ("error: The format of date input should be \"MM/dd/yyyy\"");
 		}
 		// check check-in date is not before today
-		long currentTime = System.currentTimeMillis();
-		Date today = stringToDate(dateToString(new Date(currentTime)));
+//		long currentTime = System.currentTimeMillis();
+//		Date today = new Date(currentTime);
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date today = calendar.getTime();
 		if (today.after(checkIn)) {
 			return ("error: The check in date should not be in the past.");
 		}
@@ -496,7 +501,7 @@ public class SearchAndBook {
 	private int calculateNight(Date checkIn, Date checkOut) {
 		int toReturn = 0;
 		Date datePointer = new Date(checkIn.getTime());
-		while (datePointer != checkOut) {
+		while (!datePointer.equals(checkOut)) {
 			toReturn++;
 			datePointer = nextDate(datePointer);
 		}

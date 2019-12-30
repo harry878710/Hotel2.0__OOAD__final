@@ -19,10 +19,16 @@ public class TestTime {
 //		System.out.println(thisDay);
 
 		Calendar calendar = Calendar.getInstance();
-		final Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -1);
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		System.out.println(dateFormat.format(cal.getTime()));
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date today = calendar.getTime();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+		System.out.println(dateFormat.format(today));
+				
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date checkIn = sdf.parse("12/30/2019", new ParsePosition(0));
+		System.out.println(dateFormat.format(checkIn));
+		System.out.println(today.after(checkIn));
+		
 		// Instant now = Instant.now();
 		// TimeZone tz = TimeZone.getTimeZone("Asia/Taipei");
 		// Locale.TAIWAN;

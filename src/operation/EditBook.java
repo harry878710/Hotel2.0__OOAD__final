@@ -184,8 +184,9 @@ public class EditBook {
 			return 1;
 		}
 		// check check-in date is not before today
-		long currentTime = System.currentTimeMillis();
-		Date today = stringToDate(dateToString(new Date(currentTime)));
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date today = calendar.getTime();
 		if (today.after(checkIn)) {
 			// ("error: The check in date should not be in the past.");
 			return 2;
@@ -227,7 +228,7 @@ public class EditBook {
 	private int calculateNight(Date checkIn, Date checkOut) {
 		int toReturn = 0;
 		Date datePointer = new Date(checkIn.getTime());
-		while (datePointer != checkOut) {
+		while (!datePointer.equals(checkOut)) {
 			toReturn++;
 			datePointer = nextDate(datePointer);
 		}
