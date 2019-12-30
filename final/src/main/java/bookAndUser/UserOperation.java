@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
+
+
 public class UserOperation { 
 
 	// Note:
@@ -37,10 +39,10 @@ public class UserOperation {
 //		System.out.println("Table created successfully");
 //	}
 
-//	public static void main(String[] args) {
-//		UserOperation.addUser("raiyray", "hoho", "hoho");
-//
-//	}
+	public static void main(String[] args) {
+		UserOperation.addUser("raiyray", "hoho", "hoho");
+
+	}
 
 	// Add an user with corresponding id and password.
 	// If the id has been used, it would cause an exception.
@@ -67,6 +69,10 @@ public class UserOperation {
 			stmt.close();
 			c.commit();
 			c.close();
+
+		} catch (org.sqlite.SQLiteException e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return 2;
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
@@ -76,6 +82,31 @@ public class UserOperation {
 
 	}
 
+	public static int userLogin(String userId,String password) {
+		if (!userId.equals("") && !password.equals("")) {
+			if (UserOperation.hasUser(userId)) {
+				if (UserOperation.checkPassword(userId, password)) {
+					for (int i = 0; i < UserList.userList.size(); i++) {
+						if (userId.equals(UserList.userList.get(i).getName())) {
+							//find specified user in userList,change his login status.
+							UserList.userList.get(i).setLogin(true);
+							return 0;
+						} 
+					}
+				} else {
+					//wrong password.
+					return 1;
+				}
+			} else {
+				//no such specified user in userList.
+				return 2;
+			}
+		} else {
+			//try to login without fill all the blanks
+			return 3;
+		}
+		return 4;
+	}
 	// To show you all the user.
 	// Actually, you can use DB Browser to see all the user, too.
 	public static void showAllUser() {
@@ -234,7 +265,7 @@ public class UserOperation {
 
 	public static boolean anyoneLoggedin() {
 		for (int i = 0; i < UserList.userList.size(); i++) {
-			if (UserList.userList.get(i).isLoggin()) {
+			if (UserList.userList.get(i).isLogin()) {
 				return true;
 			}
 		}
@@ -243,13 +274,13 @@ public class UserOperation {
 
 	public static void everyOneloggedOut() {
 		for (int i = 0; i < UserList.userList.size(); i++) {
-			UserList.userList.get(i).setLoggin(false);
+			UserList.userList.get(i).setLogin(false);
 		}
 	}
 
 	public static String whoIsLoggedin() {
 		for (int i = 0; i < UserList.userList.size(); i++) {
-			if (UserList.userList.get(i).isLoggin()) {
+			if (UserList.userList.get(i).isLogin()) {
 				return UserList.userList.get(i).getName();
 			}
 		}

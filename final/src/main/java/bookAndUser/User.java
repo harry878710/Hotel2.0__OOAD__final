@@ -3,19 +3,19 @@ package bookAndUser;
 public class User {
 	private String name;
 	private String password;
-	private boolean loggin = false;
+	private boolean login = false;
 	
 	public User(String n, String password) {
 		this.name = n;
 		this.password = password;
 	}
 
-	public boolean isLoggin() {
-		return loggin;
+	public boolean isLogin() {
+		return login;
 	}
 
-	public void setLoggin(boolean loggin) {
-		this.loggin = loggin;
+	public void setLogin(boolean loggin) {
+		this.login = loggin;
 	}
 
 	public String getName() {

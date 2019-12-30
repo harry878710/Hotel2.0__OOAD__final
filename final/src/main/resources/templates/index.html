@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>The River</title>
 <meta charset="utf-8">
@@ -40,25 +40,24 @@
 					<nav class="main_nav">
 						<ul
 							class="d-flex flex-row align-items-start justify-content-start">
-							<li class="active"><a href="index.html">Home</a></li>
+							<li class="active"><a th:href="@{/index.html?id={id}(id=${index.id})}">Home</a></li>
 							<li><a href="about.html">About us</a></li>
 							<li><a href="#">Rooms</a></li>
 							<li><a href="blog.html">Blog</a></li>
 							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</nav>
-					<div class="book_button">
-						<a id = "demo" href="login.html">Login</a>
+					<div th:if="${index.id}==null" class="book_button">
+						<a id="demo" href="login.html">Login</a>
 					</div>
-					
-					<!-- script -->
-					<script>
-						if (new Date().getHours() < 18) {
-							document.getElementById("demo").innerHTML = "hehhehee!";
-						}
-					</script>
-					<div class="book_button">
-						<a id = "demo" href="register.html">Register</a>
+					<div th:if="${index.id}!=null" class="book_button">
+						<a id="demo" href="index.html">Logout</a>
+					</div>
+					<div th:if="${index.id}==null" class="book_button">
+						<a id="demo" href="register.html">Register</a>
+					</div>
+					<div th:if="${index.id}!=null" class="book_button">
+						<a id="demo" href="register.html">My Account</a>
 					</div>
 
 					<!-- Hamburger Menu -->
@@ -110,8 +109,8 @@
 							<div class="home_content text-center">
 								<div class="home_title">校年早餐店</div>
 								<div class="booking_form_container">
-									<form action="#" th:action="@{/index}" th:object="${index}" class="booking_form" id="booking_form"
-										method="post">
+									<form action="#" th:action="@{/index}" th:object="${index}"
+										class="booking_form" id="booking_form" method="post">
 										<div
 											class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
 											<div
@@ -127,8 +126,9 @@
 														placeholder="Check out" required="required">
 												</div>
 												<div>
-													<input type="number" th:field="*{night}" class="booking_input booking_input_b"
-														placeholder="people" required="required">
+													<input type="number" th:field="*{night}"
+														class="booking_input booking_input_b" placeholder="people"
+														required="required">
 												</div>
 												<div>
 													<input type="number" class="booking_input booking_input_b"

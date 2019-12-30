@@ -51,8 +51,8 @@
 						<div class="description">
 							<div th:switch="${passObject.n}">
 								<p th:case="'0'"th:text="'Welcome '+${passObject.id}"></p>
-								<p th:case="'1'">Password not match</p>
-								<p th:case="'2'">User name has been used</p>
+								<p th:case="'1'">Wrong password</p>
+								<p th:case="'2'">No such specified user</p>
 							</div>
 						</div>
 					</div>

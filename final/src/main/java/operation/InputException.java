@@ -1,5 +1,5 @@
 package operation;
-
+//用在checkVacancy檢查input是否正確
 public class InputException extends Exception {
 
 	private String condition;
