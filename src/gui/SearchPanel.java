@@ -330,14 +330,14 @@ public class SearchPanel extends JPanel {
 
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), numOfNight,
+				String checkOutDate = dateToString(calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
+				ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), checkOutDate,
 						roomCombination, city);
 				if (valid == null) {
 					new PopFrame("error: check in date should not be in the past");
 				} else {
 					if (valid.size() > 0) {
-						textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), numOfNight,
+						textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate,
 								roomCombination, city, sort));
 						textArea.setSelectionStart(0);
 						textArea.setSelectionEnd(0);
@@ -377,8 +377,9 @@ public class SearchPanel extends JPanel {
 					sort = (String) e.getItem();
 					System.out.println("Select " + sort);
 					if (hasSearch) {
-
-						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), numOfNight,
+						String checkOutDate = dateToString(
+								calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
+						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), checkOutDate,
 								roomCombination, city);
 						if (valid == null) {
 
@@ -386,7 +387,7 @@ public class SearchPanel extends JPanel {
 
 						} else {
 							if (valid.size() > 0) {
-								textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), numOfNight,
+								textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate,
 										roomCombination, city, sort));
 								textArea.setSelectionStart(0);
 								textArea.setSelectionEnd(0);
@@ -444,9 +445,10 @@ public class SearchPanel extends JPanel {
 		btnBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (hotelId != -1) {
-
+					String checkOutDate = dateToString(
+							calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
 					if (!getDate().equals("error: check in date should not be in the past.")) {
-						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(getDate(), numOfNight,
+						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(getDate(), checkOutDate,
 								roomCombination, city);
 						boolean hasRoom = false;
 						for (int i = 0; i < valid.size(); i++) {
@@ -472,9 +474,29 @@ public class SearchPanel extends JPanel {
 		setVisible(true);
 	}
 
+	private String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		return sdf.format(date);
+	}
+
 	private Date stringToDate(String str) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));
 	}
 
+	private Date calculateCheckOutDate(Date checkInDate, int night) {
+		Date toReturn = new Date(checkInDate.getTime());
+		for (int i = 0; i < night; i++) {
+			toReturn = nextDate(toReturn);
+		}
+		return toReturn;
+	}
+
+	private Date nextDate(Date thisDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(thisDate);
+		c.add(Calendar.DATE, 1);
+		Date nextDate = c.getTime();
+		return nextDate;
+	}
 }

@@ -70,15 +70,15 @@ public class EditBook {
 	public int editCheckInDateAndNight(String bookId, String newCheckInDate, String newCheckOutDate) {
 		// check input.
 
-		if (validCheckInDate(stringToDate(newCheckInDate),stringToDate(newCheckOutDate)) != 0) {
-			return validCheckInDate(stringToDate(newCheckInDate),stringToDate(newCheckOutDate));
+		if (validCheckInDate(stringToDate(newCheckInDate), stringToDate(newCheckOutDate)) != 0) {
+			return validCheckInDate(stringToDate(newCheckInDate), stringToDate(newCheckOutDate));
 		}
 
 		Book myBook = BookOperation.getBook(bookId);
 		// check if the new order is valid
 		int hotelId = myBook.getHotelId();
 		Date newCheckIn = stringToDate(newCheckInDate), newCheckOut = stringToDate(newCheckOutDate);
-		int night = calculateNight(newCheckIn,newCheckOut);
+		int night = calculateNight(newCheckIn, newCheckOut);
 		int[] remainRoomNumber = remainingRoomNumber(newCheckIn, newCheckOut, hotelId);
 		if (remainRoomNumber[0] < myBook.getRoomCombination()[0] || remainRoomNumber[1] < myBook.getRoomCombination()[1]
 				|| remainRoomNumber[2] < myBook.getRoomCombination()[2]) {
@@ -116,30 +116,11 @@ public class EditBook {
 	}
 
 	/**
-	 * To turn a String "MM/dd/yyyy" to a Date obj.
-	 * 
-	 * @param str
-	 * @return the Date obj according to the str.Return null if the String is not a
-	 *         valid date
-	 */
-	private Date stringToDate(String str) {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		return sdf.parse(str, new ParsePosition(0));
-	}
-
-	/**
 	 * Find the next date of thisDate
 	 * 
 	 * @param thisDate
 	 * @return next date
 	 */
-	private Date nextDate(Date thisDate) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(thisDate);
-		c.add(Calendar.DATE, 1);
-		Date nextDate = c.getTime();
-		return nextDate;
-	}
 
 	private int[] remainingRoomNumber(Date checkIn, Date checkOut, int hotelId) {
 		// the vacancy of check-in date
@@ -196,17 +177,17 @@ public class EditBook {
 	 * @return true if the input checkInDate is valid.
 	 * @throws InputException
 	 */
-	private int validCheckInDate(Date checkIn,Date checkOut) {
+	private int validCheckInDate(Date checkIn, Date checkOut) {
 		// check check-in and check-out date are not null
 		if (checkIn == null || checkOut == null) {
-			//("error: The format of date input should be \"MM/dd/yyyy\"");
+			// ("error: The format of date input should be \"MM/dd/yyyy\"");
 			return 1;
 		}
 		// check check-in date is not before today
 		long currentTime = System.currentTimeMillis();
 		Date today = stringToDate(dateToString(new Date(currentTime)));
 		if (today.after(checkIn)) {
-			//("error: The check in date should not be in the past.");
+			// ("error: The check in date should not be in the past.");
 			return 2;
 		}
 		if (!checkOut.after(checkIn)) {
@@ -217,12 +198,16 @@ public class EditBook {
 		return 0;
 	}
 
-	private Date calculateCheckOutDate(Date checkInDate, int night) {
-		Date toReturn = new Date(checkInDate.getTime());
-		for (int i = 0; i < night; i++) {
-			toReturn = nextDate(toReturn);
-		}
-		return toReturn;
+	/**
+	 * To turn a String "MM/dd/yyyy" to a Date obj.
+	 * 
+	 * @param str
+	 * @return the Date obj according to the str.Return null if the String is not a
+	 *         valid date
+	 */
+	private Date stringToDate(String str) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		return sdf.parse(str, new ParsePosition(0));
 	}
 
 	private String dateToString(Date date) {
@@ -238,6 +223,7 @@ public class EditBook {
 		priceToReturn += nights * roomInfo[2].getPrice() * newCombination[2];
 		return priceToReturn;
 	}
+
 	private int calculateNight(Date checkIn, Date checkOut) {
 		int toReturn = 0;
 		Date datePointer = new Date(checkIn.getTime());
@@ -246,5 +232,13 @@ public class EditBook {
 			datePointer = nextDate(datePointer);
 		}
 		return toReturn;
+	}
+
+	private Date nextDate(Date thisDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(thisDate);
+		c.add(Calendar.DATE, 1);
+		Date nextDate = c.getTime();
+		return nextDate;
 	}
 }

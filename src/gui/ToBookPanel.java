@@ -13,12 +13,18 @@ import javax.swing.SwingConstants;
 
 import bookAndUser.UserList;
 import bookAndUser.UserOperation;
+import hotelAndRoom.HotelList;
+import hotelAndRoom.Room;
 import operation.SearchAndBook;
 
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ToBookPanel extends JPanel {
 	JButton btnBackToSearch;
@@ -81,7 +87,9 @@ public class ToBookPanel extends JPanel {
 		getBtnConfirm().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (UserOperation.anyoneLoggedin()) {
-					String bookId = new SearchAndBook().commitBook(bd.getCheckInDate(), bd.getNight(), bd.getHotelId(),
+					String checkOutDate = dateToString(
+							calculateCheckOutDate(stringToDate(bd.getCheckInDate()), bd.getNight()));
+					String bookId = new SearchAndBook().commitBook(bd.getCheckInDate(), checkOutDate, bd.getHotelId(),
 							UserOperation.whoIsLoggedin(), bd.getRoomCombination());
 					new PopFrame("BOOK SUCCESS!\nYour book ID is " + bookId);
 					mainframe.activateUserMenuPanel();
@@ -132,4 +140,29 @@ public class ToBookPanel extends JPanel {
 		setVisible(true);
 	}
 
+	private String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		return sdf.format(date);
+	}
+
+	private Date calculateCheckOutDate(Date checkInDate, int night) {
+		Date toReturn = new Date(checkInDate.getTime());
+		for (int i = 0; i < night; i++) {
+			toReturn = nextDate(toReturn);
+		}
+		return toReturn;
+	}
+
+	private Date nextDate(Date thisDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(thisDate);
+		c.add(Calendar.DATE, 1);
+		Date nextDate = c.getTime();
+		return nextDate;
+	}
+	
+	private Date stringToDate(String str) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		return sdf.parse(str, new ParsePosition(0));
+	}
 }

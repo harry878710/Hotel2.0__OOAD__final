@@ -13,6 +13,10 @@ import operation.EditBook;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.CardLayout;
@@ -158,7 +162,9 @@ public class EditOrderPanel extends JPanel {
 
 		mod.btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int op = (new EditBook()).editCheckInDateAndNight(mod.bookId, mod.getCheckInDate(), mod.getNight());
+				String checkOutDate = dateToString(
+						calculateCheckOutDate(stringToDate(mod.getCheckInDate()), mod.getNight()));
+				int op = (new EditBook()).editCheckInDateAndNight(mod.bookId, mod.getCheckInDate(), checkOutDate);
 				if (op == 0) {
 					new PopFrame("Successfully Edited !");
 					mainframe.activateMyOrderPanel();
@@ -186,4 +192,29 @@ public class EditOrderPanel extends JPanel {
 		});
 	}
 
+	private String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		return sdf.format(date);
+	}
+
+	private Date calculateCheckOutDate(Date checkInDate, int night) {
+		Date toReturn = new Date(checkInDate.getTime());
+		for (int i = 0; i < night; i++) {
+			toReturn = nextDate(toReturn);
+		}
+		return toReturn;
+	}
+
+	private Date nextDate(Date thisDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(thisDate);
+		c.add(Calendar.DATE, 1);
+		Date nextDate = c.getTime();
+		return nextDate;
+	}
+
+	private Date stringToDate(String str) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		return sdf.parse(str, new ParsePosition(0));
+	}
 }
