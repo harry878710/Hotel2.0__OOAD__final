@@ -23,6 +23,48 @@ public class SearchAndBook {
 	public SearchAndBook() {
 	}
 
+	//for website's first search
+	public String[] firstSearch(String checkInDate, String checkOutDate, String city, int people, int room) {
+		Date checkIn = stringToDate(checkInDate);
+		Date checkOut = stringToDate(checkOutDate);
+		if (!validDateInput(checkIn, checkOut).equals("Everything's Fine")) {
+			String[] error = new String[1];
+			error[0] = validDateInput(checkIn, checkOut);
+			return error;
+		}
+//		Date checkOut = calculateCheckOutDate(checkIn, night);
+//		String checkOutDate = dateToString(checkOut);
+		int night = calculateNight(checkIn, checkOut);
+		System.out.println(night);
+		// check if the room number of every hotel in array is enough for new book
+		// if the hotel has enough number, store its Id into the arrayList
+		// assign city
+		int[] roomCombination = { 0, 0, 0 };
+		if (possibleRoomCombination(people, room).size() > 0) {
+			roomCombination[0] = possibleRoomCombination(people, room).get(0)[0];
+			roomCombination[1] = possibleRoomCombination(people, room).get(0)[1];
+			roomCombination[2] = possibleRoomCombination(people, room).get(0)[2];
+
+		}
+		ArrayList<Integer> qualifiedHotelId = cityFilter(city,
+				hotelsWithEnoughRoom(roomCombination, checkIn, checkOut));
+		// Sorted by Hotel ID(small to large)
+		String[] toReturn = new String[qualifiedHotelId.size() + 1];
+		toReturn[0] = "Check-in date : " + checkInDate + ", Check-out date : " + checkOutDate + ", Nights : " + night
+				+ " nights\nPeople : " + people + ", Rooms : " + room + "\n";
+		for (int i = 0; i < qualifiedHotelId.size(); i++) {
+			int hotelId = qualifiedHotelId.get(i);
+			int price = 0;
+			for (int j = 0; j < 3; j++) {
+				price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+			}
+			toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price
+					+ "\nRoom : \n" + " Single : " + roomCombination[0] + "\n Double : " + roomCombination[1]
+					+ "\n Quad : " + roomCombination[2] + "\n===========================================\n");
+		}
+		return toReturn;
+	}
+
 	/**
 	 * Check the vacancy of specified check-in date, nights, number of single,
 	 * double and quad room, city. And then sort the list by the specified
