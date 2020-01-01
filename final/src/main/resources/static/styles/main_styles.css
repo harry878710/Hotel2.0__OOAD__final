@@ -640,7 +640,7 @@ section
 }
 .booking_input_container
 {
-	width: 100%;
+	width: 150%;
 }
 .booking_input_container > div
 {
@@ -649,10 +649,11 @@ section
 .booking_input_container > div:first-child,
 .booking_input_container > div:nth-child(2)
 {
-	width: 32.60869565217391%;
+	width: 23.60869565217391%;
 }
 .booking_input_container > div:nth-child(3),
-.booking_input_container > div:nth-child(4)
+.booking_input_container > div:nth-child(4),
+.booking_input_container > div:nth-child(5)
 {
 	width: 17.39130434782609%;
 }

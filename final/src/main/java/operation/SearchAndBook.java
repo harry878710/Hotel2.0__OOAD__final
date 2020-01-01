@@ -23,22 +23,66 @@ public class SearchAndBook {
 	public SearchAndBook() {
 	}
 
+	//for website's first search
+	public String[] firstSearch(String checkInDate, String checkOutDate, String city, int people, int room) {
+		Date checkIn = stringToDate(checkInDate);
+		Date checkOut = stringToDate(checkOutDate);
+		if (!validDateInput(checkIn, checkOut).equals("Everything's Fine")) {
+			String[] error = new String[1];
+			error[0] = validDateInput(checkIn, checkOut);
+			return error;
+		}
+//		Date checkOut = calculateCheckOutDate(checkIn, night);
+//		String checkOutDate = dateToString(checkOut);
+		int night = calculateNight(checkIn, checkOut);
+		System.out.println(night);
+		// check if the room number of every hotel in array is enough for new book
+		// if the hotel has enough number, store its Id into the arrayList
+		// assign city
+		int[] roomCombination = { 0, 0, 0 };
+		if (possibleRoomCombination(people, room).size() > 0) {
+			roomCombination[0] = possibleRoomCombination(people, room).get(0)[0];
+			roomCombination[1] = possibleRoomCombination(people, room).get(0)[1];
+			roomCombination[2] = possibleRoomCombination(people, room).get(0)[2];
+
+		}
+		ArrayList<Integer> qualifiedHotelId = cityFilter(city,
+				hotelsWithEnoughRoom(roomCombination, checkIn, checkOut));
+		// Sorted by Hotel ID(small to large)
+		String[] toReturn = new String[qualifiedHotelId.size() + 1];
+		toReturn[0] = "Check-in date : " + checkInDate + ", Check-out date : " + checkOutDate + ", Nights : " + night
+				+ " nights\nPeople : " + people + ", Rooms : " + room + "\n";
+		for (int i = 0; i < qualifiedHotelId.size(); i++) {
+			int hotelId = qualifiedHotelId.get(i);
+			int price = 0;
+			for (int j = 0; j < 3; j++) {
+				price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+			}
+			toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price
+					+ "\nRoom : \n" + " Single : " + roomCombination[0] + "\n Double : " + roomCombination[1]
+					+ "\n Quad : " + roomCombination[2] + "\n===========================================\n");
+		}
+		return toReturn;
+	}
+
 	/**
 	 * Check the vacancy of specified check-in date, nights, number of single,
 	 * double and quad room, city. And then sort the list by the specified
 	 * operation.
 	 * 
 	 * @return a string of all vacancy hotels' details.
-	 * @throws InputException
 	 */
-	public String checkVacancy(String checkInDate, int night, int[] roomCombination, String city, String sorting)
-			throws InputException {
+	public String checkVacancy(String checkInDate, String checkOutDate, int[] roomCombination, String city,
+			String sorting) {
 		Date checkIn = stringToDate(checkInDate);
-		// check input format, may throw an exception.
-		validCheckInDate(checkIn);
-		Date checkOut = calculateCheckOutDate(checkIn, night);
-		String checkOutDate = dateToString(checkOut);
-
+		Date checkOut = stringToDate(checkOutDate);
+		if (!validDateInput(checkIn, checkOut).equals("Everything's Fine")) {
+			return validDateInput(checkIn, checkOut);
+		}
+//		Date checkOut = calculateCheckOutDate(checkIn, night);
+//		String checkOutDate = dateToString(checkOut);
+		int night = calculateNight(checkIn, checkOut);
+		System.out.println(night);
 		// check if the room number of every hotel in array is enough for new book
 		// if the hotel has enough number, store its Id into the arrayList
 		// assign city
@@ -111,13 +155,25 @@ public class SearchAndBook {
 		return toReturn;
 	}
 
-	public ArrayList<Integer> vacancyHotels(String checkInDate, int night, int[] roomCombination, String city)
-			throws InputException {
+	/**
+	 * 
+	 * @param checkInDate
+	 * @param checkOutDate
+	 * @param roomCombination
+	 * @param city
+	 * @return a arrayList of all vacancy hotel's id. Return null if there is some
+	 *         input error.
+	 */
+	public ArrayList<Integer> vacancyHotels(String checkInDate, String checkOutDate, int[] roomCombination,
+			String city) {
 		// turn the String object of date to a Date object
 		Date checkIn = stringToDate(checkInDate);
+		Date checkOut = stringToDate(checkOutDate);
 		// check input format, may throw an exception.
-		validCheckInDate(checkIn);
-		Date checkOut = calculateCheckOutDate(checkIn, night);
+		if (!validDateInput(checkIn, checkOut).equals("Everything's Fine")) {
+			return null;
+		}
+//		Date checkOut = calculateCheckOutDate(checkIn, night);
 		// Date checkOut = parseString(checkOutDate_str);
 
 		// find the number of people need how many of room with the three type of room
@@ -133,21 +189,24 @@ public class SearchAndBook {
 	/**
 	 * Book the specified order.
 	 * 
-	 * @return the bookId if booked sucessfully.
+	 * @return the bookId if booked successfully.
 	 */
-	public String commitBook(String checkInDate, int night, int hotelId, String userId, int[] roomCombination) {
+	public String commitBook(String checkInDate, String checkOutDate, int hotelId, String userId,
+			int[] roomCombination) {
 		int singleRoom = roomCombination[0];
 		int doubleRoom = roomCombination[1];
 		int quadroRoom = roomCombination[2];
 
 		Date checkIn = stringToDate(checkInDate);
-		Date checkOut = calculateCheckOutDate(checkIn, night);
+		Date checkOut = stringToDate(checkOutDate);
+		int night = calculateNight(checkIn, checkOut);
 		// check available of room again.
 		int[][] remainRoomNumber = remainingRoomNumber(checkIn, checkOut);
 		if (remainRoomNumber[hotelId][0] < singleRoom || remainRoomNumber[hotelId][1] < doubleRoom
 				|| remainRoomNumber[hotelId][2] < quadroRoom) {
 			// Room number is not enough.
-			if (singleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[0] || doubleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[1]
+			if (singleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[0]
+					|| doubleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[1]
 					|| quadroRoom >= HotelList.ALLHOTEL[hotelId].getRoomCombination()[2]) {
 				System.out.println("Room number is never enough.");
 				return null;
@@ -159,7 +218,6 @@ public class SearchAndBook {
 
 		DecimalFormat decimal = new DecimalFormat("00000");
 		String bookId = decimal.format(BookList.bookedNumber);
-		String checkOutDate = dateToString(checkOut);
 		int price = calculateTotalPrice(hotelId, night, roomCombination);
 		BookOperation.addBook(bookId, hotelId, singleRoom, doubleRoom, quadroRoom, price, night, checkInDate,
 				checkOutDate, userId);
@@ -170,14 +228,14 @@ public class SearchAndBook {
 	}
 
 	/**
-	 * To turn a String "yyyy/MM/dd" to a Date obj.
+	 * To turn a String "MM/dd/yyyy" to a Date obj.
 	 * 
 	 * @param str
 	 * @return the Date obj according to the str.Return null if the String is not a
 	 *         valid date
 	 */
 	private Date stringToDate(String str) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));
 	}
 
@@ -189,7 +247,7 @@ public class SearchAndBook {
 	 * @return
 	 */
 	private String dateToString(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.format(date);
 	}
 
@@ -215,18 +273,24 @@ public class SearchAndBook {
 	 * @return true if the input checkInDate is valid.
 	 * @throws InputException
 	 */
-	public boolean validCheckInDate(Date checkIn) throws InputException {
+	public String validDateInput(Date checkIn, Date checkOut) {
 		// check check-in and check-out date are not null
-		if (checkIn == null) {
-			throw new InputException("error: Input of date should be \"yyyy/mm/dd\"");
+		if (checkIn == null || checkOut == null) {
+			return ("error: The format of date input should be \"MM/dd/yyyy\"");
 		}
-		// check check-in date is later than today
-		long currentTime = System.currentTimeMillis();
-		Date today = new Date(currentTime);
-		if (!today.before(checkIn)) {
-			throw new InputException("Invalid date");
+		// check check-in date is not before today
+//		long currentTime = System.currentTimeMillis();
+//		Date today = new Date(currentTime);
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date today = calendar.getTime();
+		if (today.after(checkIn)) {
+			return ("error: The check in date should not be in the past.");
 		}
-		return true;
+		if (!checkOut.after(checkIn)) {
+			return ("error: The check out date should be after check in date.");
+		}
+		return ("Everything's Fine");
 	}
 
 	/**
@@ -474,5 +538,15 @@ public class SearchAndBook {
 		priceToReturn += nights * roomInfo[1].getPrice() * newCombination[1];
 		priceToReturn += nights * roomInfo[2].getPrice() * newCombination[2];
 		return priceToReturn;
+	}
+
+	private int calculateNight(Date checkIn, Date checkOut) {
+		int toReturn = 0;
+		Date datePointer = new Date(checkIn.getTime());
+		while (!datePointer.equals(checkOut)) {
+			toReturn++;
+			datePointer = nextDate(datePointer);
+		}
+		return toReturn;
 	}
 }

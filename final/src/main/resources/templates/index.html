@@ -22,6 +22,7 @@
 	type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+<script src="js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
@@ -40,7 +41,8 @@
 					<nav class="main_nav">
 						<ul
 							class="d-flex flex-row align-items-start justify-content-start">
-							<li class="active"><a th:href="@{/index.html?id={id}(id=${index.id})}">Home</a></li>
+							<li class="active"><a
+								th:href="@{/index.html?id={id}(id=${index.id})}">Home</a></li>
 							<li><a href="about.html">About us</a></li>
 							<li><a href="#">Rooms</a></li>
 							<li><a href="blog.html">Blog</a></li>
@@ -116,24 +118,72 @@
 											<div
 												class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
 												<div>
-													<input type="text" th:field="*{checkInDate}"
-														class="datepicker booking_input booking_input_a booking_in"
+													<input type="text" th:field="*{checkin}"
+														class="datepicker booking_input booking_input_b booking_in"
 														placeholder="Check in" required="required">
 												</div>
 												<div>
-													<input type="text" th:field="*{sorting}"
-														class="datepicker booking_input booking_input_a booking_out"
+													<input type="text" th:field="*{checkout}"
+														class="datepicker booking_input booking_input_b booking_out"
 														placeholder="Check out" required="required">
 												</div>
 												<div>
-													<input type="number" th:field="*{night}"
-														class="booking_input booking_input_b" placeholder="people"
-														required="required">
+													<select class="booking_input booking_input_b" id="city"
+														name="city" th:with="city=*{city}">
+														<option th:value="'SomeWhere'"
+															style="background-color: black;" th:text="SomeWhere"></option>
+														<option th:value="'Taipei'"
+															style="background-color: black;" th:text="Taipei"></option>
+														<option th:value="'Taichung'"
+															style="background-color: black;" th:text="Taichung"></option>
+														<option th:value="'Kaohsiung'"
+															style="background-color: black;" th:text="Kaohsiung"></option>
+													</select>
 												</div>
 												<div>
-													<input type="number" class="booking_input booking_input_b"
-														placeholder="Room" required="required">
+													<select class="booking_input booking_input_b" id="people"
+														name="people" th:with="people=*{people}"
+														required="required">
+														<option disabled selected th:value="0"
+															style="background-color: black;">People</option>
+														<option th:each="i : ${#numbers.sequence(1, 20)}"
+															th:value="${i}" th:text="${i}"
+															style="background-color: black;"></option>
+													</select>
 												</div>
+												<div>
+													<select class="booking_input booking_input_b" id="room"
+														name="room" th:with="room=*{room}" required="required">
+														<option disabled selected th:value="0"
+															style="background-color: black;">Room</option>
+													</select>
+												</div>
+												<script th:inline="javascript">
+													$('#people').change(
+														function(){
+															var arg_numOfPeople = $(this).val();
+															var s,d,q;
+															var possibleRoomNumber = [];
+															var html = '<option disabled selected th:value="0" style="background-color: black;">Room</option>';
+															
+															for (s = 0; s < 31; s++) {
+																for (d = 0; d < 31; d++) {
+																	for (q = 0; q < 31; q++) {
+																		if ((s + 2 * d + 4 * q) == arg_numOfPeople) {
+																			possibleRoomNumber[possibleRoomNumber.length] =( s + d + q);
+																		}
+																	}
+																}
+															}
+															for ( var i = 0; i < possibleRoomNumber.length; i++) {
+											                    html += '<option th:value="' + possibleRoomNumber[i] +'" th:text="'+possibleRoomNumber[i]+ '" style="background-color: black;">'
+											                           + possibleRoomNumber[i] + '</option>';
+											                }
+											                html += '</option>';
+															 $('#room').html(html);
+														}
+													);
+												</script>
 											</div>
 											<div>
 												<button class="booking_button trans_200">Book Now</button>
@@ -581,7 +631,7 @@
 	</footer>
 	</div>
 
-	<script src="js/jquery-3.3.1.min.js"></script>
+	
 	<script src="styles/bootstrap-4.1.2/popper.js"></script>
 	<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
 	<script src="plugins/greensock/TweenMax.min.js"></script>

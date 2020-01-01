@@ -11,7 +11,6 @@ import java.util.Date;
 
 
 
-
 public class UserOperation { 
 
 	// Note:
@@ -71,7 +70,6 @@ public class UserOperation {
 			c.close();
 
 		} catch (org.sqlite.SQLiteException e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			return 2;
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());

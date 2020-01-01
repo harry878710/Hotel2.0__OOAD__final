@@ -160,7 +160,7 @@ $(document).ready(function()
 
     	// Initialize a map with options
     	map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
+    	src = 
 		// Re-center map after window resize
 		google.maps.event.addDomListener(window, 'resize', function()
 		{
