@@ -1,5 +1,6 @@
 package bookAndUser;
 
+import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -38,6 +39,28 @@ public class UserOperation {
 //		}
 //		System.out.println("Table created successfully");
 //	}
+	
+	private final String url = "jdbc:postgresql://localhost/user_postgre";
+	private final String user = "postgres";
+	private final String passwords = "harry8787";
+	
+    /**
+     * Connect to the PostgreSQL database
+     *
+     * @return a Connection object
+     */
+    public Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url, user, passwords);
+            System.out.println("Connected to the PostgreSQL server successfully.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+ 
+        return conn;
+    }
+	
 
 	public static void main(String[] args) {
 		UserOperation.addUser("raiyray", "hoho", "hoho");
@@ -57,8 +80,8 @@ public class UserOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:user.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -112,8 +135,8 @@ public class UserOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:user.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -159,8 +182,8 @@ public class UserOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:user.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -204,8 +227,8 @@ public class UserOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:user.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -239,8 +262,8 @@ public class UserOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:user.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -301,8 +324,8 @@ public class UserOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:user.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
