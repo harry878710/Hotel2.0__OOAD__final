@@ -38,7 +38,7 @@ public class BookOperation {
 	 * System.out.println("Table created successfully"); }
 	 */
 
-	private static final String url = "jdbc:postgresql://localhost/book_postgre";
+	private static final String url = "jdbc:postgresql://140.112.77.36/book_postgre";
 	private static final String user = "postgres";
 	private static final String passwords = "harry8787";
 
@@ -60,7 +60,9 @@ public class BookOperation {
 	}
 
 	public static void main(String[] args) {
-		//addBook("00111", 149, 2, 3, 1, 5004, 2, "01/04/2020", "01/06/2020", "rayray");
+		//addBook("01111", 149, 2, 3, 1, 5004, 2, "01/04/2020", "01/06/2020", "rayray");
+		//deleteBook("01111");
+		showBook("00001");
 	}
 
 	public static ArrayList<String> bookIdListOfUser(String userId) {
@@ -171,7 +173,7 @@ public class BookOperation {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
-			// System.out.println("Opened database successfully");
+			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
@@ -200,7 +202,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		// System.out.println("Operation done successfully");
+		System.out.println("Operation done successfully");
 
 	}
 
@@ -215,7 +217,7 @@ public class BookOperation {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
-			// System.out.println("Opened database successfully");
+			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
@@ -246,7 +248,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		// System.out.println("Operation done successfully");
+		System.out.println("Operation done successfully");
 
 	}
 
@@ -383,7 +385,7 @@ public class BookOperation {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
-			// System.out.println("Opened database successfully");
+			 System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			String sql = "DELETE from BOOK where BookId='" + bookId + "';";
@@ -396,7 +398,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		// System.out.println("Operation done successfully");
+		 System.out.println("Operation done successfully");
 	}
 
 	public static boolean hasBook(String bookId) {
