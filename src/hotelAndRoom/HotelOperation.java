@@ -40,55 +40,45 @@ public class HotelOperation {
 	 */
 
 	// Load data from initial json to hotel.db
-	/*static {
-		Scanner fileIn = null;
+	/*
+	 * static { Scanner fileIn = null; try { fileIn = new Scanner(new
+	 * FileInputStream("HotelList.json")); } catch (FileNotFoundException e) {
+	 * System.out.println("File not found."); System.exit(0); } StringBuffer tmp =
+	 * new StringBuffer(""); while (fileIn.hasNextLine()) {
+	 * tmp.append(fileIn.nextLine()); } fileIn.close(); String hotelString = new
+	 * String(tmp); JSONArray obj = new JSONArray(hotelString); for (int i = 0; i <
+	 * obj.length(); i++) { JSONObject hotelJSON = obj.getJSONObject(i); JSONObject
+	 * hotelRoom1 = hotelJSON.getJSONArray("Rooms").getJSONObject(0); JSONObject
+	 * hotelRoom2 = hotelJSON.getJSONArray("Rooms").getJSONObject(1); JSONObject
+	 * hotelRoom4 = hotelJSON.getJSONArray("Rooms").getJSONObject(2); int[]
+	 * roomCombination = { hotelRoom1.getInt("Number"), hotelRoom2.getInt("Number"),
+	 * hotelRoom4.getInt("Number") }; int[] roomPrice = {
+	 * hotelRoom1.getInt("RoomPrice"), hotelRoom2.getInt("RoomPrice"),
+	 * hotelRoom4.getInt("RoomPrice") }; addHotelToDB(hotelJSON.getInt("HotelID"),
+	 * hotelJSON.getInt("HotelStar"), hotelJSON.getString("Locality"),
+	 * hotelJSON.getString("Street-Address"), roomCombination, roomPrice, 0); } }
+	 */
+	private static final String url = "jdbc:postgresql://localhost/hotel_postgre";
+	private static final String user = "postgres";
+	private static final String passwords = "harry8787";
+
+	/**
+	 * Connect to the PostgreSQL database
+	 *
+	 * @return a Connection object
+	 */
+	public Connection connect() {
+		Connection conn = null;
 		try {
-			fileIn = new Scanner(new FileInputStream("HotelList.json"));
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found.");
-			System.exit(0);
+			conn = DriverManager.getConnection(url, user, passwords);
+			System.out.println("Connected to the PostgreSQL server successfully.");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
-		StringBuffer tmp = new StringBuffer("");
-		while (fileIn.hasNextLine()) {
-			tmp.append(fileIn.nextLine());
-		}
-		fileIn.close();
-		String hotelString = new String(tmp);
-		JSONArray obj = new JSONArray(hotelString);
-		for (int i = 0; i < obj.length(); i++) {
-			JSONObject hotelJSON = obj.getJSONObject(i);
-			JSONObject hotelRoom1 = hotelJSON.getJSONArray("Rooms").getJSONObject(0);
-			JSONObject hotelRoom2 = hotelJSON.getJSONArray("Rooms").getJSONObject(1);
-			JSONObject hotelRoom4 = hotelJSON.getJSONArray("Rooms").getJSONObject(2);
-			int[] roomCombination = { hotelRoom1.getInt("Number"), hotelRoom2.getInt("Number"),
-					hotelRoom4.getInt("Number") };
-			int[] roomPrice = { hotelRoom1.getInt("RoomPrice"), hotelRoom2.getInt("RoomPrice"),
-					hotelRoom4.getInt("RoomPrice") };
-			addHotelToDB(hotelJSON.getInt("HotelID"), hotelJSON.getInt("HotelStar"), hotelJSON.getString("Locality"),
-					hotelJSON.getString("Street-Address"), roomCombination, roomPrice, 0);
-		}
-	}*/
-	private final String url = "jdbc:postgresql://localhost/hotel_postgre";
-	private final String user = "postgres";
-	private final String passwords = "harry8787";
-	
-    /**
-     * Connect to the PostgreSQL database
-     *
-     * @return a Connection object
-     */
-    public Connection connect() {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url, user, passwords);
-            System.out.println("Connected to the PostgreSQL server successfully.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
- 
-        return conn;
-    }
-	
+
+		return conn;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
@@ -119,7 +109,7 @@ public class HotelOperation {
 		}
 		System.out.println("Records created successfully");
 	}
-	
+
 	public static void addHotelToDB(Hotel hotel) {
 		Connection c = null;
 		Statement stmt = null;
@@ -131,9 +121,10 @@ public class HotelOperation {
 
 			stmt = c.createStatement();
 			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
-					+ "VALUES (" + hotel.getId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','" + hotel.getAddress() + "'," + hotel.getRoomCombination()[0]
-					+ "," +hotel.getRoomCombination()[1] + "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + "," + hotel.getRoomInfo()[1].getPrice()
-					+ "," + hotel.getRoomInfo()[0].getPrice() + "," + 0 + ");";
+					+ "VALUES (" + hotel.getId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','"
+					+ hotel.getAddress() + "'," + hotel.getRoomCombination()[0] + "," + hotel.getRoomCombination()[1]
+					+ "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + ","
+					+ hotel.getRoomInfo()[1].getPrice() + "," + hotel.getRoomInfo()[0].getPrice() + "," + 0 + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.commit();
@@ -190,12 +181,12 @@ public class HotelOperation {
 				int star = rs.getInt("STAR");
 				String locality = rs.getString("LOCALITY");
 				String address = rs.getString("ADDRESS");
-				int[] roomCombination = {rs.getInt("NUMBER1"),rs.getInt("NUMBER2"),rs.getInt("NUMBER4")};
+				int[] roomCombination = { rs.getInt("NUMBER1"), rs.getInt("NUMBER2"), rs.getInt("NUMBER4") };
 				Room[] roomInfo = new Room[3];
-				roomInfo[0] = new Room("Single",rs.getInt("PRICE1"));
-				roomInfo[1] = new Room("Double",rs.getInt("PRICE2"));
-				roomInfo[2] = new Room("Quad",rs.getInt("PRICE4"));
-				newHotelList[i]=new Hotel(hotelID,star,locality,address,roomCombination,roomInfo);
+				roomInfo[0] = new Room("Single", rs.getInt("PRICE1"));
+				roomInfo[1] = new Room("Double", rs.getInt("PRICE2"));
+				roomInfo[2] = new Room("Quad", rs.getInt("PRICE4"));
+				newHotelList[i] = new Hotel(hotelID, star, locality, address, roomCombination, roomInfo);
 				i++;
 			}
 			rs.close();
