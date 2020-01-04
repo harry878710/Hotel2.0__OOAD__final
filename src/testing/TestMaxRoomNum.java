@@ -2,7 +2,7 @@ package testing;
 
 import java.util.ArrayList;
 
-import hotelAndRoom.*;
+import book_Hotel_Room.*;
 
 public class TestMaxRoomNum {
 

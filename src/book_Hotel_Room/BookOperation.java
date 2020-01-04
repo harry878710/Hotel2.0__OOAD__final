@@ -37,10 +37,10 @@ public class BookOperation {
 	 * System.out.println("Table created successfully"); }
 	 */
 
-	public static void main(String[] args) {
-		// showBook("00001");
-		// addBook("0110", 50, 1, 2, 0, 1580, 10, "2019/12/25", "2020/01/03", "rayray");
-	}
+//	public static void main(String[] args) {
+//		// showBook("00001");
+//		// addBook("0110", 50, 1, 2, 0, 1580, 10, "2019/12/25", "2020/01/03", "rayray");
+//	}
 
 	public static ArrayList<String> bookIdListOfUser(String userId) {
 		ArrayList<String> bookIdList = new ArrayList<String>();
@@ -248,11 +248,9 @@ public class BookOperation {
 				if (rs.getString("BookId").equals(bookId)) {
 					String userId = rs.getString("UserId");
 					String checkInDate = rs.getString("CheckInDate");
-					String checkOutDate = rs.getString("CheckOutDate");
 					int hotelId = rs.getInt("HotelId");
 					int[] roomCombination = { rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad") };
 					int stayNight = rs.getInt("Night");
-					int price = rs.getInt("Price");
 					tmpBook = new Book(hotelId, roomCombination, stringToDate(checkInDate), stayNight, bookId, userId);
 				}
 			}

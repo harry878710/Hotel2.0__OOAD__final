@@ -1,6 +1,6 @@
 package testing;
 
-import hotelAndRoom.*;
+import book_Hotel_Room.*;
 
 public class TestListHotelAndRoom {
 

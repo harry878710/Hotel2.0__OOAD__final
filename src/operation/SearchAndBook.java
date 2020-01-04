@@ -13,10 +13,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import bookAndUser.BookList;
-import bookAndUser.BookOperation;
-import hotelAndRoom.HotelList;
-import hotelAndRoom.Room;
+import book_Hotel_Room.BookList;
+import book_Hotel_Room.BookOperation;
+import book_Hotel_Room.HotelList;
+import book_Hotel_Room.Room;
 
 public class SearchAndBook {
 	// default constructor

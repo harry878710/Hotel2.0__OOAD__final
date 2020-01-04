@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import bookAndUser.Book;
-import bookAndUser.BookList;
-import bookAndUser.BookOperation;
-import hotelAndRoom.HotelList;
-import hotelAndRoom.Room;
+import book_Hotel_Room.Book;
+import book_Hotel_Room.BookList;
+import book_Hotel_Room.BookOperation;
+import book_Hotel_Room.HotelList;
+import book_Hotel_Room.Room;
 
 public class EditBook {
 

@@ -1,19 +1,10 @@
 package book_Hotel_Room;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class HotelOperation {
 
@@ -56,10 +47,9 @@ public class HotelOperation {
 	 * hotelJSON.getString("Street-Address"), roomCombination, roomPrice, 0); } }
 	 */
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+//	public static void main(String[] args) {
+//
+//	}
 
 	public static void addHotelToDB(int star, String locality, String address, int[] roomCombination, int[] roomPrice,
 			String landlordID) {
