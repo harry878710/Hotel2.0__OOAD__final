@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import bookAndUser.UserList;
-import bookAndUser.UserOperation;
+import member.UserList;
+import member.UserOperation;
 import java.awt.GridLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;

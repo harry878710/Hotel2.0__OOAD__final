@@ -11,13 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import bookAndUser.BookOperation;
-import bookAndUser.UserOperation;
+import book_Hotel_Room.BookOperation;
+import member.UserOperation;
 import gui.MainFrame;
 
 public class LandlordHotelsPanel extends JPanel {
 
-	JButton btnEditOrder;
+	JButton btnAdd;
 	JButton btnBack;
 
 	/**
@@ -46,12 +46,12 @@ public class LandlordHotelsPanel extends JPanel {
 		scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroller);
 
-		btnEditOrder = new JButton("PPG");
-		btnEditOrder.setOpaque(true);
-		btnEditOrder.setBackground(new Color(32, 178, 170));
-		btnEditOrder.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		btnEditOrder.setBounds(850, 14, 150, 60);
-		add(btnEditOrder);
+		btnAdd = new JButton("Add");
+		btnAdd.setOpaque(true);
+		btnAdd.setBackground(new Color(32, 178, 170));
+		btnAdd.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		btnAdd.setBounds(850, 14, 150, 60);
+		add(btnAdd);
 
 		btnBack = new JButton("Back");
 		btnBack.setOpaque(true);
@@ -62,17 +62,17 @@ public class LandlordHotelsPanel extends JPanel {
 
 	}
 
-	public void activateMyOrderPanel(MainFrame mainframe) {
+	public void activateLandlordHotelsPanel(MainFrame mainframe) {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainframe.activateUserMenuPanel();
+				mainframe.activateLandlordMenuPanel();
 				setVisible(false);
 			}
 		});
-		btnEditOrder.addActionListener(new ActionListener() {
+		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				mainframe.activateEditOrderPanel();
+				mainframe.activateLandlordAddHotelPanel();
 				setVisible(false);
 			}
 		});

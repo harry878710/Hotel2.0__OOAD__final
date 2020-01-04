@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import hotelAndRoom.HotelList;
+import book_Hotel_Room.HotelList;
 
 public class BookDeposit {
 	private int hotelId;

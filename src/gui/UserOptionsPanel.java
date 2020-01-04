@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import bookAndUser.UserOperation;
+import member.UserOperation;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

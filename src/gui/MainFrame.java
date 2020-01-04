@@ -1,32 +1,15 @@
 package gui;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 
-import bookAndUser.User;
-import bookAndUser.UserList;
-import bookAndUser.UserOperation;
+import gui.landlord.LandlordAddHotelPanel;
+import gui.landlord.LandlordHotelsPanel;
 import gui.landlord.LandlordMenuPanel;
 import gui.landlord.LandlordOrderPanel;
-
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import java.awt.Font;
 
 public class MainFrame {
 
@@ -41,7 +24,8 @@ public class MainFrame {
 	private UserOptionsPanel uop;
 	private LandlordMenuPanel lmp;
 	private LandlordOrderPanel lop;
-
+	private LandlordHotelsPanel lhp;
+	private LandlordAddHotelPanel lahp;
 	Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
 	/**
@@ -122,10 +106,20 @@ public class MainFrame {
 		lmp = new LandlordMenuPanel();
 		lmp.activateLandlordMenuPanel(this);
 	}
-	
+
 	public void activateLandlordOrderPanel() {
 		lop = new LandlordOrderPanel();
 		lop.activateLandlordOrderPanel(this);
+	}
+
+	public void activateLandlordHotelsPanel() {
+		lhp = new LandlordHotelsPanel();
+		lhp.activateLandlordHotelsPanel(this);
+	}
+
+	public void activateLandlordAddHotelPanel() {
+		lahp = new LandlordAddHotelPanel();
+		lahp.activateLandlordAddHotelPanel(this);
 	}
 
 	public Container getContentPane() {

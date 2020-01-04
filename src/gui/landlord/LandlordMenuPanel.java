@@ -43,6 +43,14 @@ public class LandlordMenuPanel extends JPanel {
 	public void activateLandlordMenuPanel(MainFrame mainframe) {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 
+		btnMyHotels.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainframe.activateLandlordHotelsPanel();
+				setVisible(false);
+			}
+		});
+		
+		
 		btnAllOrders.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainframe.activateLandlordOrderPanel();

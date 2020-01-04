@@ -14,9 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import bookAndUser.User;
-import bookAndUser.UserList;
-import bookAndUser.UserOperation;
+import member.UserList;
+import member.UserOperation;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -24,7 +23,6 @@ import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
-import java.awt.SystemColor;
 
 public class ChangePWFrame extends JFrame {
 	private JTextField txtPleaseDontEnter;

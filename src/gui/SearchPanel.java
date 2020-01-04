@@ -29,7 +29,7 @@ import javax.swing.SwingConstants;
 
 import com.eltima.components.ui.DatePicker;
 
-import bookAndUser.UserOperation;
+import member.UserOperation;
 import gui.BookDeposit;
 import gui.PopFrame;
 

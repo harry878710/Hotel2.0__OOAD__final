@@ -54,6 +54,7 @@ public class UserMenuPanel extends JPanel {
 				setVisible(false);
 			}
 		});
+		
 		btnUserOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainframe.activateUserOptionsPanel();
