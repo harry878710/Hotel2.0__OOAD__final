@@ -1,8 +1,10 @@
-package bookAndUser;
+package member;
 
 import java.util.ArrayList;
 
-import hotelAndRoom.HotelList;
+import book_Hotel_Room.BookOperation;
+import book_Hotel_Room.HotelList;
+import book_Hotel_Room.HotelOperation;
 
 public class LandlordOperation implements MemberOperation {
 	public static void main(String[] args) {
@@ -88,9 +90,13 @@ public class LandlordOperation implements MemberOperation {
 	}
 	
 	public static String showAllMyHotel(String landlord) {
-		
-		
-		return null;
+		int[] hotelIdList = listMyHotelId(landlord);
+		StringBuffer tmp = new StringBuffer("");
+		for (int i = 0; i < hotelIdList.length; i++) {
+			tmp.append(HotelOperation.showThisHotel(hotelIdList[i]));
+		}
+		String toReturn = new String(tmp);
+		return toReturn;
 	}
 
 }

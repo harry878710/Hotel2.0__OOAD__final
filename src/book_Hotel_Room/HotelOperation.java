@@ -1,4 +1,4 @@
-package hotelAndRoom;
+package book_Hotel_Room;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,8 +14,6 @@ import java.util.Scanner;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import bookAndUser.Book;
 
 public class HotelOperation {
 
@@ -64,7 +62,7 @@ public class HotelOperation {
 	}
 
 	public static void addHotelToDB(int hotelID, int star, String locality, String address, int[] roomCombination,
-			int[] roomPrice, int landlordID) {
+			int[] roomPrice, String landlordID) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -77,7 +75,7 @@ public class HotelOperation {
 			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
 					+ "VALUES (" + hotelID + "," + star + ", '" + locality + "','" + address + "'," + roomCombination[0]
 					+ "," + roomCombination[1] + "," + roomCombination[2] + "," + roomPrice[0] + "," + roomPrice[1]
-					+ "," + roomPrice[2] + "," + landlordID + ");";
+					+ "," + roomPrice[2] + ",'" + landlordID + "');";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.commit();
@@ -114,6 +112,42 @@ public class HotelOperation {
 			System.exit(0);
 		}
 		System.out.println("Records created successfully");
+	}
+
+	public static String showThisHotel(int hotelId) {
+		String toReturn = "The book ID is not existed.";
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			c.setAutoCommit(false);
+			// System.out.println("Opened database successfully");
+
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM hotel;");
+			while (rs.next()) {
+				//(ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD)
+				if (rs.getString("ID").equals(hotelId)) {
+					int[] roomCombination = {rs.getInt("NUMBER1"),rs.getInt("NUMBER2"),rs.getInt("NUMBER4")};
+					int[] price = {rs.getInt("PRICE1"),rs.getInt("PRICE2"),rs.getInt("PRICE4")};
+					toReturn = ("\n"+HotelList.ALLHOTEL[hotelId].toString() + "\nRooms and prices:"+
+							"\nSingle room number: " +roomCombination[0] +", price: "+price[0]+
+							"\nDouble room number: " +roomCombination[1] +", price: "+price[1]+
+							"\nQuad   room number: " +roomCombination[2] +", price: "+price[2]+ "\n");
+					break;
+				}
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		return toReturn;
+		// System.out.println("Operation done successfully");
+
 	}
 
 	public static int sizeOfHotelList() {
@@ -161,7 +195,7 @@ public class HotelOperation {
 				int star = rs.getInt("STAR");
 				String locality = rs.getString("LOCALITY");
 				String address = rs.getString("ADDRESS");
-				String landlord = rs.getString("LANDLOD");
+				String landlord = rs.getString("LANDLORD");
 				int[] roomCombination = { rs.getInt("NUMBER1"), rs.getInt("NUMBER2"), rs.getInt("NUMBER4") };
 				Room[] roomInfo = new Room[3];
 				roomInfo[0] = new Room("Single", rs.getInt("PRICE1"));

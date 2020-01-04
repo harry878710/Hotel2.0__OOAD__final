@@ -1,4 +1,4 @@
-package hotelAndRoom;
+package book_Hotel_Room;
 
 public class Hotel {
 

@@ -1,4 +1,4 @@
-package bookAndUser;
+package book_Hotel_Room;
 
 import java.util.ArrayList;
 

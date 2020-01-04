@@ -1,8 +1,9 @@
-package bookAndUser;
+package book_Hotel_Room;
 
 import java.util.Calendar;
 import java.util.Date;
-import hotelAndRoom.*;
+
+import book_Hotel_Room.*;
 import operation.SearchAndBook;
 
 public class Book {

@@ -1,4 +1,4 @@
-package bookAndUser;
+package member;
 
 public class Landlord implements Member {
 	private String name;

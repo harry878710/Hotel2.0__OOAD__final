@@ -1,4 +1,4 @@
-package bookAndUser;
+package member;
 
 interface Member {
 	String name = "";

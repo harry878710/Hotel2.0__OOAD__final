@@ -1,4 +1,4 @@
-package bookAndUser;
+package book_Hotel_Room;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import hotelAndRoom.*;
+import book_Hotel_Room.*;
 import operation.*;
 
 public class BookOperation {
