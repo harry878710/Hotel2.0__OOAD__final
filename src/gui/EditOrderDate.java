@@ -103,10 +103,10 @@ public class EditOrderDate extends JPanel {
 			Iterator<String> iter = idListUnsort.iterator();
 			if (iter.hasNext()) {
 				minId = (String) iter.next();
-				min = new Integer(minId);
+				min = Integer.parseInt(minId);
 				while (iter.hasNext()) {
 					String valId = (String) iter.next();
-					int val = new Integer(valId);
+					int val = Integer.parseInt(valId);
 					minId = (val < min) ? valId : minId;
 					min = (val < min) ? val : min;
 				}

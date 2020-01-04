@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import book_Hotel_Room.BookOperation;
+import book_Hotel_Room.HotelList;
 import member.UserList;
 import member.UserOperation;
 
@@ -22,15 +23,16 @@ import javax.swing.JComboBox;
 public class EditOrderRoom extends JPanel {
 	JButton btnConfirm;
 	String bookId;
-	int single = 0,dual = 0,quad = 0;
-	
+	int hotelId;
+	int single = 0, dual = 0, quad = 0;
+
 	/**
 	 * Create the panel.
 	 */
 	public EditOrderRoom() {
 		setBackground(new Color(95, 158, 160));
-		
-		setSize(540,720);
+
+		setSize(540, 720);
 		setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Enter book ID");
@@ -45,40 +47,32 @@ public class EditOrderRoom extends JPanel {
 		comboBox_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_ID.setBounds(14, 99, 498, 73);
 		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(UserOperation.whoIsLoggedin());
-		  ArrayList<String> idListsort = new ArrayList<String>();
-		  int x = idListUnsort.size();
-		  for (int i = 0; i < x; i++) {
-		   String minId;
-		   int min;
-		   Iterator<String> iter = idListUnsort.iterator();
-		   if (iter.hasNext()) {
-		    minId = (String) iter.next();
-		    min = new Integer(minId);
-		    while (iter.hasNext()) {
-		     String valId = (String) iter.next();
-		     int val = new Integer(valId);
-		     minId = (val < min) ? valId : minId;
-		     min = (val < min) ? val : min;
-		    }
-		   } else
-		    break;
-		   idListsort.add(minId);
-		   idListUnsort.remove(minId);
-		  }
-		  bookId = idListsort.get(0);
-		  for (int i = 0; i < idListsort.size(); i++) {
-		   comboBox_ID.addItem(idListsort.get(i));
-		  }
-		comboBox_ID.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					bookId = (String) e.getItem();
-					System.out.println("Select " + bookId);
+		ArrayList<String> idListsort = new ArrayList<String>();
+		int x = idListUnsort.size();
+		for (int i = 0; i < x; i++) {
+			String minId;
+			int min;
+			Iterator<String> iter = idListUnsort.iterator();
+			if (iter.hasNext()) {
+				minId = (String) iter.next();
+				min = Integer.parseInt(minId);
+				while (iter.hasNext()) {
+					String valId = (String) iter.next();
+					int val = Integer.parseInt(valId);
+					minId = (val < min) ? valId : minId;
+					min = (val < min) ? val : min;
 				}
-			}
-		});
+			} else
+				break;
+			idListsort.add(minId);
+			idListUnsort.remove(minId);
+		}
+		bookId = idListsort.get(0);
+		hotelId = BookOperation.getBook(bookId).getHotelId();
+		for (int i = 0; i < idListsort.size(); i++) {
+			comboBox_ID.addItem(idListsort.get(i));
+		}
 		add(comboBox_ID);
-
 
 		btnConfirm = new JButton("CONFIRM");
 		btnConfirm.setBackground(new Color(32, 178, 170));
@@ -86,13 +80,13 @@ public class EditOrderRoom extends JPanel {
 		btnConfirm.setBounds(147, 529, 218, 73);
 		btnConfirm.setOpaque(true);
 		add(btnConfirm);
-		
+
 		JComboBox<Integer> comboBox_Single = new JComboBox<Integer>();
 		comboBox_Single.setBackground(new Color(240, 255, 240));
 		comboBox_Single.setForeground(new Color(102, 205, 170));
 		comboBox_Single.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_Single.setBounds(147, 271, 365, 73);
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
 			comboBox_Single.addItem(i);
 		}
 		comboBox_Single.addItemListener(new ItemListener() {
@@ -104,25 +98,25 @@ public class EditOrderRoom extends JPanel {
 			}
 		});
 		add(comboBox_Single);
-		
+
 		JLabel lblNewRoomNumber = new JLabel(" New Room Number");
 		lblNewRoomNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewRoomNumber.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblNewRoomNumber.setBounds(14, 185, 498, 73);
 		add(lblNewRoomNumber);
-		
+
 		JLabel lblSingle = new JLabel("Single");
 		lblSingle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSingle.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblSingle.setBounds(14, 271, 133, 73);
 		add(lblSingle);
-		
+
 		JComboBox<Integer> comboBox_Double = new JComboBox<Integer>();
 		comboBox_Double.setBackground(new Color(240, 255, 240));
 		comboBox_Double.setForeground(new Color(102, 205, 170));
 		comboBox_Double.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_Double.setBounds(147, 358, 365, 73);
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
 			comboBox_Double.addItem(i);
 		}
 		comboBox_Double.addItemListener(new ItemListener() {
@@ -134,19 +128,19 @@ public class EditOrderRoom extends JPanel {
 			}
 		});
 		add(comboBox_Double);
-		
+
 		JLabel lblDual = new JLabel("Dual");
 		lblDual.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDual.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblDual.setBounds(14, 357, 133, 73);
 		add(lblDual);
-		
+
 		JComboBox<Integer> comboBox_Quad = new JComboBox<Integer>();
 		comboBox_Quad.setBackground(new Color(240, 255, 240));
 		comboBox_Quad.setForeground(new Color(102, 205, 170));
 		comboBox_Quad.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_Quad.setBounds(147, 443, 365, 73);
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
 			comboBox_Quad.addItem(i);
 		}
 		comboBox_Quad.addItemListener(new ItemListener() {
@@ -158,12 +152,34 @@ public class EditOrderRoom extends JPanel {
 			}
 		});
 		add(comboBox_Quad);
-		
+
 		JLabel lblQuad = new JLabel("Quad");
 		lblQuad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuad.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblQuad.setBounds(14, 443, 133, 73);
 		add(lblQuad);
+
+		comboBox_ID.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					bookId = (String) e.getItem();
+					hotelId = BookOperation.getBook(bookId).getHotelId();
+					comboBox_Single.removeAllItems();
+					for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
+						comboBox_Single.addItem(i);
+					}
+					comboBox_Double.removeAllItems();
+					for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
+						comboBox_Double.addItem(i);
+					}
+					comboBox_Quad.removeAllItems();
+					for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
+						comboBox_Quad.addItem(i);
+					}
+					System.out.println("Select " + bookId);
+				}
+			}
+		});
 	}
 
 }

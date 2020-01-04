@@ -25,7 +25,7 @@ import javax.swing.JPasswordField;
 import java.awt.Color;
 import java.awt.SystemColor;
 
-public class JoinFrame extends JFrame {
+public class JoinFrameCopy extends JFrame {
 	private JTextField textField;
 	private JPasswordField textField_1;
 	private JPasswordField textField_2;
@@ -51,7 +51,7 @@ public class JoinFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JoinFrame() {
+	public JoinFrameCopy() {
 		setTitle("Join us");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 602, 501);
