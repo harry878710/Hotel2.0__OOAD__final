@@ -46,6 +46,7 @@ public class SearchPanel extends JPanel {
 	int numOfNight = 1;
 	int numOfRoom = 1;
 	int hotelId = -1;
+	int hotelStar = 0;
 	int[] roomCombination = { 1, 0, 0 };
 	String city = "SomeWhere";
 	String sort = "Sorted by Hotel ID(small to large)";
@@ -127,6 +128,57 @@ public class SearchPanel extends JPanel {
 
 		});
 		add(comboBox_City);
+		/*
+		 * Choose hotel star to look for
+		 */
+		
+		JLabel lblStar = new JLabel("Hotel Star");
+		lblStar.setFont(new Font("Agency FB", Font.PLAIN, 24));
+		lblStar.setBounds(24, 94, 140, 27);
+		add(lblStar);
+
+		JComboBox<String> comboBox_Star = new JComboBox<String>();
+		comboBox_Star.setFont(new Font("Agency FB", Font.PLAIN, 18));
+		comboBox_Star.setBackground(SystemColor.inactiveCaptionBorder);
+		comboBox_Star.setBounds(203, 94, 117, 27);
+		comboBox_Star.addItem("Every star");
+		comboBox_Star.addItem("5");
+		comboBox_Star.addItem("4");
+		comboBox_Star.addItem("3");
+		comboBox_Star.addItem("2");
+		comboBox_Star.addItem("1");
+		comboBox_Star.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					String starStr = (String) e.getItem();
+					switch (starStr) {
+					case "5":
+						hotelStar = 5;
+						break;
+					case "4":
+						hotelStar = 4;
+						break;
+					case "3":
+						hotelStar = 3;
+						break;
+					case "2":
+						hotelStar = 2;
+						break;
+					case "1":
+						hotelStar = 1;
+						break;
+					case "Every star":
+					default:
+						hotelStar = 0;
+						break;
+					}
+					System.out.println("Select " + city);
+					hasSearch = false;
+				}
+			}
+
+		});
+		add(comboBox_Star);
 
 		/*
 		 * Choose the number of people with scroll bar
@@ -153,10 +205,15 @@ public class SearchPanel extends JPanel {
 		lblRooms.setBounds(364, 13, 99, 28);
 		add(lblRooms);
 
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(364, 102, 99, 29);
-		comboBox.addItem("1,0,0");
-		comboBox.addItemListener(new ItemListener() {
+		JLabel lblRoomCombination = new JLabel("Room combination");
+		lblRoomCombination.setFont(new Font("Agency FB", Font.PLAIN, 24));
+		lblRoomCombination.setBounds(364, 94, 99, 28);
+		add(lblRoomCombination);
+		
+		JComboBox<String> comboBox_RoomCombination = new JComboBox<String>();
+		comboBox_RoomCombination.setBounds(507, 94, 99, 29);
+		comboBox_RoomCombination.addItem("1,0,0");
+		comboBox_RoomCombination.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					StringTokenizer st = new StringTokenizer((String) e.getItem(), ",");
@@ -173,7 +230,7 @@ public class SearchPanel extends JPanel {
 			}
 		});
 
-		add(comboBox);
+		add(comboBox_RoomCombination);
 
 		JComboBox<Integer> comboBox_Rooms = new JComboBox<Integer>();
 		comboBox_Rooms.setFont(new Font("Agency FB", Font.PLAIN, 18));
@@ -184,13 +241,13 @@ public class SearchPanel extends JPanel {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					numOfRoom = (Integer) e.getItem();
-					comboBox.removeAllItems();
+					comboBox_RoomCombination.removeAllItems();
 					ArrayList<Integer[]> tmp = (new SearchAndBook()).possibleRoomCombination(numOfPeople, numOfRoom);
 					for (int i = 0; i < 3; i++) {
 						roomCombination[i] = tmp.get(0)[i];
 					}
 					for (int i = 0; i < tmp.size(); i++) {
-						comboBox.addItem(tmp.get(i)[0] + "," + tmp.get(i)[1] + "," + tmp.get(i)[2]);
+						comboBox_RoomCombination.addItem(tmp.get(i)[0] + "," + tmp.get(i)[1] + "," + tmp.get(i)[2]);
 					}
 					System.out.println("Select " + numOfRoom);
 					hasSearch = false;
@@ -208,13 +265,13 @@ public class SearchPanel extends JPanel {
 					for (int i = 0; i < x.length; i++) {
 						comboBox_Rooms.addItem(x[i]);
 					}
-					comboBox.removeAllItems();
+					comboBox_RoomCombination.removeAllItems();
 					ArrayList<Integer[]> tmp = (new SearchAndBook()).possibleRoomCombination(numOfPeople, numOfRoom);
 					for (int i = 0; i < 3; i++) {
 						roomCombination[i] = tmp.get(0)[i];
 					}
 					for (int i = 0; i < tmp.size(); i++) {
-						comboBox.addItem(tmp.get(i)[0] + "," + tmp.get(i)[1] + "," + tmp.get(i)[2]);
+						comboBox_RoomCombination.addItem(tmp.get(i)[0] + "," + tmp.get(i)[1] + "," + tmp.get(i)[2]);
 					}
 					System.out.println("Select " + numOfPeople);
 					hasSearch = false;
@@ -332,9 +389,9 @@ public class SearchPanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String checkOutDate = dateToString(calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
-				String msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination, city,
-						sort);
-				switch (msg) {
+				String[] msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination, city,
+						sort,hotelStar);
+				switch (msg[0]) {
 				case "error: The format of date input should be \"MM/dd/yyyy\"":
 					new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
 					break;
@@ -348,7 +405,12 @@ public class SearchPanel extends JPanel {
 					ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), checkOutDate,
 							roomCombination, city);
 					if (valid.size() > 0) {
-						textArea.setText(msg);
+						StringBuffer buf = new StringBuffer("");
+						for(int i = 0;i<msg.length;i++) {
+							buf.append(msg[i]);
+						}
+						String text = new String(buf);
+						textArea.setText(text);
 						textArea.setSelectionStart(0);
 						textArea.setSelectionEnd(0);
 						comboBox_ID.removeAllItems();
@@ -391,9 +453,9 @@ public class SearchPanel extends JPanel {
 					if (hasSearch) {
 						String checkOutDate = dateToString(
 								calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
-						String msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination,
-								city, sort);
-						switch (msg) {
+						String[] msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination,
+								city, sort,hotelStar);
+						switch (msg[0]) {
 						case "error: The format of date input should be \"MM/dd/yyyy\"":
 							new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
 							break;
@@ -407,8 +469,12 @@ public class SearchPanel extends JPanel {
 							ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(),
 									checkOutDate, roomCombination, city);
 							if (valid.size() > 0) {
-								textArea.setText(new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate,
-										roomCombination, city, sort));
+								StringBuffer buf = new StringBuffer("");
+								for(int i = 0;i<msg.length;i++) {
+									buf.append(msg[i]);
+								}
+								String text = new String(buf);
+								textArea.setText(text);
 								textArea.setSelectionStart(0);
 								textArea.setSelectionEnd(0);
 								comboBox_ID.removeAllItems();

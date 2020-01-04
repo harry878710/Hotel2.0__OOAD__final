@@ -40,7 +40,11 @@ public class UserOperation {
 //		System.out.println("Table created successfully");
 //	}
 	
+<<<<<<< HEAD
 	private static final String url = "jdbc:postgresql://140.112.73.145/user_postgre";
+=======
+	private static final String url = "jdbc:postgresql://140.112.77.36/user_postgre";
+>>>>>>> 199d832fedd39711b442eca9fdc60e7e7ac3aceb
 	private static final String user = "postgres";
 	private static final String passwords = "harry8787";
 	

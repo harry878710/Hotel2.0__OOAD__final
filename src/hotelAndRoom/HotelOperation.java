@@ -58,7 +58,11 @@ public class HotelOperation {
 	 * hotelJSON.getInt("HotelStar"), hotelJSON.getString("Locality"),
 	 * hotelJSON.getString("Street-Address"), roomCombination, roomPrice, 0); } }
 	 */
+<<<<<<< HEAD
 	private static final String url = "jdbc:postgresql://140.112.73.145/hotel_postgre";
+=======
+	private static final String url = "jdbc:postgresql://140.112.77.36/hotel_postgre";
+>>>>>>> 199d832fedd39711b442eca9fdc60e7e7ac3aceb
 	private static final String user = "postgres";
 	private static final String passwords = "harry8787";
 
@@ -144,7 +148,7 @@ public class HotelOperation {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
-			// System.out.println("Opened database successfully");
+			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM HOTEL;");
@@ -158,7 +162,7 @@ public class HotelOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		// System.out.println("Operation done successfully");
+		System.out.println("Operation done successfully");
 		return size;
 	}
 
@@ -171,7 +175,7 @@ public class HotelOperation {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
-			// System.out.println("Opened database successfully");
+			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM HOTEL;");
@@ -196,6 +200,7 @@ public class HotelOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
+		System.out.println("Operation done successfully");
 		return newHotelList;
 	}
 
