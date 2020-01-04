@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 import book_Hotel_Room.BookList;
 import book_Hotel_Room.BookOperation;
 import book_Hotel_Room.HotelList;
+import book_Hotel_Room.HotelOperation;
 import book_Hotel_Room.Room;
 
 public class SearchAndBook {
@@ -384,10 +385,11 @@ public class SearchAndBook {
 	// 31 should be changed to the possible maximum in database
 	public int[] possibleRoomNumber(int arg_numOfPeople) {
 		int s, d, q;
+		int[] maxRoomCombination = HotelOperation.maxRoomCombination();
 		Set<Integer> possibleRoomNumber = new HashSet<Integer>();
-		for (s = 0; s < 31; s++) {
-			for (d = 0; d < 31; d++) {
-				for (q = 0; q < 31; q++) {
+		for (s = 0; s < maxRoomCombination[0]; s++) {
+			for (d = 0; d < maxRoomCombination[1]; d++) {
+				for (q = 0; q < maxRoomCombination[2]; q++) {
 					if ((s + 2 * d + 4 * q) == arg_numOfPeople) {
 						possibleRoomNumber.add(s + d + q);
 					}
@@ -417,10 +419,11 @@ public class SearchAndBook {
 	// 31 should be modified
 	public ArrayList<Integer[]> possibleRoomCombination(int arg_numOfPeople, int arg_numOfRoom) {
 		int s, d, q;
+		int[] maxRoomCombination = HotelOperation.maxRoomCombination();
 		ArrayList<Integer[]> combination = new ArrayList<Integer[]>();
-		for (s = 0; s < 31; s++) {
-			for (d = 0; d < 31; d++) {
-				for (q = 0; q < 31; q++) {
+		for (s = 0; s < maxRoomCombination[0]; s++) {
+			for (d = 0; d < maxRoomCombination[1]; d++) {
+				for (q = 0; q < maxRoomCombination[2]; q++) {
 					if ((s + 2 * d + 4 * q) == arg_numOfPeople && (s + d + q) == arg_numOfRoom) {
 						Integer[] tmp = { s, d, q };
 						combination.add(tmp);
@@ -442,7 +445,7 @@ public class SearchAndBook {
 	private ArrayList<Integer> hotelsWithEnoughRoom(int[] arg_roomCombination, Date checkIn, Date checkOut) {
 		// the whole remain room number of all hotel and room type
 		int[][] remainRoomNumber = remainingRoomNumber(checkIn, checkOut);
-		ArrayList<Integer> hotelsWithEnoughRoom = new ArrayList<Integer>(1500);
+		ArrayList<Integer> hotelsWithEnoughRoom = new ArrayList<Integer>();
 		for (int i = 0; i < remainRoomNumber.length; i++) {
 			if (remainRoomNumber[i][0] >= arg_roomCombination[0] && remainRoomNumber[i][1] >= arg_roomCombination[1]
 					&& remainRoomNumber[i][2] >= arg_roomCombination[2]) {

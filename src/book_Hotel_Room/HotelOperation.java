@@ -221,7 +221,6 @@ public class HotelOperation {
 		// System.out.println("Operation done successfully");
 	}
 
-	
 	public static String showThisHotel(int hotelId) {
 		String toReturn = "The book ID is not existed.";
 		Connection c = null;
@@ -282,6 +281,34 @@ public class HotelOperation {
 		}
 		// System.out.println("Operation done successfully");
 		return size;
+	}
+
+	public static int[] maxRoomCombination() {
+		int single = 0, doub = 0, quad = 0;
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			c.setAutoCommit(false);
+			// System.out.println("Opened database successfully");
+
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM hotel;");
+			while (rs.next()) {
+				single = (rs.getInt("number1") > single) ? rs.getInt("number1") : single;
+				doub = (rs.getInt("number2") > doub) ? rs.getInt("number2") : doub;
+				quad = (rs.getInt("number4") > quad) ? rs.getInt("number4") : quad;
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		int[] toReturn = { single, doub, quad };
+		return toReturn;
 	}
 
 	public static int nextHotelId() {
