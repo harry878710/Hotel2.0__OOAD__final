@@ -15,7 +15,7 @@ import gui.MainFrame;
 public class LandlordMenuPanel extends JPanel {
 	JButton btnMyHotels;
 	JButton btnAllOrders;
-	JButton btnLandlordOptions;
+	JButton btnLandlordAccountOptions;
 
 	/**
 	 * Create the panel.
@@ -34,10 +34,10 @@ public class LandlordMenuPanel extends JPanel {
 		btnAllOrders.setFont(new Font("Agency FB", Font.PLAIN, 72));
 		add(btnAllOrders);
 
-		btnLandlordOptions = new JButton("Landlord Options");
-		btnLandlordOptions.setBackground(new Color(95, 158, 160));
-		btnLandlordOptions.setFont(new Font("Agency FB", Font.PLAIN, 72));
-		add(btnLandlordOptions);
+		btnLandlordAccountOptions = new JButton("Landlord Options");
+		btnLandlordAccountOptions.setBackground(new Color(95, 158, 160));
+		btnLandlordAccountOptions.setFont(new Font("Agency FB", Font.PLAIN, 72));
+		add(btnLandlordAccountOptions);
 	}
 
 	public void activateLandlordMenuPanel(MainFrame mainframe) {
@@ -58,9 +58,9 @@ public class LandlordMenuPanel extends JPanel {
 			}
 		});
 		
-		btnLandlordOptions.addActionListener(new ActionListener() {
+		btnLandlordAccountOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainframe.activateUserOptionsPanel();
+				mainframe.activateLandlordAccountOptionPanel();
 				setVisible(false);
 			}
 		});

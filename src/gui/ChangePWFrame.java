@@ -163,7 +163,6 @@ public class ChangePWFrame extends JFrame {
 		btnChange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (txtPleaseDontEnter.getText().equals(UserOperation.whoIsLoggedin())) {
-
 					int op = UserOperation.changePassword(txtPleaseDontEnter.getText(),
 							new String(textFieldOld.getPassword()), new String(textFieldNew.getPassword()),
 							new String(textFieldConfirm.getPassword()));
@@ -202,7 +201,6 @@ public class ChangePWFrame extends JFrame {
 				} else {
 					new PopFrame("Liar ! U NOT " + txtPleaseDontEnter.getText());
 				}
-
 			}
 		});
 		contentPane.add(btnChange);

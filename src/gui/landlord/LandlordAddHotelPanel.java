@@ -180,11 +180,11 @@ public class LandlordAddHotelPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int[] roomCombination = { (int) comboBox_Single.getSelectedItem(),
 						(int) comboBox_Double.getSelectedItem(), (int) comboBox_Quadro.getSelectedItem() };
-				String[] priceCombination = { textField_S_price.getSelectedText(), textField_D_price.getSelectedText(),
-						textField_Q_price.getSelectedText() };
-				int op = HotelOperation.addHotelToDB(comboBox_Star.getSelectedItem(), comboBox_City.getSelectedItem(),
-						textField_Address.getText(), roomCombination, priceCombination,
-						LandlordOperation.whoIsLoggedin());
+				String[] priceCombination = { textField_S_price.getText() , textField_D_price.getText() ,
+						textField_Q_price.getText() };
+				int op = HotelOperation.addHotelToDB((int) comboBox_Star.getSelectedItem(),
+						(String) comboBox_City.getSelectedItem(), textField_Address.getText(), roomCombination,
+						priceCombination, LandlordOperation.whoIsLoggedin());
 				switch (op) {
 				case 0:
 					mainframe.activateLandlordHotelsPanel();

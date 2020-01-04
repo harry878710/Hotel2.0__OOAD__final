@@ -12,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import book_Hotel_Room.BookOperation;
+import book_Hotel_Room.HotelOperation;
+import member.LandlordOperation;
 import member.UserOperation;
 import gui.MainFrame;
 
@@ -30,12 +32,12 @@ public class LandlordHotelsPanel extends JPanel {
 
 		JTextArea textArea = new JTextArea(10, 40);
 		textArea.setBackground(new Color(240, 255, 240));
-		textArea.setFont(new Font("�L�n������", Font.PLAIN, 18));
-		String myBookList = (BookOperation.bookOfUser(UserOperation.whoIsLoggedin()));
-		if (!myBookList.equals("")) {
-			textArea.setText("User Id :" + UserOperation.whoIsLoggedin() + "\n\n" + myBookList);
+		textArea.setFont(new Font("Dialog", Font.PLAIN, 18));
+		String myHotelList = (LandlordOperation.showAllMyHotel(LandlordOperation.whoIsLoggedin()));
+		if (!myHotelList.equals("")) {
+			textArea.setText("Landlord Id :" + LandlordOperation.whoIsLoggedin() + "\n\n" + myHotelList);
 		} else {
-			textArea.setText("User Id :" + UserOperation.whoIsLoggedin() + "\n\n" + "No order yet.");
+			textArea.setText("Landlord Id :" + LandlordOperation.whoIsLoggedin() + "\n\n" + "No Hotel yet.");
 		}
 		textArea.setSelectionStart(0);
 		textArea.setSelectionEnd(0);

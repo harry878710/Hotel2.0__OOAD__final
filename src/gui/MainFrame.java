@@ -3,6 +3,7 @@ package gui;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 
+import gui.landlord.LandlordAccountOptionPanel;
 import gui.landlord.LandlordAddHotelPanel;
 import gui.landlord.LandlordHotelsPanel;
 import gui.landlord.LandlordMenuPanel;
@@ -26,6 +27,8 @@ public class MainFrame {
 	private LandlordOrderPanel lop;
 	private LandlordHotelsPanel lhp;
 	private LandlordAddHotelPanel lahp;
+	private LandlordAccountOptionPanel laop;
+	
 	Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
 	/**
@@ -120,6 +123,11 @@ public class MainFrame {
 	public void activateLandlordAddHotelPanel() {
 		lahp = new LandlordAddHotelPanel();
 		lahp.activateLandlordAddHotelPanel(this);
+	}
+	
+	public void activateLandlordAccountOptionPanel() {
+		laop = new LandlordAccountOptionPanel();
+		laop.activateLandlordAccountOptionPanel(this);
 	}
 
 	public Container getContentPane() {
