@@ -81,8 +81,6 @@ public class SearchAndBook {
 			error[0] = validDateInput(checkIn, checkOut);
 			return error;
 		}
-//		Date checkOut = calculateCheckOutDate(checkIn, night);
-//		String checkOutDate = dateToString(checkOut);
 		int night = calculateNight(checkIn, checkOut);
 		System.out.println(night);
 		// check if the room number of every hotel in array is enough for new book
@@ -103,20 +101,22 @@ public class SearchAndBook {
 		case "Sorted by Price(large to small)":
 			// Sorted by Price(large to small)
 			ArrayList<Integer> sortList1 = sortByPrice(qualifiedHotelId, roomCombination);
+			int a = 1;
 			for (int i = sortList1.size() - 1; i >= 0; i--) {
-				int hotelId = qualifiedHotelId.get(i);
+				int hotelId = sortList1.get(i);
 				int price = 0;
 				for (int j = 0; j < 3; j++) {
 					price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 				}
-				toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				toReturn[a] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				a++;
 			}
 			break;
 		case "Sorted by Price(small to large)":
 			// Sorted by Price(small to large)
 			ArrayList<Integer> sortList2 = sortByPrice(qualifiedHotelId, roomCombination);
 			for (int i = 0; i < sortList2.size(); i++) {
-				int hotelId = qualifiedHotelId.get(i);
+				int hotelId = sortList2.get(i);
 				int price = 0;
 				for (int j = 0; j < 3; j++) {
 					price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
@@ -126,13 +126,15 @@ public class SearchAndBook {
 			break;
 		case "Sorted by Hotel ID(large to small)":
 			// Sorted by Hotel ID(large to small)
+			int b = 1;
 			for (int i = qualifiedHotelId.size() - 1; i >= 0; i--) {
 				int hotelId = qualifiedHotelId.get(i);
 				int price = 0;
 				for (int j = 0; j < 3; j++) {
 					price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 				}
-				toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				toReturn[b] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				b++;
 			}
 			break;
 		case "Sorted by Hotel ID(small to large)":

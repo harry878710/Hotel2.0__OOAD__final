@@ -1,6 +1,5 @@
 package book_Hotel_Room;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -51,8 +50,36 @@ public class HotelOperation {
 //
 //	}
 
-	public static void addHotelToDB(int star, String locality, String address, int[] roomCombination, int[] roomPrice,
+	public static int addHotelToDB(int star, String locality, String address, int[] roomCombination, String[] roomPrice,
 			String landlordID) {
+		if (address.equals("")||roomPrice[0].equals("")||roomPrice[1].equals("")||roomPrice[2].equals("")) {
+			// Please fill all blanks
+			return 1;
+		}
+		int[] price = new int[3];
+		try {
+			price[0] = Integer.parseInt(roomPrice[0]);
+			price[1] = Integer.parseInt(roomPrice[1]);
+			price[2] = Integer.parseInt(roomPrice[2]);
+		}catch(NumberFormatException e) {
+			//price is not number
+			return 5;
+		}
+		
+		if (roomCombination[0] == 0 && roomCombination[1] == 0 && roomCombination[2] == 0) {
+			// You has no rooms?
+			return 2;
+		}
+		for (int i = 0; i < 3; i++) {
+			if (roomCombination[i] != 0 && price[i] == 0) {
+				// your room's price cannot be zero
+				return 3;
+			}
+			if (roomCombination[i] == 0 && price[i] != 0) {
+				// your don't have room then you cannot have price
+				return 4;
+			}
+		}
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -75,6 +102,7 @@ public class HotelOperation {
 			System.exit(0);
 		}
 		System.out.println("Records created successfully");
+		return 0;
 	}
 
 	public static void addHotelToDB(Hotel hotel) {
@@ -104,6 +132,11 @@ public class HotelOperation {
 		System.out.println("Records created successfully");
 	}
 
+	public static void editHotelRoomAndPrice(int hotelId, int[] roomCombination, int[] roomPrice) {
+		
+		
+	}
+	
 	public static String showThisHotel(int hotelId) {
 		String toReturn = "The book ID is not existed.";
 		Connection c = null;
