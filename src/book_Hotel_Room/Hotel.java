@@ -1,6 +1,14 @@
 package book_Hotel_Room;
 
 public class Hotel {
+	
+	public static Hotel[] ALLHOTEL;
+	public static int TOTAL_NUMBER_OF_HOTEL;
+
+	static {
+		ALLHOTEL = HotelOperation.uploadHotelList();
+		TOTAL_NUMBER_OF_HOTEL = HotelOperation.sizeOfHotelList();		
+	}	
 
 	private int id;
 	private int star;

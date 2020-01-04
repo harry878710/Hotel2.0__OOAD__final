@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import book_Hotel_Room.BookList;
+import book_Hotel_Room.Book;
 import gui.PopFrame;
 
 
@@ -51,7 +51,7 @@ public class TouristOperation implements MemberOperation{
 	public static int addUser(String id, String password, String checkPass) {
 		int op =  MemberOperation.addUser(id, password, checkPass, "user");
 		if (op == 0) {
-			TouristList.userList = uploadUserList();
+			Tourist.userList = uploadUserList();
 		}
 		return op;
 //		if (!password.equals(checkPass)) {
@@ -302,9 +302,9 @@ public class TouristOperation implements MemberOperation{
 
 	public static ArrayList<String> usersOrders(String userName) {
 		ArrayList<String> bookIds = new ArrayList<String>();
-		for (int i = 0; i < BookList.bookList.size(); i++) {
-			if (BookList.bookList.get(i).getUserId().equals(userName)) {
-				bookIds.add(BookList.bookList.get(i).getBookId());
+		for (int i = 0; i < Book.bookList.size(); i++) {
+			if (Book.bookList.get(i).getUserId().equals(userName)) {
+				bookIds.add(Book.bookList.get(i).getBookId());
 			}
 		}
 		return bookIds;

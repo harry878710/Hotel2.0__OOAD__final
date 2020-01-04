@@ -1,6 +1,15 @@
 package member;
 
+import java.util.ArrayList;
+
 public class Tourist implements Member{
+	
+	public static ArrayList<Tourist> userList;
+
+	static {
+		userList = TouristOperation.uploadUserList();
+	}
+	
 	private String name;
 	private String password;
 	private boolean login = false;

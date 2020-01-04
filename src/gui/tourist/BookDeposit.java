@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import book_Hotel_Room.HotelList;
+import book_Hotel_Room.Hotel;
 
 public class BookDeposit {
 	private int hotelId;
@@ -54,9 +54,9 @@ public class BookDeposit {
 		}
 		int price = 0;
 		for (int j = 0; j < 3; j++) {
-			price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+			price += Hotel.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 		}
-		return HotelList.ALLHOTEL[hotelId].toString() + "\nCheck-in date : " + checkInDate + "\nCheck-out date : "
+		return Hotel.ALLHOTEL[hotelId].toString() + "\nCheck-in date : " + checkInDate + "\nCheck-out date : "
 				+ checkOutDate + "\n" + "Stay nights : " + night + " nights\nTotal price : " + price + "\nRoom : \n"
 				+ " Single : " + roomCombination[0] + "\n Double : " + roomCombination[1] + "\n Quad : " + roomCombination[2] + "\n";
 	}

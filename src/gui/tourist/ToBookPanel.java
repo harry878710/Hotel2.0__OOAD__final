@@ -12,7 +12,8 @@ import javax.swing.SwingConstants;
 import gui.LoginPanel;
 import gui.MainFrame;
 import gui.PopFrame;
-import member.TouristList;
+import member.Tourist;
+ 
 import member.TouristOperation;
 
 import operation.SearchAndBook;
@@ -102,11 +103,11 @@ public class ToBookPanel extends JPanel {
 							if (!loginpane.getName().equals("") && !loginpane.getPassword().equals("")) {
 								if (TouristOperation.hasUser(loginpane.getName())) {
 									if (TouristOperation.checkPassword(loginpane.getName(), loginpane.getPassword())) {
-										for (int i = 0; i < TouristList.userList.size(); i++) {
-											if (loginpane.getName().equals(TouristList.userList.get(i).getName())) {
-												TouristList.userList.get(i).setLogin(true);
+										for (int i = 0; i < Tourist.userList.size(); i++) {
+											if (loginpane.getName().equals(Tourist.userList.get(i).getName())) {
+												Tourist.userList.get(i).setLogin(true);
 											} else {
-												TouristList.userList.get(i).setLogin(false);
+												Tourist.userList.get(i).setLogin(false);
 											}
 										}
 										setVisible(true);

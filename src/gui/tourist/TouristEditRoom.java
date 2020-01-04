@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import book_Hotel_Room.BookOperation;
-import book_Hotel_Room.HotelList;
-import member.TouristList;
+import book_Hotel_Room.Hotel;
+ 
 import member.TouristOperation;
 
 import javax.swing.JComboBox;
@@ -86,7 +86,7 @@ public class TouristEditRoom extends JPanel {
 		comboBox_Single.setForeground(new Color(102, 205, 170));
 		comboBox_Single.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_Single.setBounds(147, 271, 365, 73);
-		for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
+		for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
 			comboBox_Single.addItem(i);
 		}
 		comboBox_Single.addItemListener(new ItemListener() {
@@ -116,7 +116,7 @@ public class TouristEditRoom extends JPanel {
 		comboBox_Double.setForeground(new Color(102, 205, 170));
 		comboBox_Double.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_Double.setBounds(147, 358, 365, 73);
-		for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
+		for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
 			comboBox_Double.addItem(i);
 		}
 		comboBox_Double.addItemListener(new ItemListener() {
@@ -140,7 +140,7 @@ public class TouristEditRoom extends JPanel {
 		comboBox_Quad.setForeground(new Color(102, 205, 170));
 		comboBox_Quad.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_Quad.setBounds(147, 443, 365, 73);
-		for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
+		for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
 			comboBox_Quad.addItem(i);
 		}
 		comboBox_Quad.addItemListener(new ItemListener() {
@@ -165,15 +165,15 @@ public class TouristEditRoom extends JPanel {
 					bookId = (String) e.getItem();
 					hotelId = BookOperation.getBook(bookId).getHotelId();
 					comboBox_Single.removeAllItems();
-					for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
+					for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
 						comboBox_Single.addItem(i);
 					}
 					comboBox_Double.removeAllItems();
-					for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
+					for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
 						comboBox_Double.addItem(i);
 					}
 					comboBox_Quad.removeAllItems();
-					for (int i = 0; i < HotelList.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
+					for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
 						comboBox_Quad.addItem(i);
 					}
 					System.out.println("Select " + bookId);

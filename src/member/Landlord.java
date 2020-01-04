@@ -1,6 +1,15 @@
 package member;
 
+import java.util.ArrayList;
+
 public class Landlord implements Member {
+	
+	public static ArrayList<Landlord> landlordList;
+
+	static {
+		landlordList = LandlordOperation.uploadUserList();
+	}
+	
 	private String name;
 	private String password;
 	private boolean login = false;

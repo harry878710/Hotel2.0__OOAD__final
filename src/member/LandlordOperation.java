@@ -3,7 +3,7 @@ package member;
 import java.util.ArrayList;
 
 import book_Hotel_Room.BookOperation;
-import book_Hotel_Room.HotelList;
+import book_Hotel_Room.Hotel;
 import book_Hotel_Room.HotelOperation;
 
 public class LandlordOperation implements MemberOperation {
@@ -17,7 +17,7 @@ public class LandlordOperation implements MemberOperation {
 	public static int addUser(String id, String password, String checkPass) {
 		int op = MemberOperation.addUser(id, password, checkPass, "landlord");
 		if (op == 0) {
-			LandlordList.landlordList = uploadUserList();
+			Landlord.landlordList = uploadUserList();
 		}
 		return op;
 
@@ -71,9 +71,9 @@ public class LandlordOperation implements MemberOperation {
 
 	public static int[] listMyHotelId(String landlordName) {
 		ArrayList<Integer> myHotelId = new ArrayList<Integer>();
-		for (int i = 0; i < HotelList.TOTAL_NUMBER_OF_HOTEL; i++) {
-			if (HotelList.ALLHOTEL[i].getLandlord().equals(landlordName)) {
-				myHotelId.add(HotelList.ALLHOTEL[i].getId());
+		for (int i = 0; i < Hotel.TOTAL_NUMBER_OF_HOTEL; i++) {
+			if (Hotel.ALLHOTEL[i].getLandlord().equals(landlordName)) {
+				myHotelId.add(Hotel.ALLHOTEL[i].getId());
 			}
 		}
 		int[] toReturn = new int[myHotelId.size()];

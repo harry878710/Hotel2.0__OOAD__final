@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import member.LandlordOperation;
-import member.TouristList;
+ 
 import member.TouristOperation;
 
 import java.awt.event.ActionListener;

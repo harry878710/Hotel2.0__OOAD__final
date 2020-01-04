@@ -14,9 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import member.LandlordList;
+import member.Landlord;
 import member.LandlordOperation;
-import member.TouristList;
+import member.Tourist;
+
 import member.TouristOperation;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
@@ -195,12 +196,12 @@ public class ChangePWFrame extends JFrame {
 							textFieldConfirm.setText("");
 							break;
 						case 0:
-							TouristList.userList = TouristOperation.uploadUserList();
-							for (int i = 0; i < TouristList.userList.size(); i++) {
-								if (TouristList.userList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
-									TouristList.userList.get(i).setLogin(true);
+							Tourist.userList = TouristOperation.uploadUserList();
+							for (int i = 0; i < Tourist.userList.size(); i++) {
+								if (Tourist.userList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
+									Tourist.userList.get(i).setLogin(true);
 								} else {
-									TouristList.userList.get(i).setLogin(false);
+									Tourist.userList.get(i).setLogin(false);
 								}
 							}
 							new PopFrame("Change success");
@@ -243,12 +244,12 @@ public class ChangePWFrame extends JFrame {
 							textFieldConfirm.setText("");
 							break;
 						case 0:
-							LandlordList.landlordList = LandlordOperation.uploadUserList();
-							for (int i = 0; i < LandlordList.landlordList.size(); i++) {
-								if (LandlordList.landlordList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
-									LandlordList.landlordList.get(i).setLogin(true);
+							Landlord.landlordList = LandlordOperation.uploadUserList();
+							for (int i = 0; i < Landlord.landlordList.size(); i++) {
+								if (Landlord.landlordList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
+									Landlord.landlordList.get(i).setLogin(true);
 								} else {
-									LandlordList.landlordList.get(i).setLogin(false);
+									Landlord.landlordList.get(i).setLogin(false);
 								}
 							}
 							new PopFrame("Change success");

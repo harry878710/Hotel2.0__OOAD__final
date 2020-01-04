@@ -14,9 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import member.LandlordList;
+import member.Landlord;
 import member.LandlordOperation;
-import member.TouristList;
+import member.Tourist;
+ 
 import member.TouristOperation;
 import java.awt.GridLayout;
 import java.awt.Font;
@@ -115,7 +116,7 @@ public class JoinFrame extends JFrame {
 						new String(textField_2.getPassword()));
 				switch (op) {
 				case 0:
-					TouristList.userList = TouristOperation.uploadUserList();
+					Tourist.userList = TouristOperation.uploadUserList();
 					new PopFrame("Welcome!");
 					dispose();
 					break;
@@ -186,7 +187,7 @@ public class JoinFrame extends JFrame {
 						new String(textField_2.getPassword()));
 				switch (op) {
 				case 0:
-					LandlordList.landlordList = LandlordOperation.uploadUserList();
+					Landlord.landlordList = LandlordOperation.uploadUserList();
 					new PopFrame("Welcome!");
 					dispose();
 					break;

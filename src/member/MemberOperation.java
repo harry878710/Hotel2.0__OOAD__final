@@ -47,10 +47,10 @@ interface MemberOperation {
 			if (!userId.equals("") && !password.equals("")) {
 				if (TouristOperation.hasUser(userId)) {
 					if (TouristOperation.checkPassword(userId, password)) {
-						for (int i = 0; i < TouristList.userList.size(); i++) {
-							if (userId.equals(TouristList.userList.get(i).getName())) {
+						for (int i = 0; i < Tourist.userList.size(); i++) {
+							if (userId.equals(Tourist.userList.get(i).getName())) {
 								// find specified user in userList,change his login status.
-								TouristList.userList.get(i).setLogin(true);
+								Tourist.userList.get(i).setLogin(true);
 								return 0;
 							}
 						}
@@ -71,10 +71,10 @@ interface MemberOperation {
 			if (!userId.equals("") && !password.equals("")) {
 				if (LandlordOperation.hasUser(userId)) {
 					if (LandlordOperation.checkPassword(userId, password)) {
-						for (int i = 0; i < LandlordList.landlordList.size(); i++) {
-							if (userId.equals(LandlordList.landlordList.get(i).getName())) {
+						for (int i = 0; i < Landlord.landlordList.size(); i++) {
+							if (userId.equals(Landlord.landlordList.get(i).getName())) {
 								// find specified user in userList,change his login status.
-								LandlordList.landlordList.get(i).setLogin(true);
+								Landlord.landlordList.get(i).setLogin(true);
 								return 0;
 							}
 						}
@@ -254,15 +254,15 @@ interface MemberOperation {
 	public static boolean anyoneLoggedin(String member) {
 		switch (member) {
 		case "user":
-			for (int i = 0; i < TouristList.userList.size(); i++) {
-				if (TouristList.userList.get(i).isLogin()) {
+			for (int i = 0; i < Tourist.userList.size(); i++) {
+				if (Tourist.userList.get(i).isLogin()) {
 					return true;
 				}
 			}
 			break;
 		case "landlord":
-			for (int i = 0; i < LandlordList.landlordList.size(); i++) {
-				if (LandlordList.landlordList.get(i).isLogin()) {
+			for (int i = 0; i < Landlord.landlordList.size(); i++) {
+				if (Landlord.landlordList.get(i).isLogin()) {
 					return true;
 				}
 			}
@@ -275,13 +275,13 @@ interface MemberOperation {
 	public static void everyOneloggedOut(String member) {
 		switch (member) {
 		case "user":
-			for (int i = 0; i < TouristList.userList.size(); i++) {
-				TouristList.userList.get(i).setLogin(false);
+			for (int i = 0; i < Tourist.userList.size(); i++) {
+				Tourist.userList.get(i).setLogin(false);
 			}
 			break;
 		case "landlord":
-			for (int i = 0; i < LandlordList.landlordList.size(); i++) {
-				LandlordList.landlordList.get(i).setLogin(false);
+			for (int i = 0; i < Landlord.landlordList.size(); i++) {
+				Landlord.landlordList.get(i).setLogin(false);
 			}
 			break;
 		}
@@ -291,16 +291,16 @@ interface MemberOperation {
 	public static String whoIsLoggedin(String member) {
 		switch (member) {
 		case "user":
-			for (int i = 0; i < TouristList.userList.size(); i++) {
-				if (TouristList.userList.get(i).isLogin()) {
-					return TouristList.userList.get(i).getName();
+			for (int i = 0; i < Tourist.userList.size(); i++) {
+				if (Tourist.userList.get(i).isLogin()) {
+					return Tourist.userList.get(i).getName();
 				}
 			}
 			break;
 		case "landlord":
-			for (int i = 0; i < LandlordList.landlordList.size(); i++) {
-				if (LandlordList.landlordList.get(i).isLogin()) {
-					return LandlordList.landlordList.get(i).getName();
+			for (int i = 0; i < Landlord.landlordList.size(); i++) {
+				if (Landlord.landlordList.get(i).isLogin()) {
+					return Landlord.landlordList.get(i).getName();
 				}
 			}
 			break;

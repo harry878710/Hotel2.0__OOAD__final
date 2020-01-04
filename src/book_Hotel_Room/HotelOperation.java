@@ -102,8 +102,8 @@ public class HotelOperation {
 			System.exit(0);
 		}
 		System.out.println("Records created successfully");
-		HotelList.ALLHOTEL = uploadHotelList();
-		HotelList.TOTAL_NUMBER_OF_HOTEL = sizeOfHotelList();
+		Hotel.ALLHOTEL = uploadHotelList();
+		Hotel.TOTAL_NUMBER_OF_HOTEL = sizeOfHotelList();
 		return 0;
 	}
 
@@ -178,7 +178,7 @@ public class HotelOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		HotelList.ALLHOTEL = uploadHotelList();
+		Hotel.ALLHOTEL = uploadHotelList();
 		// System.out.println("Operation done successfully");
 	}
 
@@ -217,7 +217,7 @@ public class HotelOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		HotelList.ALLHOTEL = uploadHotelList();
+		Hotel.ALLHOTEL = uploadHotelList();
 		// System.out.println("Operation done successfully");
 	}
 
@@ -238,7 +238,7 @@ public class HotelOperation {
 				if (rs.getInt("ID") == hotelId) {
 					int[] roomCombination = { rs.getInt("NUMBER1"), rs.getInt("NUMBER2"), rs.getInt("NUMBER4") };
 					int[] price = { rs.getInt("PRICE1"), rs.getInt("PRICE2"), rs.getInt("PRICE4") };
-					toReturn = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nRooms and prices:"
+					toReturn = ("\n" + Hotel.ALLHOTEL[hotelId].toString() + "\nRooms and prices:"
 							+ "\nSingle room number: " + roomCombination[0] + ", price: " + price[0]
 							+ "\nDouble room number: " + roomCombination[1] + ", price: " + price[1]
 							+ "\nQuad   room number: " + roomCombination[2] + ", price: " + price[2] + "\n");
@@ -373,7 +373,7 @@ public class HotelOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		HotelList.TOTAL_NUMBER_OF_HOTEL = newTotalNumberOfHotel;
+		Hotel.TOTAL_NUMBER_OF_HOTEL = newTotalNumberOfHotel;
 		return newHotelList;
 	}
 

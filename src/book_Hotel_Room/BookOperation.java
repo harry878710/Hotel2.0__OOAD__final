@@ -92,7 +92,7 @@ public class BookOperation {
 					int doub = rs.getInt("Double");
 					int quad = rs.getInt("Quad");
 					int stayNight = rs.getInt("Night");
-					tmp.append("Book ID: " + bookId + "\n" + HotelList.ALLHOTEL[hotelId].toString() + "\n"
+					tmp.append("Book ID: " + bookId + "\n" + Hotel.ALLHOTEL[hotelId].toString() + "\n"
 							+ "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
 							+ "Stay nights: " + stayNight + " nights, Total price: " + price + "\n" + "Room:\n Single: "
 							+ single + "\n Double: " + doub + "\n Quad: " + quad
@@ -166,7 +166,7 @@ public class BookOperation {
 				int stayNight = rs.getInt("Night");
 				int price = rs.getInt("Price");
 				System.out.println(
-						"Book ID: " + bookId + ", User ID: " + userId + "\n" + HotelList.ALLHOTEL[hotelId].toString()
+						"Book ID: " + bookId + ", User ID: " + userId + "\n" + Hotel.ALLHOTEL[hotelId].toString()
 								+ "\n" + "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
 								+ "Stay nights: " + stayNight + " nights, Total price: " + price + "\n"
 								+ "Room:\n	Single: " + single + "\n	Double: " + doub + "\n	Quad: " + quad);
@@ -210,7 +210,7 @@ public class BookOperation {
 					int stayNight = rs.getInt("Night");
 					int price = rs.getInt("Price");
 					toReturn = ("\nBook ID: " + bookId + ", User ID: " + userId + "\n"
-							+ HotelList.ALLHOTEL[hotelId].toString() + "\n" + "Check-in date: " + checkInDate
+							+ Hotel.ALLHOTEL[hotelId].toString() + "\n" + "Check-in date: " + checkInDate
 							+ ", Check-out date: " + checkOutDate + "\n" + "Stay nights: " + stayNight
 							+ " nights, Total price: " + price + "\n" + "Room:\n	Single: " + single
 							+ "\n	Double: " + doub + "\n	Quad: " + quad+"\n");
