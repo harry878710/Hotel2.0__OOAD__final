@@ -58,7 +58,7 @@ public class HotelOperation {
 	 * hotelJSON.getInt("HotelStar"), hotelJSON.getString("Locality"),
 	 * hotelJSON.getString("Street-Address"), roomCombination, roomPrice, 0); } }
 	 */
-	private static final String url = "jdbc:postgresql://localhost/hotel_postgre";
+	private static final String url = "jdbc:postgresql://140.112.73.145/hotel_postgre";
 	private static final String user = "postgres";
 	private static final String passwords = "harry8787";
 
@@ -95,7 +95,7 @@ public class HotelOperation {
 			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
-			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
+			String sql = "INSERT INTO HOTEL (id,star,locality,address,number1,number2,number4,price1,price2,Price4,landlord) "
 					+ "VALUES (" + hotelID + "," + star + ", '" + locality + "','" + address + "'," + roomCombination[0]
 					+ "," + roomCombination[1] + "," + roomCombination[2] + "," + roomPrice[0] + "," + roomPrice[1]
 					+ "," + roomPrice[2] + "," + landlordID + ");";
@@ -120,7 +120,7 @@ public class HotelOperation {
 			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
-			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
+			String sql = "INSERT INTO HOTEL (id,star,locality,address,number1,number2,number4,price1,price2,Price4,landlord) "
 					+ "VALUES (" + hotel.getId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','"
 					+ hotel.getAddress() + "'," + hotel.getRoomCombination()[0] + "," + hotel.getRoomCombination()[1]
 					+ "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + ","
@@ -177,15 +177,15 @@ public class HotelOperation {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM HOTEL;");
 			int i = 0;
 			while (rs.next() && (i < newTotalNumberOfHotel)) {
-				int hotelID = rs.getInt("ID");
-				int star = rs.getInt("STAR");
-				String locality = rs.getString("LOCALITY");
-				String address = rs.getString("ADDRESS");
-				int[] roomCombination = { rs.getInt("NUMBER1"), rs.getInt("NUMBER2"), rs.getInt("NUMBER4") };
+				int hotelID = rs.getInt("id");
+				int star = rs.getInt("star");
+				String locality = rs.getString("locality");
+				String address = rs.getString("address");
+				int[] roomCombination = { rs.getInt("number1"), rs.getInt("number2"), rs.getInt("number4") };
 				Room[] roomInfo = new Room[3];
-				roomInfo[0] = new Room("Single", rs.getInt("PRICE1"));
-				roomInfo[1] = new Room("Double", rs.getInt("PRICE2"));
-				roomInfo[2] = new Room("Quad", rs.getInt("PRICE4"));
+				roomInfo[0] = new Room("single", rs.getInt("price1"));
+				roomInfo[1] = new Room("double", rs.getInt("price2"));
+				roomInfo[2] = new Room("quad", rs.getInt("price4"));
 				newHotelList[i] = new Hotel(hotelID, star, locality, address, roomCombination, roomInfo);
 				i++;
 			}

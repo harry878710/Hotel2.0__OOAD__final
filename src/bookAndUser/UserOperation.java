@@ -40,7 +40,7 @@ public class UserOperation {
 //		System.out.println("Table created successfully");
 //	}
 	
-	private static final String url = "jdbc:postgresql://localhost/user_postgre";
+	private static final String url = "jdbc:postgresql://140.112.73.145/user_postgre";
 	private static final String user = "postgres";
 	private static final String passwords = "harry8787";
 	
@@ -93,7 +93,7 @@ public class UserOperation {
 			c.commit();
 			c.close();
 
-		} catch (org.sqlite.SQLiteException e) {
+		} catch (SQLException e) {
 			return 2;
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -143,8 +143,8 @@ public class UserOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM USER;");
 			while (rs.next()) {
-				String id = rs.getString("ID");
-				String password = rs.getString("PASSWORD");
+				String id = rs.getString("id");
+				String password = rs.getString("password");
 
 				System.out.println("ID = " + id);
 				System.out.println("PASSWORD = " + password);
@@ -190,8 +190,8 @@ public class UserOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM USER;");
 			while (rs.next()) {
-				String tmpId = rs.getString("ID");
-				String tmpPass = rs.getString("PASSWORD");
+				String tmpId = rs.getString("id");
+				String tmpPass = rs.getString("password");
 				if (tmpId.equals(id)) {
 					if (tmpPass.equals(oldPass)) {
 						String sql = "UPDATE USER set PASSWORD = '" + newPass + "' where ID='" + id + "';";
@@ -235,8 +235,8 @@ public class UserOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM USER;");
 			while (rs.next()) {
-				String tmpId = rs.getString("ID");
-				String tmpPass = rs.getString("PASSWORD");
+				String tmpId = rs.getString("id");
+				String tmpPass = rs.getString("password");
 				if (tmpId.equals(id)) {
 					if (tmpPass.equals(password)) {
 						toReturn = true;
@@ -270,7 +270,7 @@ public class UserOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM USER;");
 			while (rs.next()) {
-				if (rs.getString("ID").equals(id)) {
+				if (rs.getString("id").equals(id)) {
 					get = true;
 				}
 			}
@@ -332,8 +332,8 @@ public class UserOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM USER;");
 			while (rs.next()) {
-				String name = rs.getString("Id");
-				String password = rs.getString("Password");
+				String name = rs.getString("id");
+				String password = rs.getString("password");
 
 				User user = new User(name, password);
 				userList.add(user);

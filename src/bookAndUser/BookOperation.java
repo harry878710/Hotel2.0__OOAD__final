@@ -38,7 +38,7 @@ public class BookOperation {
 	 * System.out.println("Table created successfully"); }
 	 */
 
-	private static final String url = "jdbc:postgresql://localhost/book_postgre";
+	private static final String url = "jdbc:postgresql://140.112.73.145/book_postgre";
 	private static final String user = "postgres";
 	private static final String passwords = "harry8787";
 
@@ -60,7 +60,7 @@ public class BookOperation {
 	}
 
 	public static void main(String[] args) {
-		//addBook("00111", 149, 2, 3, 1, 5004, 2, "01/04/2020", "01/06/2020", "rayray");
+		addBook("00111", 149, 2, 3, 1, 5004, 2, "01/04/2020", "01/06/2020", "rayray");
 	}
 
 	public static ArrayList<String> bookIdListOfUser(String userId) {
@@ -76,8 +76,8 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				if (rs.getString("UserId").equals(userId)) {
-					bookIdList.add(rs.getString("BookId"));
+				if (rs.getString("userid").equals(userId)) {
+					bookIdList.add(rs.getString("bookid"));
 				}
 			}
 			rs.close();
@@ -103,16 +103,16 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				if (rs.getString("UserId").equals(userId)) {
-					String bookId = rs.getString("BookId");
-					String checkInDate = rs.getString("CheckInDate");
-					String checkOutDate = rs.getString("CheckOutDate");
-					int hotelId = rs.getInt("HotelId");
-					int price = rs.getInt("Price");
-					int single = rs.getInt("Single");
-					int doub = rs.getInt("Double");
-					int quad = rs.getInt("Quad");
-					int stayNight = rs.getInt("Night");
+				if (rs.getString("userid").equals(userId)) {
+					String bookId = rs.getString("bookid");
+					String checkInDate = rs.getString("checkinDate");
+					String checkOutDate = rs.getString("checkoutdate");
+					int hotelId = rs.getInt("hotelid");
+					int price = rs.getInt("price");
+					int single = rs.getInt("single");
+					int doub = rs.getInt("double");
+					int quad = rs.getInt("quad");
+					int stayNight = rs.getInt("night");
 					tmp.append("Book ID: " + bookId + "\n" + HotelList.ALLHOTEL[hotelId].toString() + "\n"
 							+ "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
 							+ "Stay nights: " + stayNight + " nights, Total price: " + price + "\n" + "Room:\n Single: "
@@ -176,16 +176,16 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				String bookId = rs.getString("BookId");
-				String userId = rs.getString("UserId");
-				String checkInDate = rs.getString("CheckInDate");
-				String checkOutDate = rs.getString("CheckOutDate");
-				int hotelId = rs.getInt("HotelId");
-				int single = rs.getInt("Single");
-				int doub = rs.getInt("Double");
-				int quad = rs.getInt("Quad");
-				int stayNight = rs.getInt("Night");
-				int price = rs.getInt("Price");
+				String bookId = rs.getString("bookid");
+				String userId = rs.getString("userid");
+				String checkInDate = rs.getString("checkindate");
+				String checkOutDate = rs.getString("checkoutdate");
+				int hotelId = rs.getInt("hotelid");
+				int single = rs.getInt("single");
+				int doub = rs.getInt("double");
+				int quad = rs.getInt("quad");
+				int stayNight = rs.getInt("night");
+				int price = rs.getInt("price");
 				System.out.println(
 						"Book ID: " + bookId + ", User ID: " + userId + "\n" + HotelList.ALLHOTEL[hotelId].toString()
 								+ "\n" + "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
@@ -220,16 +220,16 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				if (rs.getString("BookId").equals(bookId)) {
-					String userId = rs.getString("UserId");
-					String checkInDate = rs.getString("CheckInDate");
-					String checkOutDate = rs.getString("CheckOutDate");
-					int hotelId = rs.getInt("HotelId");
-					int single = rs.getInt("Single");
-					int doub = rs.getInt("Double");
-					int quad = rs.getInt("Quad");
-					int stayNight = rs.getInt("Night");
-					int price = rs.getInt("Price");
+				if (rs.getString("bookid").equals(bookId)) {
+					String userId = rs.getString("userid");
+					String checkInDate = rs.getString("checkindate");
+					String checkOutDate = rs.getString("checkoutdate");
+					int hotelId = rs.getInt("hotelid");
+					int single = rs.getInt("single");
+					int doub = rs.getInt("double");
+					int quad = rs.getInt("quad");
+					int stayNight = rs.getInt("night");
+					int price = rs.getInt("price");
 					System.out.println("Book ID: " + bookId + ", User ID: " + userId + "\n"
 							+ HotelList.ALLHOTEL[hotelId].toString() + "\n" + "Check-in date: " + checkInDate
 							+ ", Check-out date: " + checkOutDate + "\n" + "Stay nights: " + stayNight
@@ -266,14 +266,14 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				if (rs.getString("BookId").equals(bookId)) {
-					String userId = rs.getString("UserId");
-					String checkInDate = rs.getString("CheckInDate");
-					String checkOutDate = rs.getString("CheckOutDate");
-					int hotelId = rs.getInt("HotelId");
-					int[] roomCombination = { rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad") };
-					int stayNight = rs.getInt("Night");
-					int price = rs.getInt("Price");
+				if (rs.getString("bookid").equals(bookId)) {
+					String userId = rs.getString("userid");
+					String checkInDate = rs.getString("checkindate");
+					String checkOutDate = rs.getString("checkoutdate");
+					int hotelId = rs.getInt("hotelId");
+					int[] roomCombination = { rs.getInt("single"), rs.getInt("double"), rs.getInt("quad") };
+					int stayNight = rs.getInt("night");
+					int price = rs.getInt("price");
 					tmpBook = new Book(hotelId, roomCombination, stringToDate(checkInDate), stayNight, bookId, userId);
 				}
 			}
@@ -305,7 +305,7 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				String tmpId = rs.getString("BookId");
+				String tmpId = rs.getString("bookid");
 				if (tmpId.equals(bookId)) {
 					String sql = "";
 					sql = "UPDATE BOOK set Single = '" + newSingle + "' where BookId='" + bookId + "';";
@@ -350,7 +350,7 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				String tmpId = rs.getString("BookId");
+				String tmpId = rs.getString("bookid");
 				if (tmpId.equals(bookId)) {
 					String sql = "UPDATE BOOK set Night = '" + night + "',CheckInDate = '" + checkInDate
 							+ "',CheckOutDate = '" + checkOutDate + "',Price = '" + price + "' where BookId='" + bookId
@@ -411,7 +411,7 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				if (rs.getString("BookId").equals(bookId)) {
+				if (rs.getString("bookid").equals(bookId)) {
 					get = true;
 				}
 			}
@@ -439,14 +439,14 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				String bookId = rs.getString("BookId");
-				String userId = rs.getString("UserId");
-				String checkInDate = rs.getString("CheckInDate");
-				String checkOutDate = rs.getString("CheckOutDate");
-				int night = rs.getInt("Night");
-				int hotelId = rs.getInt("HotelId");
-				int[] roomCombination = { rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad") };
-				int price = rs.getInt("Price");
+				String bookId = rs.getString("bookid");
+				String userId = rs.getString("userid");
+				String checkInDate = rs.getString("checkindate");
+				String checkOutDate = rs.getString("checkoutdate");
+				int night = rs.getInt("night");
+				int hotelId = rs.getInt("hotelid");
+				int[] roomCombination = { rs.getInt("single"), rs.getInt("double"), rs.getInt("quad") };
+				int price = rs.getInt("price");
 				Book newBook = new Book(hotelId, roomCombination, stringToDate(checkInDate), night, bookId, userId);
 				bookList.add(newBook);
 
@@ -474,7 +474,7 @@ public class BookOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
 			while (rs.next()) {
-				String bookId = rs.getString("BookId");
+				String bookId = rs.getString("bookid");
 				int id = Integer.parseInt(bookId);
 				bookedId = (id > bookedId) ? id : bookedId;
 			}
