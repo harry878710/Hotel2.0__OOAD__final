@@ -1,6 +1,5 @@
 package bookAndUser;
 
-import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -38,31 +37,9 @@ public class BookOperation {
 	 * System.out.println("Table created successfully"); }
 	 */
 
-	private static final String url = "jdbc:postgresql://140.112.77.36/book_postgre";
-	private static final String user = "postgres";
-	private static final String passwords = "harry8787";
-
-	/**
-	 * Connect to the PostgreSQL database
-	 *
-	 * @return a Connection object
-	 */
-	public Connection connect() {
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, user, passwords);
-			System.out.println("Connected to the PostgreSQL server successfully.");
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-		return conn;
-	}
-
 	public static void main(String[] args) {
-		//addBook("01111", 149, 2, 3, 1, 5004, 2, "01/04/2020", "01/06/2020", "rayray");
-		//deleteBook("01111");
-		showBook("00001");
+		// showBook("00001");
+		// addBook("0110", 50, 1, 2, 0, 1580, 10, "2019/12/25", "2020/01/03", "rayray");
 	}
 
 	public static ArrayList<String> bookIdListOfUser(String userId) {
@@ -70,8 +47,8 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -97,8 +74,8 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -142,10 +119,10 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully");
+			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			String sql = "INSERT INTO book (BookId,HotelId,Single,Double,Quad,Price,Night,CheckInDate,CheckOutDate,UserId)"
@@ -160,7 +137,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Records created successfully");
+		// System.out.println("Records created successfully");
 
 	}
 
@@ -170,10 +147,10 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully");
+			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
@@ -202,7 +179,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Operation done successfully");
+		// System.out.println("Operation done successfully");
 
 	}
 
@@ -214,10 +191,10 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully");
+			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM BOOK;");
@@ -248,7 +225,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Operation done successfully");
+		// System.out.println("Operation done successfully");
 
 	}
 
@@ -260,8 +237,8 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -276,7 +253,8 @@ public class BookOperation {
 					int[] roomCombination = { rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad") };
 					int stayNight = rs.getInt("Night");
 					int price = rs.getInt("Price");
-					tmpBook = new Book(hotelId, roomCombination, stringToDate(checkInDate), stayNight, bookId, userId);
+					tmpBook = new Book(hotelId, roomCombination,stringToDate(checkInDate),
+							stayNight, bookId, userId);
 				}
 			}
 			rs.close();
@@ -291,7 +269,7 @@ public class BookOperation {
 
 	}
 
-	public static void changeBook(String bookId, int newSingle, int newDouble, int newQuad, int price) {
+	public static void changeBook(String bookId, int newSingle, int newDouble, int newQuad,int price) {
 		if (!hasBook(bookId)) {
 			System.out.println("The book ID is not existed.");
 			return;
@@ -299,8 +277,8 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -336,7 +314,7 @@ public class BookOperation {
 		// System.out.println("Operation done successfully");
 	}
 
-	public static void changeBook(String bookId, int night, String checkInDate, String checkOutDate, int price) {
+	public static void changeBook(String bookId, int night, String checkInDate, String checkOutDate,int price) {
 		if (!hasBook(bookId)) {
 			System.out.println("The book ID is not existed.");
 			return;
@@ -344,8 +322,8 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -355,8 +333,7 @@ public class BookOperation {
 				String tmpId = rs.getString("BookId");
 				if (tmpId.equals(bookId)) {
 					String sql = "UPDATE BOOK set Night = '" + night + "',CheckInDate = '" + checkInDate
-							+ "',CheckOutDate = '" + checkOutDate + "',Price = '" + price + "' where BookId='" + bookId
-							+ "';";
+							+ "',CheckOutDate = '" + checkOutDate + "',Price = '"+price+"' where BookId='" + bookId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
 					System.out.println("Changed book successfully.");
@@ -382,10 +359,10 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
-			 System.out.println("Opened database successfully");
+			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			String sql = "DELETE from BOOK where BookId='" + bookId + "';";
@@ -398,7 +375,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		 System.out.println("Operation done successfully");
+		// System.out.println("Operation done successfully");
 	}
 
 	public static boolean hasBook(String bookId) {
@@ -406,8 +383,8 @@ public class BookOperation {
 		Statement stmt = null;
 		boolean get = false;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 
 			stmt = c.createStatement();
@@ -433,8 +410,8 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -447,11 +424,11 @@ public class BookOperation {
 				String checkOutDate = rs.getString("CheckOutDate");
 				int night = rs.getInt("Night");
 				int hotelId = rs.getInt("HotelId");
-				int[] roomCombination = { rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad") };
+				int[] roomCombination = {rs.getInt("Single"), rs.getInt("Double"), rs.getInt("Quad")};
 				int price = rs.getInt("Price");
-				Book newBook = new Book(hotelId, roomCombination, stringToDate(checkInDate), night, bookId, userId);
+				Book newBook = new Book(hotelId, roomCombination,stringToDate(checkInDate),night,bookId,userId);
 				bookList.add(newBook);
-
+				
 			}
 			rs.close();
 			stmt.close();
@@ -468,8 +445,8 @@ public class BookOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:book.db");
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -490,7 +467,7 @@ public class BookOperation {
 
 		return bookedId + 1;
 	}
-
+	
 	private static Date stringToDate(String str) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));

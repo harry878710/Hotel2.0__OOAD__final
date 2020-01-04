@@ -1,6 +1,5 @@
 package hotelAndRoom;
 
-import java.sql.SQLException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -58,26 +57,6 @@ public class HotelOperation {
 	 * hotelJSON.getInt("HotelStar"), hotelJSON.getString("Locality"),
 	 * hotelJSON.getString("Street-Address"), roomCombination, roomPrice, 0); } }
 	 */
-	private static final String url = "jdbc:postgresql://140.112.77.36/hotel_postgre";
-	private static final String user = "postgres";
-	private static final String passwords = "harry8787";
-
-	/**
-	 * Connect to the PostgreSQL database
-	 *
-	 * @return a Connection object
-	 */
-	public Connection connect() {
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, user, passwords);
-			System.out.println("Connected to the PostgreSQL server successfully.");
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-		return conn;
-	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -89,8 +68,8 @@ public class HotelOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
@@ -114,8 +93,8 @@ public class HotelOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
@@ -124,7 +103,8 @@ public class HotelOperation {
 					+ "VALUES (" + hotel.getId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','"
 					+ hotel.getAddress() + "'," + hotel.getRoomCombination()[0] + "," + hotel.getRoomCombination()[1]
 					+ "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + ","
-					+ hotel.getRoomInfo()[1].getPrice() + "," + hotel.getRoomInfo()[0].getPrice() + "," + 0 + ");";
+					+ hotel.getRoomInfo()[1].getPrice() + "," + hotel.getRoomInfo()[0].getPrice() + ","
+					+ hotel.getLandlord() + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.commit();
@@ -141,10 +121,10 @@ public class HotelOperation {
 		Statement stmt = null;
 		int size = 0;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully");
+			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM HOTEL;");
@@ -158,7 +138,7 @@ public class HotelOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Operation done successfully");
+		// System.out.println("Operation done successfully");
 		return size;
 	}
 
@@ -168,10 +148,10 @@ public class HotelOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			c = DriverManager.getConnection(url, user, passwords);
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully");
+			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM HOTEL;");
@@ -181,12 +161,13 @@ public class HotelOperation {
 				int star = rs.getInt("STAR");
 				String locality = rs.getString("LOCALITY");
 				String address = rs.getString("ADDRESS");
+				String landlord = rs.getString("LANDLOD");
 				int[] roomCombination = { rs.getInt("NUMBER1"), rs.getInt("NUMBER2"), rs.getInt("NUMBER4") };
 				Room[] roomInfo = new Room[3];
 				roomInfo[0] = new Room("Single", rs.getInt("PRICE1"));
 				roomInfo[1] = new Room("Double", rs.getInt("PRICE2"));
 				roomInfo[2] = new Room("Quad", rs.getInt("PRICE4"));
-				newHotelList[i] = new Hotel(hotelID, star, locality, address, roomCombination, roomInfo);
+				newHotelList[i] = new Hotel(hotelID, star, locality, address, roomCombination, roomInfo, landlord);
 				i++;
 			}
 			rs.close();
@@ -196,7 +177,6 @@ public class HotelOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Operation done successfully");
 		return newHotelList;
 	}
 

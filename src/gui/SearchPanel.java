@@ -212,6 +212,8 @@ public class SearchPanel extends JPanel {
 		
 		JComboBox<String> comboBox_RoomCombination = new JComboBox<String>();
 		comboBox_RoomCombination.setBounds(507, 94, 99, 29);
+		comboBox_RoomCombination.setFont(new Font("Agency FB", Font.PLAIN, 18));
+		comboBox_RoomCombination.setBackground(SystemColor.inactiveCaptionBorder);
 		comboBox_RoomCombination.addItem("1,0,0");
 		comboBox_RoomCombination.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {

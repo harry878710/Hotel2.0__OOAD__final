@@ -1,11 +1,11 @@
 package bookAndUser;
 
-public class User implements Member{
+public class Landlord implements Member {
 	private String name;
 	private String password;
 	private boolean login = false;
-	
-	public User(String n, String password) {
+
+	public Landlord(String n, String password) {
 		this.name = n;
 		this.password = password;
 	}
@@ -21,4 +21,5 @@ public class User implements Member{
 	public String getName() {
 		return this.name;
 	}
+
 }

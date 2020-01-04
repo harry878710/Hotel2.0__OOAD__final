@@ -6,6 +6,7 @@ public class Hotel {
 	private int star;
 	private String locality;
 	private String address;
+	private String landlord = "0";
 	private int[] roomCombination = new int[3];
 	private Room[] roomInfo = new Room[3];
 
@@ -14,6 +15,20 @@ public class Hotel {
 		this.star = star;
 		this.locality = locality;
 		this.address = address;
+		for (int i = 0; i < 3; i++) {
+			this.roomCombination[i] = roomCombination[i];
+		}
+		for (int i = 0; i < 3; i++) {
+			this.roomInfo[i] = new Room(roomInfo[i]);
+		}
+	}
+	
+	public Hotel(int id, int star, String locality, String address, int[] roomCombination, Room[] roomInfo,String landlord) {
+		this.id = id;
+		this.star = star;
+		this.locality = locality;
+		this.address = address;
+		this.landlord = landlord;
 		for (int i = 0; i < 3; i++) {
 			this.roomCombination[i] = roomCombination[i];
 		}
@@ -36,6 +51,10 @@ public class Hotel {
 
 	public String getAddress() {
 		return address;
+	}
+	
+	public String getLandlord() {
+		return landlord;
 	}
 
 	public int[] getRoomCombination() {
@@ -64,8 +83,7 @@ public class Hotel {
 		} else if (getClass() != obj.getClass()) {
 			return false;
 		} else {
-			return id == ((Hotel) obj).id && star == ((Hotel) obj).star && locality == ((Hotel) obj).locality
-					&& address == ((Hotel) obj).address;
+			return id == ((Hotel) obj).id;
 		}
 	}
 
