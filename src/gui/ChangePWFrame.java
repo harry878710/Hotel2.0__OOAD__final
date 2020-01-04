@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import member.LandlordList;
+import member.LandlordOperation;
 import member.UserList;
 import member.UserOperation;
 import java.awt.GridLayout;
@@ -162,44 +164,103 @@ public class ChangePWFrame extends JFrame {
 
 		btnChange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (txtPleaseDontEnter.getText().equals(UserOperation.whoIsLoggedin())) {
-					int op = UserOperation.changePassword(txtPleaseDontEnter.getText(),
-							new String(textFieldOld.getPassword()), new String(textFieldNew.getPassword()),
-							new String(textFieldConfirm.getPassword()));
-					if (op == 3) {
-						new PopFrame("Incomplete data");
-						textFieldOld.setText("");
-						textFieldNew.setText("");
-						textFieldConfirm.setText("");
-					}else if (op == 1) {
-						new PopFrame("Your old password is wrong");
-						textFieldOld.setText("");
-						textFieldNew.setText("");
-						textFieldConfirm.setText("");
-					} else if (op == 2) {
-						new PopFrame("New Password doesn't match");
-						textFieldOld.setText("");
-						textFieldNew.setText("");
-						textFieldConfirm.setText("");
-					} else if (op == 4) {
-						new PopFrame("DON'T use the same password");
-						textFieldOld.setText("");
-						textFieldNew.setText("");
-						textFieldConfirm.setText("");
-					} else if (op == 0) {
-						UserList.userList = UserOperation.uploadUserList();
-						for (int i = 0; i < UserList.userList.size(); i++) {
-							if (UserList.userList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
-								UserList.userList.get(i).setLogin(true);
-							} else {
-								UserList.userList.get(i).setLogin(false);
+				if (UserOperation.anyoneLoggedin()) {
+					if (txtPleaseDontEnter.getText().equals(UserOperation.whoIsLoggedin())) {
+						int op = UserOperation.changePassword(txtPleaseDontEnter.getText(),
+								new String(textFieldOld.getPassword()), new String(textFieldNew.getPassword()),
+								new String(textFieldConfirm.getPassword()));
+						switch (op) {
+						case 3:
+							new PopFrame("Incomplete data");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 1:
+							new PopFrame("Your old password is wrong");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 2:
+							new PopFrame("New Password doesn't match");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 4:
+							new PopFrame("DON'T use the same password");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 0:
+							UserList.userList = UserOperation.uploadUserList();
+							for (int i = 0; i < UserList.userList.size(); i++) {
+								if (UserList.userList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
+									UserList.userList.get(i).setLogin(true);
+								} else {
+									UserList.userList.get(i).setLogin(false);
+								}
 							}
+							new PopFrame("Change success");
+							dispose();
+							break;
+						default:
+							new PopFrame("error: fatal error.");
 						}
-						new PopFrame("Change success");
-						dispose();
+					} else {
+						new PopFrame("Liar ! U NOT " + txtPleaseDontEnter.getText());
 					}
-				} else {
-					new PopFrame("Liar ! U NOT " + txtPleaseDontEnter.getText());
+				} else if (LandlordOperation.anyoneLoggedin()) {
+					if (txtPleaseDontEnter.getText().equals(LandlordOperation.whoIsLoggedin())) {
+						int op = LandlordOperation.changePassword(txtPleaseDontEnter.getText(),
+								new String(textFieldOld.getPassword()), new String(textFieldNew.getPassword()),
+								new String(textFieldConfirm.getPassword()));
+						switch (op) {
+						case 3:
+							new PopFrame("Incomplete data");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 1:
+							new PopFrame("Your old password is wrong");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 2:
+							new PopFrame("New Password doesn't match");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 4:
+							new PopFrame("DON'T use the same password");
+							textFieldOld.setText("");
+							textFieldNew.setText("");
+							textFieldConfirm.setText("");
+							break;
+						case 0:
+							LandlordList.landlordList = LandlordOperation.uploadUserList();
+							for (int i = 0; i < LandlordList.landlordList.size(); i++) {
+								if (LandlordList.landlordList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
+									LandlordList.landlordList.get(i).setLogin(true);
+								} else {
+									LandlordList.landlordList.get(i).setLogin(false);
+								}
+							}
+							new PopFrame("Change success");
+							dispose();
+							break;
+						default:
+							new PopFrame("error: fatal error.");
+						}
+					} else {
+						new PopFrame("Liar ! U NOT " + txtPleaseDontEnter.getText());
+					}
+
 				}
 			}
 		});

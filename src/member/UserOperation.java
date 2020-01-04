@@ -49,7 +49,11 @@ public class UserOperation implements MemberOperation{
 	// If the id has been used, it would cause an exception.
 	// We can turn it to a pop-up window later.
 	public static int addUser(String id, String password, String checkPass) {
-		return MemberOperation.addUser(id, password, checkPass, "user");
+		int op =  MemberOperation.addUser(id, password, checkPass, "user");
+		if (op == 0) {
+			UserList.userList = uploadUserList();
+		}
+		return op;
 //		if (!password.equals(checkPass)) {
 //			return 1;
 //		}

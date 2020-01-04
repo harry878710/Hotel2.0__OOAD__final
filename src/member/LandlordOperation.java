@@ -15,7 +15,11 @@ public class LandlordOperation implements MemberOperation {
 	// If the id has been used, it would cause an exception.
 	// We can turn it to a pop-up window later.
 	public static int addUser(String id, String password, String checkPass) {
-		return MemberOperation.addUser(id, password, checkPass, "landlord");
+		int op = MemberOperation.addUser(id, password, checkPass, "landlord");
+		if (op == 0) {
+			LandlordList.landlordList = uploadUserList();
+		}
+		return op;
 
 	}
 
@@ -88,7 +92,7 @@ public class LandlordOperation implements MemberOperation {
 		String toReturn = new String(tmp);
 		return toReturn;
 	}
-	
+
 	public static String showAllMyHotel(String landlord) {
 		int[] hotelIdList = listMyHotelId(landlord);
 		StringBuffer tmp = new StringBuffer("");

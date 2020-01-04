@@ -102,35 +102,37 @@ public class HotelOperation {
 			System.exit(0);
 		}
 		System.out.println("Records created successfully");
+		HotelList.ALLHOTEL = uploadHotelList();
+		HotelList.TOTAL_NUMBER_OF_HOTEL = sizeOfHotelList();
 		return 0;
 	}
 
-	public static void addHotelToDB(Hotel hotel) {
-		Connection c = null;
-		Statement stmt = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
-			c.setAutoCommit(false);
-			System.out.println("Opened database successfully");
-
-			stmt = c.createStatement();
-			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
-					+ "VALUES (" + nextHotelId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','"
-					+ hotel.getAddress() + "'," + hotel.getRoomCombination()[0] + "," + hotel.getRoomCombination()[1]
-					+ "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + ","
-					+ hotel.getRoomInfo()[1].getPrice() + "," + hotel.getRoomInfo()[0].getPrice() + ","
-					+ hotel.getLandlord() + ");";
-			stmt.executeUpdate(sql);
-			stmt.close();
-			c.commit();
-			c.close();
-		} catch (Exception e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
-		}
-		System.out.println("Records created successfully");
-	}
+//	public static void addHotelToDB(Hotel hotel) {
+//		Connection c = null;
+//		Statement stmt = null;
+//		try {
+//			Class.forName("org.sqlite.JDBC");
+//			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+//			c.setAutoCommit(false);
+//			System.out.println("Opened database successfully");
+//
+//			stmt = c.createStatement();
+//			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
+//					+ "VALUES (" + nextHotelId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','"
+//					+ hotel.getAddress() + "'," + hotel.getRoomCombination()[0] + "," + hotel.getRoomCombination()[1]
+//					+ "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + ","
+//					+ hotel.getRoomInfo()[1].getPrice() + "," + hotel.getRoomInfo()[0].getPrice() + ","
+//					+ hotel.getLandlord() + ");";
+//			stmt.executeUpdate(sql);
+//			stmt.close();
+//			c.commit();
+//			c.close();
+//		} catch (Exception e) {
+//			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//			System.exit(0);
+//		}
+//		System.out.println("Records created successfully");
+//	}
 
 	public static void editHotelRoomAndPrice(int hotelId, int[] roomCombination, int[] roomPrice) {
 		
