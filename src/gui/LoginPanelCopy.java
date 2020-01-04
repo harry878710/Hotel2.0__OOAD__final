@@ -10,7 +10,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import bookAndUser.LandlordOperation;
 import bookAndUser.UserList;
 import bookAndUser.UserOperation;
 
@@ -25,8 +24,8 @@ import java.awt.SystemColor;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 
-public class LoginPanel extends JPanel {
-	private String identity = "no_identity";
+public class LoginPanelCopy extends JPanel {
+	private String identity;
 	private JTextField textFieldName;
 	private JPasswordField textFieldPassword;
 
@@ -34,8 +33,8 @@ public class LoginPanel extends JPanel {
 	private JButton btnBackToMenu;
 
 	private ButtonGroup buttonGroup = new ButtonGroup();
-	private JRadioButton rdbtn_Tourist;
-	private JRadioButton rdbtn_Landlord;
+	private JRadioButton rdbtnNewRadioButton_Tourist;
+	private JRadioButton rdbtnNewRadioButton_Landlord;
 
 	public String getName() {
 		return textFieldName.getText();
@@ -56,7 +55,7 @@ public class LoginPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public LoginPanel() {
+	public LoginPanelCopy() {
 		setBackground(new Color(95, 158, 160));
 		setSize(1200, 900);
 		setLayout(null);
@@ -129,25 +128,25 @@ public class LoginPanel extends JPanel {
 		btnBackToMenu.setBounds(105, 13, 194, 59);
 		add(btnBackToMenu);
 
-		rdbtn_Tourist = new JRadioButton("I'm Tourist");
-		rdbtn_Tourist.setBounds(916, 88, 105, 23);
-		add(rdbtn_Tourist);
-		buttonGroup.add(rdbtn_Tourist);
-		rdbtn_Tourist.addActionListener(new ActionListener() {
+		rdbtnNewRadioButton_Tourist = new JRadioButton("I'm Tourist");
+		rdbtnNewRadioButton_Tourist.setBounds(916, 88, 105, 23);
+		add(rdbtnNewRadioButton_Tourist);
+		buttonGroup.add(rdbtnNewRadioButton_Tourist);
+		rdbtnNewRadioButton_Tourist.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				identity = rdbtn_Tourist.getText();
+				identity = rdbtnNewRadioButton_Tourist.getText();
 			}
 		});
 
-		rdbtn_Landlord = new JRadioButton("I'm Landlord");
-		rdbtn_Landlord.setBounds(916, 156, 105, 23);
-		add(rdbtn_Landlord);
-		buttonGroup.add(rdbtn_Landlord);
-		rdbtn_Landlord.addActionListener(new ActionListener() {
+		rdbtnNewRadioButton_Landlord = new JRadioButton("I'm Landlord");
+		rdbtnNewRadioButton_Landlord.setBounds(916, 156, 105, 23);
+		add(rdbtnNewRadioButton_Landlord);
+		buttonGroup.add(rdbtnNewRadioButton_Landlord);
+		rdbtnNewRadioButton_Landlord.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				identity = rdbtn_Landlord.getText();
+				identity = rdbtnNewRadioButton_Tourist.getText();
 			}
 		});
 	}
@@ -157,54 +156,25 @@ public class LoginPanel extends JPanel {
 		// click the Log in button
 		getBtnLogIn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(identity);
-				switch (identity) {
-				case "I'm Tourist":
-					int op = UserOperation.userLogin(getName(), getPassword());
-					switch (op) {
-					case 0:
-						mainframe.activateUserMenuPanel();
-						setVisible(false);
-						break;
-					case 1:
-						new PopFrame("error: Incorrect password.");
-						break;
-					case 2:
-						new PopFrame("error: Unable to find this. Please check your user name.");
-						break;
-					case 3:
-						new PopFrame("error: Please fill all the blanks.");
-						break;
-					default:
-						new PopFrame("error: Fatal error.");
-
-					}
+				int op = UserOperation.userLogin(getName(), getPassword());
+				switch (op) {
+				case 0:
+					mainframe.activateUserMenuPanel();
+					setVisible(false);
 					break;
-				case "I'm Landlord":
-					int op_land = LandlordOperation.userLogin(getName(), getPassword());
-					switch (op_land) {
-					case 0:
-						mainframe.activateLandlordMenuPanel();
-						setVisible(false);
-						break;
-					case 1:
-						new PopFrame("error: Incorrect password.");
-						break;
-					case 2:
-						new PopFrame("error: Unable to find this. Please check your user name.");
-						break;
-					case 3:
-						new PopFrame("error: Please fill all the blanks.");
-						break;
-					default:
-						new PopFrame("error: Fatal error.");
-
-					}
+				case 1:
+					new PopFrame("error: Incorrect password.");
+					break;
+				case 2:
+					new PopFrame("error: Unable to find this. Please check your user name.");
+					break;
+				case 3:
+					new PopFrame("error: Please fill all the blanks.");
 					break;
 				default:
-					new PopFrame("error: Identity must be chosen");
-				}
+					new PopFrame("error: Fatal error.");
 
+				}
 			}
 		});
 		// click the Back to Menu button
