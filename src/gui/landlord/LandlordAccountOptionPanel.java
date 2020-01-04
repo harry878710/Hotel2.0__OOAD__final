@@ -70,6 +70,7 @@ public class LandlordAccountOptionPanel extends JPanel {
 				new ChangePWFrame().setVisible(true);
 			}
 		});
+		setVisible(true);
 	}
 
 }

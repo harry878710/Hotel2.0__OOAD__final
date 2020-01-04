@@ -46,9 +46,9 @@ public class LandlordAddHotelPanel extends JPanel {
 			comboBox_Star.addItem(i);
 		}
 		// Add options of hotel locality
-		comboBox_City.addItem("¥x¥_");
-		comboBox_City.addItem("¥x¤¤");
-		comboBox_City.addItem("°ª¶¯");
+		comboBox_City.addItem("ï¿½xï¿½_");
+		comboBox_City.addItem("ï¿½xï¿½ï¿½");
+		comboBox_City.addItem("ï¿½ï¿½ï¿½ï¿½");
 
 		// Add options of single room number
 		for (int i = 0; i < 31; i++) {
@@ -76,7 +76,6 @@ public class LandlordAddHotelPanel extends JPanel {
 		btnOk.setBounds(965, 499, 85, 23);
 		add(btnOk);
 
-		System.out.println(comboBox_Star.getSelectedIndex());
 	}
 
 	private void initializeLabels() {
@@ -210,5 +209,6 @@ public class LandlordAddHotelPanel extends JPanel {
 
 			}
 		});
+		setVisible(true);
 	}
 }

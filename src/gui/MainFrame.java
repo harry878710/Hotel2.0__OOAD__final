@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 
 import gui.landlord.LandlordAccountOptionPanel;
 import gui.landlord.LandlordAddHotelPanel;
+import gui.landlord.LandlordEditHotelPanel;
 import gui.landlord.LandlordHotelsPanel;
 import gui.landlord.LandlordMenuPanel;
 import gui.landlord.LandlordOrderPanel;
@@ -36,6 +37,7 @@ public class MainFrame {
 	private LandlordHotelsPanel lhp;
 	private LandlordAddHotelPanel lahp;
 	private LandlordAccountOptionPanel laop;
+	private LandlordEditHotelPanel lehp;
 	
 	Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -138,7 +140,14 @@ public class MainFrame {
 		laop.activateLandlordAccountOptionPanel(this);
 	}
 
+	public void activateLandlordEditHotelPanel() {
+		lehp = new LandlordEditHotelPanel();
+		lehp.activateLandlordEditHotelPanel(this);
+	}
+	
 	public Container getContentPane() {
 		return mainframe.getContentPane();
 	}
+
+	
 }

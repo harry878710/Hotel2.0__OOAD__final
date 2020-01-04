@@ -19,7 +19,7 @@ import gui.MainFrame;
 
 public class LandlordHotelsPanel extends JPanel {
 
-	JButton btnAdd;
+	JButton btnAdd,btnEdit;
 	JButton btnBack;
 
 	/**
@@ -54,6 +54,13 @@ public class LandlordHotelsPanel extends JPanel {
 		btnAdd.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		btnAdd.setBounds(850, 14, 150, 60);
 		add(btnAdd);
+		
+		btnEdit = new JButton("Edit");
+		btnEdit.setOpaque(true);
+		btnEdit.setBackground(new Color(32, 178, 170));
+		btnEdit.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		btnEdit.setBounds(675, 14, 150, 60);
+		add(btnEdit);
 
 		btnBack = new JButton("Back");
 		btnBack.setOpaque(true);
@@ -78,6 +85,13 @@ public class LandlordHotelsPanel extends JPanel {
 				setVisible(false);
 			}
 		});
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainframe.activateLandlordEditHotelPanel();
+				setVisible(false);
+			}
+		});
+		setVisible(true);
 	}
 
 }

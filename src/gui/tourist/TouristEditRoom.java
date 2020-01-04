@@ -89,6 +89,8 @@ public class TouristEditRoom extends JPanel {
 		for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
 			comboBox_Single.addItem(i);
 		}
+		single = BookOperation.getBook(bookId).getRoomCombination()[0];
+		comboBox_Single.setSelectedItem(single);
 		comboBox_Single.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -119,6 +121,8 @@ public class TouristEditRoom extends JPanel {
 		for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
 			comboBox_Double.addItem(i);
 		}
+		dual = BookOperation.getBook(bookId).getRoomCombination()[1];
+		comboBox_Double.setSelectedItem(dual);
 		comboBox_Double.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -143,6 +147,8 @@ public class TouristEditRoom extends JPanel {
 		for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
 			comboBox_Quad.addItem(i);
 		}
+		quad = BookOperation.getBook(bookId).getRoomCombination()[2];
+		comboBox_Quad.setSelectedItem(quad);
 		comboBox_Quad.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -168,14 +174,20 @@ public class TouristEditRoom extends JPanel {
 					for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[0] + 1; i++) {
 						comboBox_Single.addItem(i);
 					}
+					single = BookOperation.getBook(bookId).getRoomCombination()[0];
+					comboBox_Single.setSelectedItem(single);
 					comboBox_Double.removeAllItems();
 					for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[1] + 1; i++) {
 						comboBox_Double.addItem(i);
 					}
+					dual = BookOperation.getBook(bookId).getRoomCombination()[1];
+					comboBox_Double.setSelectedItem(dual);
 					comboBox_Quad.removeAllItems();
 					for (int i = 0; i < Hotel.ALLHOTEL[hotelId].getRoomCombination()[2] + 1; i++) {
 						comboBox_Quad.addItem(i);
 					}
+					quad = BookOperation.getBook(bookId).getRoomCombination()[2];
+					comboBox_Quad.setSelectedItem(quad);					
 					System.out.println("Select " + bookId);
 				}
 			}
