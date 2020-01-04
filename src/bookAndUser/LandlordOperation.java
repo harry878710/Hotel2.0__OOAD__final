@@ -2,6 +2,8 @@ package bookAndUser;
 
 import java.util.ArrayList;
 
+import hotelAndRoom.HotelList;
+
 public class LandlordOperation implements MemberOperation {
 	public static void main(String[] args) {
 
@@ -61,13 +63,33 @@ public class LandlordOperation implements MemberOperation {
 		return toReturn;
 	}
 
-	public static ArrayList<String> hotelsOrders(String landlordName, int hotelId) {
-
-		return null;
+	public static int[] listMyHotelId(String landlordName) {
+		ArrayList<Integer> myHotelId = new ArrayList<Integer>();
+		for (int i = 0; i < HotelList.TOTAL_NUMBER_OF_HOTEL; i++) {
+			if (HotelList.ALLHOTEL[i].getLandlord().equals(landlordName)) {
+				myHotelId.add(HotelList.ALLHOTEL[i].getId());
+			}
+		}
+		int[] toReturn = new int[myHotelId.size()];
+		for (int i = 0; i < myHotelId.size(); i++) {
+			toReturn[i] = myHotelId.get(i);
+		}
+		return toReturn;
 	}
 
-	public static ArrayList<String> listHotels(String landlordName) {
-
+	public static String showThisHotelOrder(int hotelId) {
+		ArrayList<String> bookIdList = BookOperation.listBookIdOfHotel(hotelId);
+		StringBuffer tmp = new StringBuffer("");
+		for (int i = 0; i < bookIdList.size(); i++) {
+			tmp.append(BookOperation.showBook(bookIdList.get(i)));
+		}
+		String toReturn = new String(tmp);
+		return toReturn;
+	}
+	
+	public static String showAllMyHotel(String landlord) {
+		
+		
 		return null;
 	}
 
