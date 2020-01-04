@@ -1,6 +1,9 @@
-package gui;
+package gui.tourist;
 
 import javax.swing.JPanel;
+
+import gui.MainFrame;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +13,7 @@ import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-public class UserMenuPanel extends JPanel {
+public class TouristMenuPanel extends JPanel {
 	JButton btnRoom;
 	JButton btnMyOrder;
 	JButton btnUserOptions;
@@ -18,7 +21,7 @@ public class UserMenuPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public UserMenuPanel() {
+	public TouristMenuPanel() {
 		setSize(900, 600);
 		setLayout(new GridLayout(3, 1, 0, 0));
 

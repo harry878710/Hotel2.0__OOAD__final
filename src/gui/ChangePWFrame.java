@@ -16,8 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 import member.LandlordList;
 import member.LandlordOperation;
-import member.UserList;
-import member.UserOperation;
+import member.TouristList;
+import member.TouristOperation;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -164,9 +164,9 @@ public class ChangePWFrame extends JFrame {
 
 		btnChange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (UserOperation.anyoneLoggedin()) {
-					if (txtPleaseDontEnter.getText().equals(UserOperation.whoIsLoggedin())) {
-						int op = UserOperation.changePassword(txtPleaseDontEnter.getText(),
+				if (TouristOperation.anyoneLoggedin()) {
+					if (txtPleaseDontEnter.getText().equals(TouristOperation.whoIsLoggedin())) {
+						int op = TouristOperation.changePassword(txtPleaseDontEnter.getText(),
 								new String(textFieldOld.getPassword()), new String(textFieldNew.getPassword()),
 								new String(textFieldConfirm.getPassword()));
 						switch (op) {
@@ -195,12 +195,12 @@ public class ChangePWFrame extends JFrame {
 							textFieldConfirm.setText("");
 							break;
 						case 0:
-							UserList.userList = UserOperation.uploadUserList();
-							for (int i = 0; i < UserList.userList.size(); i++) {
-								if (UserList.userList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
-									UserList.userList.get(i).setLogin(true);
+							TouristList.userList = TouristOperation.uploadUserList();
+							for (int i = 0; i < TouristList.userList.size(); i++) {
+								if (TouristList.userList.get(i).getName().equals(txtPleaseDontEnter.getText())) {
+									TouristList.userList.get(i).setLogin(true);
 								} else {
-									UserList.userList.get(i).setLogin(false);
+									TouristList.userList.get(i).setLogin(false);
 								}
 							}
 							new PopFrame("Change success");

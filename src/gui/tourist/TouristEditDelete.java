@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -11,8 +11,8 @@ import java.util.Iterator;
 import javax.swing.SwingConstants;
 
 import book_Hotel_Room.BookOperation;
-import member.UserList;
-import member.UserOperation;
+import member.TouristList;
+import member.TouristOperation;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -20,14 +20,14 @@ import javax.swing.JComboBox;
 
 import java.awt.Color;
 
-public class EditOrderDelete extends JPanel {
+public class TouristEditDelete extends JPanel {
 	JButton btnConfirm;
 	String bookId;
 
 	/**
 	 * Create the panel.
 	 */
-	public EditOrderDelete() {
+	public TouristEditDelete() {
 		setBackground(new Color(95, 158, 160));
 		setSize(540, 720);
 		setLayout(null);
@@ -43,7 +43,7 @@ public class EditOrderDelete extends JPanel {
 		comboBox_ID.setBackground(new Color(240, 255, 240));
 		comboBox_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_ID.setBounds(14, 159, 498, 73);
-		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(UserOperation.whoIsLoggedin());
+		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(TouristOperation.whoIsLoggedin());
 		  ArrayList<String> idListsort = new ArrayList<String>();
 		  int x = idListUnsort.size();
 		  for (int i = 0; i < x; i++) {

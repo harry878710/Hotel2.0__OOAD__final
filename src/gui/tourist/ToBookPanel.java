@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,8 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import member.UserList;
-import member.UserOperation;
+import gui.LoginPanel;
+import gui.MainFrame;
+import gui.PopFrame;
+import member.TouristList;
+import member.TouristOperation;
 
 import operation.SearchAndBook;
 import java.awt.Font;
@@ -81,11 +84,11 @@ public class ToBookPanel extends JPanel {
 		});
 		getBtnConfirm().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (UserOperation.anyoneLoggedin()) {
+				if (TouristOperation.anyoneLoggedin()) {
 					String checkOutDate = dateToString(
 							calculateCheckOutDate(stringToDate(bd.getCheckInDate()), bd.getNight()));
 					String bookId = new SearchAndBook().commitBook(bd.getCheckInDate(), checkOutDate, bd.getHotelId(),
-							UserOperation.whoIsLoggedin(), bd.getRoomCombination());
+							TouristOperation.whoIsLoggedin(), bd.getRoomCombination());
 					new PopFrame("BOOK SUCCESS!\nYour book ID is " + bookId);
 					mainframe.activateUserMenuPanel();
 					setVisible(false);
@@ -97,13 +100,13 @@ public class ToBookPanel extends JPanel {
 					loginpane.getBtnLogIn().addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if (!loginpane.getName().equals("") && !loginpane.getPassword().equals("")) {
-								if (UserOperation.hasUser(loginpane.getName())) {
-									if (UserOperation.checkPassword(loginpane.getName(), loginpane.getPassword())) {
-										for (int i = 0; i < UserList.userList.size(); i++) {
-											if (loginpane.getName().equals(UserList.userList.get(i).getName())) {
-												UserList.userList.get(i).setLogin(true);
+								if (TouristOperation.hasUser(loginpane.getName())) {
+									if (TouristOperation.checkPassword(loginpane.getName(), loginpane.getPassword())) {
+										for (int i = 0; i < TouristList.userList.size(); i++) {
+											if (loginpane.getName().equals(TouristList.userList.get(i).getName())) {
+												TouristList.userList.get(i).setLogin(true);
 											} else {
-												UserList.userList.get(i).setLogin(false);
+												TouristList.userList.get(i).setLogin(false);
 											}
 										}
 										setVisible(true);

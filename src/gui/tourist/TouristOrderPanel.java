@@ -1,12 +1,13 @@
-package gui;
+package gui.tourist;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import book_Hotel_Room.BookOperation;
-import member.UserList;
-import member.UserOperation;
+import gui.MainFrame;
+import member.TouristList;
+import member.TouristOperation;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -17,14 +18,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.SystemColor;
 
-public class MyOrderPanel extends JPanel {
+public class TouristOrderPanel extends JPanel {
 	JButton btnEditOrder;
 	JButton btnBack;
 
 	/**
 	 * Create the panel.
 	 */
-	public MyOrderPanel() {
+	public TouristOrderPanel() {
 		setBackground(new Color(95, 158, 160));
 		setSize(1080, 720);
 		setLayout(null);
@@ -32,11 +33,11 @@ public class MyOrderPanel extends JPanel {
 		JTextArea textArea = new JTextArea(10, 40);
 		textArea.setBackground(new Color(240, 255, 240));
 		textArea.setFont(new Font("�L�n������", Font.PLAIN, 18));
-		String myBookList = (BookOperation.bookOfUser(UserOperation.whoIsLoggedin()));
+		String myBookList = (BookOperation.bookOfUser(TouristOperation.whoIsLoggedin()));
 		if (!myBookList.equals("")) {
-			textArea.setText("User Id :" + UserOperation.whoIsLoggedin() + "\n\n" + myBookList);
+			textArea.setText("User Id :" + TouristOperation.whoIsLoggedin() + "\n\n" + myBookList);
 		} else {
-			textArea.setText("User Id :" + UserOperation.whoIsLoggedin() + "\n\n" + "No order yet.");
+			textArea.setText("User Id :" + TouristOperation.whoIsLoggedin() + "\n\n" + "No order yet.");
 		}
 		textArea.setSelectionStart(0);
 		textArea.setSelectionEnd(0);

@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,8 +29,8 @@ import javax.swing.SwingConstants;
 
 import com.eltima.components.ui.DatePicker;
 
-import member.UserOperation;
-import gui.BookDeposit;
+import member.TouristOperation;
+import gui.MainFrame;
 import gui.PopFrame;
 
 import operation.SearchAndBook;
@@ -518,7 +518,7 @@ public class SearchPanel extends JPanel {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 		btnBackToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (UserOperation.anyoneLoggedin()) {
+				if (TouristOperation.anyoneLoggedin()) {
 					mainframe.activateUserMenuPanel();
 				} else {
 					mainframe.initialize();

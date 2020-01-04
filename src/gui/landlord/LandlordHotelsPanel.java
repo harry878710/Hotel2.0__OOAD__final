@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import book_Hotel_Room.BookOperation;
 import book_Hotel_Room.HotelOperation;
 import member.LandlordOperation;
-import member.UserOperation;
+import member.TouristOperation;
 import gui.MainFrame;
 
 public class LandlordHotelsPanel extends JPanel {

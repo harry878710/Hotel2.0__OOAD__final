@@ -1,10 +1,12 @@
-package gui;
+package gui.tourist;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import member.UserOperation;
+import gui.ChangePWFrame;
+import gui.MainFrame;
+import member.TouristOperation;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,14 +17,14 @@ import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-public class UserOptionsPanel extends JPanel {
+public class TouristOptionsPanel extends JPanel {
 	JButton btnChangePW;
 	JButton btnBackToMenu;
 	JButton btnLogOut;
 	/**
 	 * Create the panel.
 	 */
-	public UserOptionsPanel() {
+	public TouristOptionsPanel() {
 		setSize(1200, 900);
 		setLayout(new GridLayout(3, 0, 0, 0));
 		
@@ -54,7 +56,7 @@ public class UserOptionsPanel extends JPanel {
 
 		btnLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserOperation.everyOneloggedOut();
+				TouristOperation.everyOneloggedOut();
 				mainframe.initialize();
 				setVisible(false);
 			}

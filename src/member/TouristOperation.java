@@ -13,7 +13,7 @@ import book_Hotel_Room.BookList;
 import gui.PopFrame;
 
 
-public class UserOperation implements MemberOperation{ 
+public class TouristOperation implements MemberOperation{ 
 
 	// Note:
 	// At the first time you use this class, you should un-toggle the static{ }
@@ -41,7 +41,7 @@ public class UserOperation implements MemberOperation{
 //	}
 
 	public static void main(String[] args) {
-		UserOperation.addUser("raiyray", "hoho", "hoho");
+		TouristOperation.addUser("raiyray", "hoho", "hoho");
 
 	}
 
@@ -51,7 +51,7 @@ public class UserOperation implements MemberOperation{
 	public static int addUser(String id, String password, String checkPass) {
 		int op =  MemberOperation.addUser(id, password, checkPass, "user");
 		if (op == 0) {
-			UserList.userList = uploadUserList();
+			TouristList.userList = uploadUserList();
 		}
 		return op;
 //		if (!password.equals(checkPass)) {
@@ -310,8 +310,8 @@ public class UserOperation implements MemberOperation{
 		return bookIds;
 	}
 	
-	public static ArrayList<User> uploadUserList() {
-		ArrayList<User> toReturn = MemberOperation.uploadUserList("user");
+	public static ArrayList<Tourist> uploadUserList() {
+		ArrayList<Tourist> toReturn = MemberOperation.uploadUserList("user");
 		return toReturn;
 //		ArrayList<User> userList = new ArrayList<User>();
 //		Connection c = null;

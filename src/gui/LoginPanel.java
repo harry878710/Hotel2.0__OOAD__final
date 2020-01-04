@@ -11,8 +11,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import member.LandlordOperation;
-import member.UserList;
-import member.UserOperation;
+import member.TouristList;
+import member.TouristOperation;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -160,7 +160,7 @@ public class LoginPanel extends JPanel {
 				System.out.println(identity);
 				switch (identity) {
 				case "I'm Tourist":
-					int op = UserOperation.userLogin(getName(), getPassword());
+					int op = TouristOperation.userLogin(getName(), getPassword());
 					switch (op) {
 					case 0:
 						mainframe.activateUserMenuPanel();

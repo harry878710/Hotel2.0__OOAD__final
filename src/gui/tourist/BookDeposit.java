@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;

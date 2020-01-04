@@ -16,8 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 import member.LandlordList;
 import member.LandlordOperation;
-import member.UserList;
-import member.UserOperation;
+import member.TouristList;
+import member.TouristOperation;
 import java.awt.GridLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -111,11 +111,11 @@ public class JoinFrame extends JFrame {
 		btnRegisterTourist.setFont(new Font("Arial Black", Font.PLAIN, 32));
 		btnRegisterTourist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int op = UserOperation.addUser(textField.getText(), new String(textField_1.getPassword()),
+				int op = TouristOperation.addUser(textField.getText(), new String(textField_1.getPassword()),
 						new String(textField_2.getPassword()));
 				switch (op) {
 				case 0:
-					UserList.userList = UserOperation.uploadUserList();
+					TouristList.userList = TouristOperation.uploadUserList();
 					new PopFrame("Welcome!");
 					dispose();
 					break;

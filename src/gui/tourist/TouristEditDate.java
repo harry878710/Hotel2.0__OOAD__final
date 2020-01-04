@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,12 +23,13 @@ import javax.swing.SwingConstants;
 import com.eltima.components.ui.DatePicker;
 
 import book_Hotel_Room.BookOperation;
-import member.UserList;
-import member.UserOperation;
+import gui.PopFrame;
+import member.TouristList;
+import member.TouristOperation;
 
 import javax.swing.JComboBox;
 
-public class EditOrderDate extends JPanel {
+public class TouristEditDate extends JPanel {
 	JButton btnConfirm;
 	String bookId;
 	final DatePicker datepick;
@@ -78,7 +79,7 @@ public class EditOrderDate extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public EditOrderDate() {
+	public TouristEditDate() {
 		setBackground(new Color(95, 158, 160));
 		setSize(600, 900);
 		setLayout(null);
@@ -94,7 +95,7 @@ public class EditOrderDate extends JPanel {
 		comboBox_ID.setBackground(new Color(240, 255, 240));
 		comboBox_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_ID.setBounds(14, 119, 498, 73);
-		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(UserOperation.whoIsLoggedin());
+		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(TouristOperation.whoIsLoggedin());
 		ArrayList<String> idListsort = new ArrayList<String>();
 		int x = idListUnsort.size();
 		for (int i = 0; i < x; i++) {

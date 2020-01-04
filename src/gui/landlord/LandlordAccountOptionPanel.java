@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 import gui.ChangePWFrame;
 import gui.MainFrame;
 import member.LandlordOperation;
-import member.UserOperation;
+import member.TouristOperation;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

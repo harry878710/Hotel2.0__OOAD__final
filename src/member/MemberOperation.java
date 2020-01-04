@@ -45,12 +45,12 @@ interface MemberOperation {
 		switch (member) {
 		case "user":
 			if (!userId.equals("") && !password.equals("")) {
-				if (UserOperation.hasUser(userId)) {
-					if (UserOperation.checkPassword(userId, password)) {
-						for (int i = 0; i < UserList.userList.size(); i++) {
-							if (userId.equals(UserList.userList.get(i).getName())) {
+				if (TouristOperation.hasUser(userId)) {
+					if (TouristOperation.checkPassword(userId, password)) {
+						for (int i = 0; i < TouristList.userList.size(); i++) {
+							if (userId.equals(TouristList.userList.get(i).getName())) {
 								// find specified user in userList,change his login status.
-								UserList.userList.get(i).setLogin(true);
+								TouristList.userList.get(i).setLogin(true);
 								return 0;
 							}
 						}
@@ -254,8 +254,8 @@ interface MemberOperation {
 	public static boolean anyoneLoggedin(String member) {
 		switch (member) {
 		case "user":
-			for (int i = 0; i < UserList.userList.size(); i++) {
-				if (UserList.userList.get(i).isLogin()) {
+			for (int i = 0; i < TouristList.userList.size(); i++) {
+				if (TouristList.userList.get(i).isLogin()) {
 					return true;
 				}
 			}
@@ -275,8 +275,8 @@ interface MemberOperation {
 	public static void everyOneloggedOut(String member) {
 		switch (member) {
 		case "user":
-			for (int i = 0; i < UserList.userList.size(); i++) {
-				UserList.userList.get(i).setLogin(false);
+			for (int i = 0; i < TouristList.userList.size(); i++) {
+				TouristList.userList.get(i).setLogin(false);
 			}
 			break;
 		case "landlord":
@@ -291,9 +291,9 @@ interface MemberOperation {
 	public static String whoIsLoggedin(String member) {
 		switch (member) {
 		case "user":
-			for (int i = 0; i < UserList.userList.size(); i++) {
-				if (UserList.userList.get(i).isLogin()) {
-					return UserList.userList.get(i).getName();
+			for (int i = 0; i < TouristList.userList.size(); i++) {
+				if (TouristList.userList.get(i).isLogin()) {
+					return TouristList.userList.get(i).getName();
 				}
 			}
 			break;
@@ -313,7 +313,7 @@ interface MemberOperation {
 		ArrayList list = new ArrayList();
 		switch (member) {
 		case "user":
-			list = new ArrayList<User>();
+			list = new ArrayList<Tourist>();
 			break;
 		case "landlord":
 			list = new ArrayList<Landlord>();
@@ -333,7 +333,7 @@ interface MemberOperation {
 				String password = rs.getString("Password");
 				switch (member) {
 				case "user":
-					User user = new User(name, password);
+					Tourist user = new Tourist(name, password);
 					list.add(user);
 					break;
 				case "landlord":

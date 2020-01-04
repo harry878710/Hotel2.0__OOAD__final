@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,12 +15,12 @@ import javax.swing.SwingConstants;
 
 import book_Hotel_Room.BookOperation;
 import book_Hotel_Room.HotelList;
-import member.UserList;
-import member.UserOperation;
+import member.TouristList;
+import member.TouristOperation;
 
 import javax.swing.JComboBox;
 
-public class EditOrderRoom extends JPanel {
+public class TouristEditRoom extends JPanel {
 	JButton btnConfirm;
 	String bookId;
 	int hotelId;
@@ -29,7 +29,7 @@ public class EditOrderRoom extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public EditOrderRoom() {
+	public TouristEditRoom() {
 		setBackground(new Color(95, 158, 160));
 
 		setSize(540, 720);
@@ -46,7 +46,7 @@ public class EditOrderRoom extends JPanel {
 		comboBox_ID.setForeground(new Color(102, 205, 170));
 		comboBox_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_ID.setBounds(14, 99, 498, 73);
-		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(UserOperation.whoIsLoggedin());
+		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(TouristOperation.whoIsLoggedin());
 		ArrayList<String> idListsort = new ArrayList<String>();
 		int x = idListUnsort.size();
 		for (int i = 0; i < x; i++) {

@@ -1,11 +1,11 @@
 package member;
 
-public class User implements Member{
+public class Tourist implements Member{
 	private String name;
 	private String password;
 	private boolean login = false;
 	
-	public User(String n, String password) {
+	public Tourist(String n, String password) {
 		this.name = n;
 		this.password = password;
 	}

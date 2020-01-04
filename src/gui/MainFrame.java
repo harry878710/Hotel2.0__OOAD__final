@@ -8,6 +8,14 @@ import gui.landlord.LandlordAddHotelPanel;
 import gui.landlord.LandlordHotelsPanel;
 import gui.landlord.LandlordMenuPanel;
 import gui.landlord.LandlordOrderPanel;
+import gui.tourist.BookDeposit;
+import gui.tourist.EditOrderPanel;
+import gui.tourist.TouristOrderPanel;
+import gui.tourist.SearchPanel;
+import gui.tourist.ToBookPanel;
+import gui.tourist.TouristMenuPanel;
+import gui.tourist.TouristOptionsPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -18,11 +26,11 @@ public class MainFrame {
 	private MainMenu mainMenu;
 	private SearchPanel sp;
 	private LoginPanel lp;
-	private UserMenuPanel um;
+	private TouristMenuPanel um;
 	private ToBookPanel tbp;
-	private MyOrderPanel mop;
+	private TouristOrderPanel mop;
 	private EditOrderPanel eop;
-	private UserOptionsPanel uop;
+	private TouristOptionsPanel uop;
 	private LandlordMenuPanel lmp;
 	private LandlordOrderPanel lop;
 	private LandlordHotelsPanel lhp;
@@ -81,7 +89,7 @@ public class MainFrame {
 	}
 
 	public void activateUserMenuPanel() {
-		um = new UserMenuPanel();
+		um = new TouristMenuPanel();
 		um.activateUserMenuPanel(this);
 	}
 
@@ -91,7 +99,7 @@ public class MainFrame {
 	}
 
 	public void activateMyOrderPanel() {
-		mop = new MyOrderPanel();
+		mop = new TouristOrderPanel();
 		mop.activateMyOrderPanel(this);
 	}
 
@@ -101,7 +109,7 @@ public class MainFrame {
 	}
 
 	public void activateUserOptionsPanel() {
-		uop = new UserOptionsPanel();
+		uop = new TouristOptionsPanel();
 		uop.activateUserOptionsPanel(this);
 	}
 

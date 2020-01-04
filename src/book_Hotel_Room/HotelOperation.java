@@ -52,7 +52,7 @@ public class HotelOperation {
 
 	public static int addHotelToDB(int star, String locality, String address, int[] roomCombination, String[] roomPrice,
 			String landlordID) {
-		if (address.equals("")||roomPrice[0].equals("")||roomPrice[1].equals("")||roomPrice[2].equals("")) {
+		if (address.equals("") || roomPrice[0].equals("") || roomPrice[1].equals("") || roomPrice[2].equals("")) {
 			// Please fill all blanks
 			return 1;
 		}
@@ -61,11 +61,11 @@ public class HotelOperation {
 			price[0] = Integer.parseInt(roomPrice[0]);
 			price[1] = Integer.parseInt(roomPrice[1]);
 			price[2] = Integer.parseInt(roomPrice[2]);
-		}catch(NumberFormatException e) {
-			//price is not number
+		} catch (NumberFormatException e) {
+			// price is not number
 			return 5;
 		}
-		
+
 		if (roomCombination[0] == 0 && roomCombination[1] == 0 && roomCombination[2] == 0) {
 			// You has no rooms?
 			return 2;
@@ -135,9 +135,92 @@ public class HotelOperation {
 //	}
 
 	public static void editHotelRoomAndPrice(int hotelId, int[] roomCombination, int[] roomPrice) {
-		
-		
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			c.setAutoCommit(false);
+			// System.out.println("Opened database successfully");
+
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM HOTEL;");
+			while (rs.next()) {
+				int tmpId = rs.getInt("ID");
+				if (tmpId == hotelId) {
+					String sql = "";
+					sql = "UPDATE HOTEL set Number1 = '" + roomCombination[0] + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					sql = "UPDATE HOTEL set Number2 = '" + roomCombination[1] + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					sql = "UPDATE HOTEL set Number4 = '" + roomCombination[2] + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					sql = "UPDATE HOTEL set Price1 = '" + roomPrice[0] + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					sql = "UPDATE HOTEL set Price2 = '" + roomPrice[1] + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					sql = "UPDATE HOTEL set Price4 = '" + roomPrice[2] + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					System.out.println("Change hotel successfully.");
+					break;
+				}
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		HotelList.ALLHOTEL = uploadHotelList();
+		// System.out.println("Operation done successfully");
 	}
+
+	public static void editHotelInformation(int hotelId, int star, String locality, String address) {
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			c.setAutoCommit(false);
+			// System.out.println("Opened database successfully");
+
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM HOTEL;");
+			while (rs.next()) {
+				int tmpId = rs.getInt("ID");
+				if (tmpId == hotelId) {
+					String sql = "";
+					sql = "UPDATE HOTEL set star = '" + star + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					sql = "UPDATE HOTEL set locality = '" + locality + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					sql = "UPDATE HOTEL set address = '" + address + "' where ID='" + hotelId + "';";
+					stmt.executeUpdate(sql);
+					c.commit();
+					System.out.println("Change hotel successfully.");
+					break;
+				}
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		HotelList.ALLHOTEL = uploadHotelList();
+		// System.out.println("Operation done successfully");
+	}
+
 	
 	public static String showThisHotel(int hotelId) {
 		String toReturn = "The book ID is not existed.";
