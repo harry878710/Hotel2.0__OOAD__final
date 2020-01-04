@@ -9,6 +9,6 @@ public class BookList {
 	
 	static {
 		bookList = BookOperation.uploadBookList();
-		bookedNumber = BookOperation.uploadBookedNumber();
+		bookedNumber = BookOperation.nextBookedNumber();
 	}
 }

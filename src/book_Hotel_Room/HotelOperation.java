@@ -61,8 +61,8 @@ public class HotelOperation {
 
 	}
 
-	public static void addHotelToDB(int hotelID, int star, String locality, String address, int[] roomCombination,
-			int[] roomPrice, String landlordID) {
+	public static void addHotelToDB(int star, String locality, String address, int[] roomCombination, int[] roomPrice,
+			String landlordID) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -73,9 +73,9 @@ public class HotelOperation {
 
 			stmt = c.createStatement();
 			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
-					+ "VALUES (" + hotelID + "," + star + ", '" + locality + "','" + address + "'," + roomCombination[0]
-					+ "," + roomCombination[1] + "," + roomCombination[2] + "," + roomPrice[0] + "," + roomPrice[1]
-					+ "," + roomPrice[2] + ",'" + landlordID + "');";
+					+ "VALUES (" + nextHotelId() + "," + star + ", '" + locality + "','" + address + "',"
+					+ roomCombination[0] + "," + roomCombination[1] + "," + roomCombination[2] + "," + roomPrice[0]
+					+ "," + roomPrice[1] + "," + roomPrice[2] + ",'" + landlordID + "');";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.commit();
@@ -98,7 +98,7 @@ public class HotelOperation {
 
 			stmt = c.createStatement();
 			String sql = "INSERT INTO HOTEL (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD) "
-					+ "VALUES (" + hotel.getId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','"
+					+ "VALUES (" + nextHotelId() + "," + hotel.getStar() + ", '" + hotel.getLocality() + "','"
 					+ hotel.getAddress() + "'," + hotel.getRoomCombination()[0] + "," + hotel.getRoomCombination()[1]
 					+ "," + hotel.getRoomCombination()[2] + "," + hotel.getRoomInfo()[0].getPrice() + ","
 					+ hotel.getRoomInfo()[1].getPrice() + "," + hotel.getRoomInfo()[0].getPrice() + ","
@@ -127,14 +127,14 @@ public class HotelOperation {
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM hotel;");
 			while (rs.next()) {
-				//(ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD)
-				if (rs.getString("ID").equals(hotelId)) {
-					int[] roomCombination = {rs.getInt("NUMBER1"),rs.getInt("NUMBER2"),rs.getInt("NUMBER4")};
-					int[] price = {rs.getInt("PRICE1"),rs.getInt("PRICE2"),rs.getInt("PRICE4")};
-					toReturn = ("\n"+HotelList.ALLHOTEL[hotelId].toString() + "\nRooms and prices:"+
-							"\nSingle room number: " +roomCombination[0] +", price: "+price[0]+
-							"\nDouble room number: " +roomCombination[1] +", price: "+price[1]+
-							"\nQuad   room number: " +roomCombination[2] +", price: "+price[2]+ "\n");
+				// (ID,STAR,LOCALITY,ADDRESS,NUMBER1,NUMBER2,NUMBER4,PRICE1,PRICE2,PRICE4,LANDLORD)
+				if (rs.getInt("ID") == hotelId) {
+					int[] roomCombination = { rs.getInt("NUMBER1"), rs.getInt("NUMBER2"), rs.getInt("NUMBER4") };
+					int[] price = { rs.getInt("PRICE1"), rs.getInt("PRICE2"), rs.getInt("PRICE4") };
+					toReturn = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nRooms and prices:"
+							+ "\nSingle room number: " + roomCombination[0] + ", price: " + price[0]
+							+ "\nDouble room number: " + roomCombination[1] + ", price: " + price[1]
+							+ "\nQuad   room number: " + roomCombination[2] + ", price: " + price[2] + "\n");
 					break;
 				}
 			}
@@ -174,6 +174,33 @@ public class HotelOperation {
 		}
 		// System.out.println("Operation done successfully");
 		return size;
+	}
+
+	public static int nextHotelId() {
+		int hotelId = 0;
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			c.setAutoCommit(false);
+			// System.out.println("Opened database successfully");
+
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM hotel;");
+			while (rs.next()) {
+				int thisId = rs.getInt("ID");
+				hotelId = (thisId > hotelId) ? thisId : hotelId;
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+
+		return hotelId + 1;
 	}
 
 	public static Hotel[] uploadHotelList() {

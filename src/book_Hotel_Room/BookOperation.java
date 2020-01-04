@@ -466,7 +466,7 @@ public class BookOperation {
 		return bookList;
 	}
 
-	public static int uploadBookedNumber() {
+	public static int nextBookedNumber() {
 		int bookedId = 0;
 		Connection c = null;
 		Statement stmt = null;
