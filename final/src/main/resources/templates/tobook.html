@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Blog</title>
+<title>Contact</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="The River template project">
@@ -18,8 +18,9 @@
 	href="plugins/OwlCarousel2-2.3.4/animate.css">
 <link href="plugins/jquery-datepicker/jquery-ui.css" rel="stylesheet"
 	type="text/css">
-<link rel="stylesheet" type="text/css" href="styles/test.css">
-<link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+<link rel="stylesheet" type="text/css" href="styles/tobook.css">
+<link rel="stylesheet" type="text/css"
+	href="styles/contact_responsive.css">
 </head>
 <body>
 
@@ -31,39 +32,39 @@
 			<div
 				class="header_content d-flex flex-row align-items-center justify-content-start">
 				<div class="logo">
-					<a href="#">Arguai</a>
+					<a href="#">The River</a>
 				</div>
 				<div
 					class="ml-auto d-flex flex-row align-items-center justify-content-start">
 					<nav class="main_nav">
 						<ul
 							class="d-flex flex-row align-items-start justify-content-start">
-							<li th:if="${test.id}!=null"><a
-								th:href="@{/index.html?id={id}(id=${test.id})}">Home</a></li>
-							<li th:if="${test.id}==null"><a
+							<li th:if="${tobook.id}!=null"><a
+								th:href="@{/index.html?id={id}(id=${tobook.id})}">Home</a></li>
+							<li th:if="${tobook.id}==null"><a
 								href="/index.html">Home</a></li>
 							<li><a href="about.html">About us</a></li>
 							<li><a href="#">Rooms</a></li>
 							<li><a href="blog.html">Blog</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li class="active"><a href="contact.html">Contact</a></li>
 						</ul>
 					</nav>
-					<div th:if="${test.id}==null" class="book_button">
+					<div th:if="${tobook.id}==null" class="book_button">
 						<a id="demo" href="login.html">Login</a>
 					</div>
-					<div th:if="${test.id}!=null" class="book_button">
+					<div th:if="${tobook.id}!=null" class="book_button">
 						<a id="demo" href="index.html">Logout</a>
 					</div>
-					<div th:if="${test.id}==null" class="book_button">
+					<div th:if="${tobook.id}==null" class="book_button">
 						<a id="demo" href="register.html">Register</a>
 					</div>
-					<div th:if="${test.id}!=null" class="book_button">
-						<a id="demo" th:href="@{account(id=${test.id})}">My Account</a>
+					<div th:if="${tobook.id}!=null" class="book_button">
+						<a id="demo" th:href="@{account(id=${tobook.id})}">My Account</a>
 					</div>
 
 					<!-- Hamburger Menu -->
 					<div class="hamburger">
-						<i class="fa fa-bars" aria-hidden="false"></i>
+						<i class="fa fa-bars" aria-hidden="true"></i>
 					</div>
 				</div>
 			</div>
@@ -86,93 +87,59 @@
 						<li><a href="contact.html">Contact</a></li>
 					</ul>
 				</nav>
-			</div>
-			<div class="menu_extra">
-				<div class="menu_book text-right">
-					<a href="#">Book online</a>
-				</div>
-				<div
-					class="menu_phone d-flex flex-row align-items-center justify-content-center">
-					<img src="images/phone-2.png" alt=""> <span>0183-12345678</span>
-				</div>
-			</div>
+					<div th:if="${tobook.id}==null" class="book_button">
+						<a id="demo" href="login.html">Login</a>
+					</div>
+					<div th:if="${tobook.id}!=null" class="book_button">
+						<a id="demo" href="index.html">Logout</a>
+					</div>
+					<div th:if="${tobook.id}==null" class="book_button">
+						<a id="demo" href="register.html">Register</a>
+					</div>
+					<div th:if="${tobook.id}!=null" class="book_button">
+						<a id="demo" href="account">My Account</a>
+					</div>
+			</div>		
 		</div>
 
 		<!-- Home -->
 
 		<div class="home">
 			<div class="background_image"
-				style="background-image: url(images/booking.jpg)"></div>
+				style="background-image: url(images/contact.jpg)"></div>
 			<div class="home_container">
 				<div class="container">
 					<div class="row">
 						<div class="col">
 							<div class="home_content text-center">
-								<div class="home_title">Blog</div>
+								<div class="home_title">Contact</div>
 								<div class="booking_form_container">
-									<form action="test2" th:object="${test2}" class="booking_form"
-										id="booking_form" method="post">
+									<form action="#" class="booking_form" id="booking_form">
 										<div
 											class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
 											<div
 												class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
 												<div>
-													<select class="booking_input booking_input_b" id="sort"
-														name="sort" th:with="sort=*{sort}">
-														<option th:value="'Sorted by Hotel ID(small to large)'"
-															style="background-color: black;">Sorted by Hotel
-															ID(small to large)</option>
-														<option th:value="'Sorted by Hotel ID(large to small)'"
-															style="background-color: black;">Sorted by Hotel
-															ID(large to small)</option>
-														<option th:value="'Sorted by Price(small to large)'"
-															style="background-color: black;">Sorted by
-															Price(small to large)</option>
-														<option th:value="'Sorted by Price(large to small)'"
-															style="background-color: black;">Sorted by
-															Price(large to small)</option>
-													</select>
+													<input type="text"
+														class="datepicker booking_input booking_input_a booking_in"
+														placeholder="Check in" required="required">
 												</div>
 												<div>
-													<select class="booking_input booking_input_b" id="stars"
-														name="stars" th:with="stars=*{stars}">
-														<option th:value="0" style="background-color: black;">All
-															Option</option>
-														<option th:value="2" style="background-color: black;">**</option>
-														<option th:value="3" style="background-color: black;">***</option>
-														<option th:value="4" style="background-color: black;">****</option>
-														<option th:value="5" style="background-color: black;">*****</option>
-													</select>
+													<input type="text"
+														class="datepicker booking_input booking_input_a booking_out"
+														placeholder="Check out" required="required">
 												</div>
 												<div>
-													<select class="booking_input booking_input_b"
-														id="roomCombin" name="roomCombin"
-														th:with="roomCombin=*{roomCombin}">
-														<option th:each="ite:${test.roomcombination}"
-															th:value="${ite}" th:text="${ite}"
-															style="background-color: black;"></option>
-													</select>
+													<input type="number" class="booking_input booking_input_b"
+														placeholder="Children" required="required">
 												</div>
-
-												<div style="display: none">
-													<select id="checkin" name="checkin"
-														th:with="checkin=*{checkin}">
-														<option th:value="${test.checkin}"></option>
-													</select> <select id="checkout" name="checkout"
-														th:with="checkout=*{checkout}">
-														<option th:value="${test.checkout}"></option>
-													</select> <select id="city" name="city" th:with="city=*{city}">
-														<option th:value="${test.city}"></option>
-													</select> <select id="people" name="people"
-														th:with="people=*{people}">
-														<option th:value="${test.people}"></option>
-													</select> <select id="room" name="room" th:with="room=*{room}">
-														<option th:value="${test.room}"></option>
-													</select>
+												<div>
+													<input type="number" class="booking_input booking_input_b"
+														placeholder="Room" required="required">
 												</div>
 											</div>
 											<div>
-												<button class="booking_button trans_200">Search</button>
+												<button class="booking_button trans_200">Book Now</button>
 											</div>
 										</div>
 									</form>
@@ -184,33 +151,63 @@
 			</div>
 		</div>
 
-		<!-- Blog -->
+		<!-- Contact -->
 
-		<div class="blog">
+		<div class="contact">
 			<div class="container">
 				<div class="row">
 
-					<!-- Blog Posts -->
-					<div class="col">
-						<div class="blog_posts">
+					<!-- Contact Content -->
+					<div class="col-lg-6">
+					<form action="/commit">
+						<div class="contact_content">
+							<div class="contact_title">
+								<h2>Details</h2>
+							</div>
+							<div class="contact_list">
+								<ul>
+									<li th:text="'Hotel ID '+${tobook.hotelid}"></li>
+									<li id="address" th:value="${tobook.address}" th:text="'Address : '+${tobook.address}"></li>
+									<li th:text="'Total Price : '+${tobook.price}"></li>
+									<li	th:text="'Checkin : '+${tobook.checkin}+' Checkout : '+${tobook.checkout}"></li>
+									<li th:text="'Single,Double,Quad : '+${tobook.roomCombin}"></li>
+								</ul>
+							</div>
+							<div style="display: none">
+													<select id="checkin" name="checkin"
+														th:with="checkin=*{checkin}">
+														<option th:value="${tobook.checkin}"></option>
+													</select> <select id="checkout" name="checkout"
+														th:with="checkout=*{checkout}">
+														<option th:value="${tobook.checkout}"></option>
+													</select> <select id="roomCombin" name="roomCombin" th:with="roomCombin=*{roomCombin}">
+														<option th:value="${tobook.roomCombin}"></option>
+													</select> <select id="hotelid" name="hotelid"
+														th:with="hotelid=*{hotelid}">
+														<option th:value="${tobook.hotelid}"></option>
+													</select> <select id="id" name="id" th:with="id=*{id}">
+														<option th:value="${tobook.id}"></option>
+													</select>
+												</div>
+							<button class="contact_button">Send</button>
+						</div>
+						</form>
+					</div>
 
-							<!-- Blog Post -->
-							<div class="blog_post">
-								<div class="blog_post_title">
-									<a th:text="${test.title}"></a>
-								</div>
-								<div class="blog_post_content" th:each="item : ${test.re}">
-									<div class="blog_post_text" th:each="item : ${test.re}">
-										<p th:text="${item}" th:item="${item}"></p>
-										<div class="button blog_post_button" th:if="${test.id}==null">
-											<a th:href="@{/login.html}">Book</a>
-										</div>
-										<div class="button blog_post_button" th:if="${test.id}!=null">
-											<a th:href="@{/tobook(id=${test.id},info=${item},checkin=${test.checkin},checkout=${test.checkout},roomCombin=${test.roomCombin})}">Book</a>
-										</div>
+					<!-- Google Map -->
+					<div class="col-xl-5 col-lg-6 offset-xl-1">
+						<div class="contact_map">
+
+							<!-- Google Map -->
+
+							<div class="map">
+								<div id="google_map" class="google_map">
+									<div class="map_container">
+										<div id="map"></div>
 									</div>
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -313,6 +310,8 @@
 	<script src="plugins/progressbar/progressbar.min.js"></script>
 	<script src="plugins/parallax-js-master/parallax.min.js"></script>
 	<script src="plugins/jquery-datepicker/jquery-ui.js"></script>
-	<script src="js/blog.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+	<script src="js/tobook.js"></script>
+	
 </body>
 </html>

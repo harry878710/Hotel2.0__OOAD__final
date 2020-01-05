@@ -31,16 +31,16 @@
 			<div
 				class="header_content d-flex flex-row align-items-center justify-content-start">
 				<div class="logo">
-					<a href="#">Arguai</a>
+					<a href="#">hehehe</a>
 				</div>
 				<div
 					class="ml-auto d-flex flex-row align-items-center justify-content-start">
 					<nav class="main_nav">
 						<ul
 							class="d-flex flex-row align-items-start justify-content-start">
-							<li th:if="${test.id}!=null"><a
-								th:href="@{/index.html?id={id}(id=${test.id})}">Home</a></li>
-							<li th:if="${test.id}==null"><a
+							<li th:if="${account.id}!=null"><a
+								th:href="@{/index.html?id={id}(id=${account.id})}">Home</a></li>
+							<li th:if="${account.id}==null"><a
 								href="/index.html">Home</a></li>
 							<li><a href="about.html">About us</a></li>
 							<li><a href="#">Rooms</a></li>
@@ -48,17 +48,17 @@
 							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</nav>
-					<div th:if="${test.id}==null" class="book_button">
+					<div th:if="${account.id}==null" class="book_button">
 						<a id="demo" href="login.html">Login</a>
 					</div>
-					<div th:if="${test.id}!=null" class="book_button">
+					<div th:if="${account.id}!=null" class="book_button">
 						<a id="demo" href="index.html">Logout</a>
 					</div>
-					<div th:if="${test.id}==null" class="book_button">
+					<div th:if="${account.id}==null" class="book_button">
 						<a id="demo" href="register.html">Register</a>
 					</div>
-					<div th:if="${test.id}!=null" class="book_button">
-						<a id="demo" th:href="@{account(id=${test.id})}">My Account</a>
+					<div th:if="${account.id}!=null" class="book_button">
+						<a id="demo" th:href="@{account(id=${account.id})}">My Account</a>
 					</div>
 
 					<!-- Hamburger Menu -->
@@ -114,66 +114,6 @@
 										id="booking_form" method="post">
 										<div
 											class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
-											<div
-												class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
-												<div>
-													<select class="booking_input booking_input_b" id="sort"
-														name="sort" th:with="sort=*{sort}">
-														<option th:value="'Sorted by Hotel ID(small to large)'"
-															style="background-color: black;">Sorted by Hotel
-															ID(small to large)</option>
-														<option th:value="'Sorted by Hotel ID(large to small)'"
-															style="background-color: black;">Sorted by Hotel
-															ID(large to small)</option>
-														<option th:value="'Sorted by Price(small to large)'"
-															style="background-color: black;">Sorted by
-															Price(small to large)</option>
-														<option th:value="'Sorted by Price(large to small)'"
-															style="background-color: black;">Sorted by
-															Price(large to small)</option>
-													</select>
-												</div>
-												<div>
-													<select class="booking_input booking_input_b" id="stars"
-														name="stars" th:with="stars=*{stars}">
-														<option th:value="0" style="background-color: black;">All
-															Option</option>
-														<option th:value="2" style="background-color: black;">**</option>
-														<option th:value="3" style="background-color: black;">***</option>
-														<option th:value="4" style="background-color: black;">****</option>
-														<option th:value="5" style="background-color: black;">*****</option>
-													</select>
-												</div>
-												<div>
-													<select class="booking_input booking_input_b"
-														id="roomCombin" name="roomCombin"
-														th:with="roomCombin=*{roomCombin}">
-														<option th:each="ite:${test.roomcombination}"
-															th:value="${ite}" th:text="${ite}"
-															style="background-color: black;"></option>
-													</select>
-												</div>
-
-												<div style="display: none">
-													<select id="checkin" name="checkin"
-														th:with="checkin=*{checkin}">
-														<option th:value="${test.checkin}"></option>
-													</select> <select id="checkout" name="checkout"
-														th:with="checkout=*{checkout}">
-														<option th:value="${test.checkout}"></option>
-													</select> <select id="city" name="city" th:with="city=*{city}">
-														<option th:value="${test.city}"></option>
-													</select> <select id="people" name="people"
-														th:with="people=*{people}">
-														<option th:value="${test.people}"></option>
-													</select> <select id="room" name="room" th:with="room=*{room}">
-														<option th:value="${test.room}"></option>
-													</select>
-												</div>
-											</div>
-											<div>
-												<button class="booking_button trans_200">Search</button>
-											</div>
 										</div>
 									</form>
 								</div>
@@ -197,16 +137,13 @@
 							<!-- Blog Post -->
 							<div class="blog_post">
 								<div class="blog_post_title">
-									<a th:text="${test.title}"></a>
+									<a>My Orders</a>
 								</div>
-								<div class="blog_post_content" th:each="item : ${test.re}">
-									<div class="blog_post_text" th:each="item : ${test.re}">
+								<div class="blog_post_content">
+									<div class="blog_post_text" th:each="item : ${account.re}">
 										<p th:text="${item}" th:item="${item}"></p>
-										<div class="button blog_post_button" th:if="${test.id}==null">
-											<a th:href="@{/login.html}">Book</a>
-										</div>
-										<div class="button blog_post_button" th:if="${test.id}!=null">
-											<a th:href="@{/tobook(id=${test.id},info=${item},checkin=${test.checkin},checkout=${test.checkout},roomCombin=${test.roomCombin})}">Book</a>
+										<div class="button blog_post_button">
+											<a th:href="@{/delete(info=${item},id=${account.id})}">delete</a>
 										</div>
 									</div>
 								</div>
