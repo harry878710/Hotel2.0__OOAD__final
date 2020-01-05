@@ -98,7 +98,7 @@ public class LandlordEditHotelPanel extends JPanel {
 		OperationalPane.add(ler, "name_219659037387500");
 		ler.setVisible(false);
 //		lef.setVisible(false);
-
+		
 	}
 
 	public void activateLandlordEditHotelPanel(MainFrame mainframe) {

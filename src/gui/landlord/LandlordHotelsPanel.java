@@ -85,13 +85,12 @@ public class LandlordHotelsPanel extends JPanel {
 				setVisible(false);
 			}
 		});
-		btnAdd.addActionListener(new ActionListener() {
+		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mainframe.activateLandlordEditHotelPanel();
 				setVisible(false);
 			}
 		});
-		setVisible(true);
 	}
 
 }
