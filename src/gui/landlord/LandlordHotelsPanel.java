@@ -19,8 +19,10 @@ import gui.MainFrame;
 
 public class LandlordHotelsPanel extends JPanel {
 
-	JButton btnAdd,btnEdit;
+	JButton btnAdd;
+	JButton btnEdit;
 	JButton btnBack;
+	String myHotelList = LandlordOperation.showAllMyHotel(LandlordOperation.whoIsLoggedin());
 
 	/**
 	 * Create the panel.
@@ -33,7 +35,6 @@ public class LandlordHotelsPanel extends JPanel {
 		JTextArea textArea = new JTextArea(10, 40);
 		textArea.setBackground(new Color(240, 255, 240));
 		textArea.setFont(new Font("Dialog", Font.PLAIN, 18));
-		String myHotelList = (LandlordOperation.showAllMyHotel(LandlordOperation.whoIsLoggedin()));
 		if (!myHotelList.equals("")) {
 			textArea.setText("Landlord Id :" + LandlordOperation.whoIsLoggedin() + "\n\n" + myHotelList);
 		} else {
@@ -54,13 +55,6 @@ public class LandlordHotelsPanel extends JPanel {
 		btnAdd.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		btnAdd.setBounds(850, 14, 150, 60);
 		add(btnAdd);
-		
-		btnEdit = new JButton("Edit");
-		btnEdit.setOpaque(true);
-		btnEdit.setBackground(new Color(32, 178, 170));
-		btnEdit.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		btnEdit.setBounds(675, 14, 150, 60);
-		add(btnEdit);
 
 		btnBack = new JButton("Back");
 		btnBack.setOpaque(true);
@@ -68,6 +62,15 @@ public class LandlordHotelsPanel extends JPanel {
 		btnBack.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		btnBack.setBounds(25, 14, 150, 60);
 		add(btnBack);
+
+		if (!myHotelList.equals("")) {
+			btnEdit = new JButton("Edit");
+			btnEdit.setOpaque(true);
+			btnEdit.setBackground(new Color(32, 178, 170));
+			btnEdit.setFont(new Font("Agency FB", Font.PLAIN, 48));
+			btnEdit.setBounds(675, 14, 150, 60);
+			add(btnEdit);
+		}
 
 	}
 
@@ -79,15 +82,17 @@ public class LandlordHotelsPanel extends JPanel {
 				setVisible(false);
 			}
 		});
+		if (!myHotelList.equals("")) {
+			btnEdit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					mainframe.activateLandlordEditHotelPanel();
+					setVisible(false);
+				}
+			});
+		}
 		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				mainframe.activateLandlordAddHotelPanel();
-				setVisible(false);
-			}
-		});
-		btnEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				mainframe.activateLandlordEditHotelPanel();
 				setVisible(false);
 			}
 		});

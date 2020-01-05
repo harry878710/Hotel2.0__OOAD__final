@@ -24,6 +24,7 @@ public class LandlordEditRoomAndPrice extends JPanel {
 	JButton btnConfirm;
 	int hotelId;
 	int single = 0, dual = 0, quad = 0;
+	int[] myHotelId = LandlordOperation.listMyHotelId(LandlordOperation.whoIsLoggedin());
 	private JTextField textField_S_price;
 	private JTextField textField_D_price;
 	private JTextField textField_Q_price;
@@ -42,7 +43,7 @@ public class LandlordEditRoomAndPrice extends JPanel {
 		lblNewLabel.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblNewLabel.setBounds(14, 13, 498, 73);
 		add(lblNewLabel);
-		
+
 		JLabel lblNewRoomNumber = new JLabel(" New Room Number");
 		lblNewRoomNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewRoomNumber.setFont(new Font("Agency FB", Font.PLAIN, 48));
@@ -54,19 +55,19 @@ public class LandlordEditRoomAndPrice extends JPanel {
 		lblSingle.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblSingle.setBounds(14, 271, 133, 73);
 		add(lblSingle);
-		
+
 		JLabel lblQuad = new JLabel("Quad");
 		lblQuad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuad.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblQuad.setBounds(14, 443, 133, 73);
 		add(lblQuad);
-		
+
 		JLabel lblDual = new JLabel("Dual");
 		lblDual.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDual.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblDual.setBounds(14, 357, 133, 73);
-		add(lblDual);	
-		
+		add(lblDual);
+
 		btnConfirm = new JButton("CONFIRM");
 		btnConfirm.setBackground(new Color(32, 178, 170));
 		btnConfirm.setFont(new Font("Agency FB", Font.PLAIN, 48));
@@ -79,10 +80,8 @@ public class LandlordEditRoomAndPrice extends JPanel {
 		comboBox_ID.setForeground(new Color(102, 205, 170));
 		comboBox_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_ID.setBounds(14, 99, 498, 73);
-		int[] idList = LandlordOperation.listMyHotelId(LandlordOperation.whoIsLoggedin());
-		hotelId = idList[0];
-		for (int i = 0; i < idList.length; i++) {
-			comboBox_ID.addItem(idList[i]);
+		for (int i = 0; i < myHotelId.length; i++) {
+			comboBox_ID.addItem(myHotelId[i]);
 		}
 		add(comboBox_ID);
 
@@ -94,8 +93,6 @@ public class LandlordEditRoomAndPrice extends JPanel {
 		for (int i = 0; i < 31; i++) {
 			comboBox_Single.addItem(i);
 		}
-		single = Hotel.ALLHOTEL[hotelId].getRoomCombination()[0];
-		comboBox_Single.setSelectedItem(single);
 		comboBox_Single.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -105,8 +102,6 @@ public class LandlordEditRoomAndPrice extends JPanel {
 			}
 		});
 		add(comboBox_Single);
-		
-	
 
 		JComboBox<Integer> comboBox_Double = new JComboBox<Integer>();
 		comboBox_Double.setBackground(new Color(240, 255, 240));
@@ -116,8 +111,6 @@ public class LandlordEditRoomAndPrice extends JPanel {
 		for (int i = 0; i < 31; i++) {
 			comboBox_Double.addItem(i);
 		}
-		dual = Hotel.ALLHOTEL[hotelId].getRoomCombination()[1];
-		comboBox_Double.setSelectedItem(dual);
 		comboBox_Double.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -132,12 +125,10 @@ public class LandlordEditRoomAndPrice extends JPanel {
 		comboBox_Quad.setBackground(new Color(240, 255, 240));
 		comboBox_Quad.setForeground(new Color(102, 205, 170));
 		comboBox_Quad.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		comboBox_Quad.setBounds(147, 443, 365, 73);
+		comboBox_Quad.setBounds(147, 443, 180, 73);
 		for (int i = 0; i < 31; i++) {
 			comboBox_Quad.addItem(i);
 		}
-		quad = Hotel.ALLHOTEL[hotelId].getRoomCombination()[2];
-		comboBox_Quad.setSelectedItem(quad);
 		comboBox_Quad.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -147,27 +138,35 @@ public class LandlordEditRoomAndPrice extends JPanel {
 			}
 		});
 		add(comboBox_Quad);
-		
+
 		textField_S_price = new JTextField();
-		int sp = Hotel.ALLHOTEL[hotelId].getRoomInfo()[0].getPrice();
-		textField_S_price.setText(Integer.toString(sp));
-		textField_S_price.setBounds(147+185, 271, 180, 73);
+		textField_S_price.setBounds(147 + 185, 271, 180, 73);
 		add(textField_S_price);
 		textField_S_price.setColumns(10);
 
 		textField_D_price = new JTextField();
-		int dp = Hotel.ALLHOTEL[hotelId].getRoomInfo()[1].getPrice();
-		textField_D_price.setText(Integer.toString(dp));
-		textField_D_price.setBounds(147+185, 358, 180, 73);
+		textField_D_price.setBounds(147 + 185, 358, 180, 73);
 		add(textField_D_price);
 		textField_D_price.setColumns(10);
 
 		textField_Q_price = new JTextField();
-		int qp = Hotel.ALLHOTEL[hotelId].getRoomInfo()[2].getPrice();
-		textField_Q_price.setText(Integer.toString(qp));
-		textField_Q_price.setBounds(147+180, 443, 185, 73);
+		textField_Q_price.setBounds(147 + 185, 443, 180, 73);
 		add(textField_Q_price);
 		textField_Q_price.setColumns(10);
+
+		if (myHotelId.length != 0) {
+			hotelId = myHotelId[0];
+			single = Hotel.ALLHOTEL[hotelId].getRoomCombination()[0];
+			single = Hotel.ALLHOTEL[hotelId].getRoomCombination()[0];
+			comboBox_Single.setSelectedItem(single);
+			dual = Hotel.ALLHOTEL[hotelId].getRoomCombination()[1];
+			comboBox_Double.setSelectedItem(dual);
+			quad = Hotel.ALLHOTEL[hotelId].getRoomCombination()[2];
+			comboBox_Quad.setSelectedItem(quad);
+			textField_S_price.setText(Integer.toString(Hotel.ALLHOTEL[hotelId].getRoomInfo()[0].getPrice()));
+			textField_D_price.setText(Integer.toString(Hotel.ALLHOTEL[hotelId].getRoomInfo()[1].getPrice()));
+			textField_Q_price.setText(Integer.toString(Hotel.ALLHOTEL[hotelId].getRoomInfo()[2].getPrice()));
+		}
 
 		comboBox_ID.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -191,7 +190,7 @@ public class LandlordEditRoomAndPrice extends JPanel {
 					}
 					quad = Hotel.ALLHOTEL[hotelId].getRoomCombination()[2];
 					comboBox_Quad.setSelectedItem(quad);
-					
+
 					textField_S_price.setText(Integer.toString(Hotel.ALLHOTEL[hotelId].getRoomInfo()[0].getPrice()));
 					textField_D_price.setText(Integer.toString(Hotel.ALLHOTEL[hotelId].getRoomInfo()[1].getPrice()));
 					textField_Q_price.setText(Integer.toString(Hotel.ALLHOTEL[hotelId].getRoomInfo()[2].getPrice()));
@@ -200,9 +199,14 @@ public class LandlordEditRoomAndPrice extends JPanel {
 			}
 		});
 	}
-	
-	public int[] getPrice() {
-		int[] toReturn =  {Integer.parseInt(textField_S_price.getText()),Integer.parseInt(textField_D_price.getText()),Integer.parseInt(textField_Q_price.getText())};
+
+	public String[] getPrice() {
+		String[] toReturn = { textField_S_price.getText(), textField_D_price.getText(), textField_Q_price.getText() };
+		return toReturn;
+	}
+
+	public int[] getRoomCombination() {
+		int[] toReturn = { single, dual, quad };
 		return toReturn;
 	}
 

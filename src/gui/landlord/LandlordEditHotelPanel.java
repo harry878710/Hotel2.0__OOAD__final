@@ -98,7 +98,7 @@ public class LandlordEditHotelPanel extends JPanel {
 		OperationalPane.add(ler, "name_219659037387500");
 		ler.setVisible(false);
 //		lef.setVisible(false);
-		
+
 	}
 
 	public void activateLandlordEditHotelPanel(MainFrame mainframe) {
@@ -129,11 +129,30 @@ public class LandlordEditHotelPanel extends JPanel {
 
 		ler.btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int[] newRoomCombination = { ler.single, ler.dual, ler.quad };
-				HotelOperation.editHotelRoomAndPrice(ler.hotelId, newRoomCombination, ler.getPrice());
-				new PopFrame("Successfully Edited !");
-				mainframe.activateLandlordOrderPanel();
-				setVisible(false);
+				int op = HotelOperation.editHotelRoomAndPrice(ler.hotelId, ler.getRoomCombination(), ler.getPrice());
+				switch (op) {
+				case 0:
+					new PopFrame("Successfully Edited !");
+					mainframe.activateLandlordOrderPanel();
+					setVisible(false);
+					break;
+				case 1:
+					new PopFrame("error: Please fill all blanks");
+					break;
+				case 2:
+					new PopFrame("error: Hotel with no room is illogical.");
+					break;
+				case 3:
+					new PopFrame("error: Invalid room price.");
+					break;
+				case 4:
+					new PopFrame("error: Cant charge for invisible room.");
+					break;
+				case 5:
+					new PopFrame("error:Input price is not a number");
+					break;
+
+				}
 
 			}
 		});
