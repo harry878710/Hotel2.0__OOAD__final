@@ -28,7 +28,7 @@ public class LandlordEditInformation extends JPanel {
 	String locality = "";
 	int[] myHotelId = LandlordOperation.listMyHotelId(LandlordOperation.whoIsLoggedin());
 
-	private JTextField textField_Q_price;
+	private JTextField textField_Address;
 
 	/**
 	 * Create the panel.
@@ -45,34 +45,28 @@ public class LandlordEditInformation extends JPanel {
 		lblNewLabel.setBounds(14, 13, 498, 73);
 		add(lblNewLabel);
 
-		JLabel lblNewRoomNumber = new JLabel(" New Room Number");
+		JLabel lblNewRoomNumber = new JLabel(" New Hotel Star");
 		lblNewRoomNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewRoomNumber.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblNewRoomNumber.setBounds(14, 185, 498, 73);
 		add(lblNewRoomNumber);
 
-		JLabel lblSingle = new JLabel("Single");
+		JLabel lblSingle = new JLabel(" New Locality");
 		lblSingle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSingle.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblSingle.setBounds(14, 271, 133, 73);
 		add(lblSingle);
 
-		JLabel lblQuad = new JLabel("Quad");
+		JLabel lblQuad = new JLabel(" New Address");
 		lblQuad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuad.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblQuad.setBounds(14, 443, 133, 73);
 		add(lblQuad);
 
-		JLabel lblDual = new JLabel("Dual");
-		lblDual.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDual.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		lblDual.setBounds(14, 357, 133, 73);
-		add(lblDual);
-
 		btnConfirm = new JButton("CONFIRM");
 		btnConfirm.setBackground(new Color(32, 178, 170));
 		btnConfirm.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		btnConfirm.setBounds(147, 529, 218, 73);
+		btnConfirm.setBounds(147, 357, 218, 73);
 		btnConfirm.setOpaque(true);
 		add(btnConfirm);
 
@@ -122,41 +116,37 @@ public class LandlordEditInformation extends JPanel {
 		});
 		add(comboBox_Locality);
 
-		textField_Q_price = new JTextField();
-		textField_Q_price.setBounds(147, 443, 365, 73);
-		add(textField_Q_price);
-		textField_Q_price.setColumns(10);
+		textField_Address = new JTextField();
+		textField_Address.setBounds(147, 443, 365, 73);
+		add(textField_Address);
+		textField_Address.setColumns(10);
 
 		if (myHotelId.length != 0) {
-//			hotelId = myHotelId[0];
-//			star = 
-//			comboBox_Star.setSelectedItem(star);
-//			locality =
-//			comboBox_Locality.setSelectedItem(locality);
-//			textField_Q_price.setText();
+			hotelId = myHotelId[0];
+			star = Hotel.ALLHOTEL[hotelId].getStar();
+			comboBox_Star.setSelectedItem(star);
+			locality = Hotel.ALLHOTEL[hotelId].getLocality();
+			comboBox_Locality.setSelectedItem(locality);
+			textField_Address.setText(Hotel.ALLHOTEL[hotelId].getAddress());
 		}
 
 		comboBox_ID.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					hotelId = (Integer) e.getItem();
-					comboBox_Star.removeAllItems();
-					for (int i = 0; i < 31; i++) {
-						comboBox_Star.addItem(i);
-					}
-					star = Hotel.ALLHOTEL[hotelId].getRoomCombination()[0];
+					star = Hotel.ALLHOTEL[hotelId].getStar();
 					comboBox_Star.setSelectedItem(star);
-					comboBox_Locality.removeAllItems();
-//					for (int i = 0; i < 31; i++) {
-//						comboBox_Locality.addItem(i);
-//					}
-//					locality = comboBox_Locality.setSelectedItem(locality);
-//
-//					TextField_Q_price.setText(Integer.toString(Hotel.ALLHOTEL[hotelId].getRoomInfo()[2].getPrice()));
-//					System.out.println("Select " + hotelId);
+					locality = Hotel.ALLHOTEL[hotelId].getLocality();
+					comboBox_Locality.setSelectedItem(locality);
+					textField_Address.setText(Hotel.ALLHOTEL[hotelId].getAddress());
+					System.out.println("Select " + hotelId);
 				}
 			}
 		});
+	}
+
+	public String getAddress() {
+		return textField_Address.getText();
 	}
 
 }

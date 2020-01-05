@@ -94,10 +94,10 @@ public class LandlordEditHotelPanel extends JPanel {
 		OperationalPane.add(defaultPanel, "name_220055604692901");
 		ler = new LandlordEditRoomAndPrice();
 		lef = new LandlordEditInformation();
-//		OperationalPane.add(lef, "name_220055604692900");
+		OperationalPane.add(lef, "name_220055604692900");
 		OperationalPane.add(ler, "name_219659037387500");
 		ler.setVisible(false);
-//		lef.setVisible(false);
+		lef.setVisible(false);
 
 	}
 
@@ -106,7 +106,7 @@ public class LandlordEditHotelPanel extends JPanel {
 
 		btnBackToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainframe.activateLandlordMenuPanel();
+				mainframe.activateLandlordHotelsPanel();
 				setVisible(false);
 			}
 		});
@@ -114,16 +114,16 @@ public class LandlordEditHotelPanel extends JPanel {
 		btnRoomNumber.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ler.setVisible(true);
-//				lef.setVisible(false);
+				lef.setVisible(false);
 				defaultPanel.setVisible(false);
 			}
 		});
 
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				ler.setVisible(false);
-//				lef.setVisible(true);
-//				defaultPanel.setVisible(false);
+				ler.setVisible(false);
+				lef.setVisible(true);
+				defaultPanel.setVisible(false);
 			}
 		});
 
@@ -133,7 +133,7 @@ public class LandlordEditHotelPanel extends JPanel {
 				switch (op) {
 				case 0:
 					new PopFrame("Successfully Edited !");
-					mainframe.activateLandlordOrderPanel();
+					mainframe.activateLandlordHotelsPanel();
 					setVisible(false);
 					break;
 				case 1:
@@ -157,15 +157,22 @@ public class LandlordEditHotelPanel extends JPanel {
 			}
 		});
 
-//		lef.btnConfirm.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				new EditBook().editCheckInDateAndNight(mod.bookId, mod.getCheckInDate(), checkOutDate);
-//				new PopFrame("Successfully Edited !");
-//				mainframe.activateMyOrderPanel();
-//				setVisible(false);
-//
-//			}
-//		});
+		lef.btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int op = HotelOperation.editHotelInformation(lef.hotelId, lef.star, lef.locality, lef.getAddress());
+				switch (op) {
+				case 0:
+					new PopFrame("Successfully Edited !");
+					mainframe.activateLandlordHotelsPanel();
+					setVisible(false);
+					break;
+				case 1:
+					new PopFrame("error: Please fill all blanks");
+					break;
+				}
+
+			}
+		});
 		setVisible(true);
 	}
 
