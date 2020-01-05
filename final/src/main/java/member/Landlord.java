@@ -1,11 +1,20 @@
-package bookAndUser;
+package member;
 
-public class User {
+import java.util.ArrayList;
+
+public class Landlord implements Member {
+	
+	public static ArrayList<Landlord> landlordList;
+
+	static {
+		landlordList = LandlordOperation.uploadUserList();
+	}
+	
 	private String name;
 	private String password;
 	private boolean login = false;
-	
-	public User(String n, String password) {
+
+	public Landlord(String n, String password) {
 		this.name = n;
 		this.password = password;
 	}
@@ -21,4 +30,5 @@ public class User {
 	public String getName() {
 		return this.name;
 	}
+
 }

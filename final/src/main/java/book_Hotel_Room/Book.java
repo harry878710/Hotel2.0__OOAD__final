@@ -1,11 +1,22 @@
-package bookAndUser;
+package book_Hotel_Room;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import hotelAndRoom.*;
+
+import book_Hotel_Room.*;
 import operation.SearchAndBook;
 
 public class Book {
+
+	public static ArrayList<Book> bookList;
+	public static int bookedNumber;
+
+	static {
+		bookList = BookOperation.uploadBookList();
+		bookedNumber = BookOperation.nextBookedNumber();
+	}
+
 	private int hotelId;
 	private int[] roomCombination = new int[3];
 	private int totalPrice;
@@ -25,7 +36,6 @@ public class Book {
 		this.bookId = bookId;
 		this.userId = userId;
 	}
-
 
 	public int getHotelId() {
 		return hotelId;
@@ -83,10 +93,9 @@ public class Book {
 		Date nextDate = c.getTime();
 		return nextDate;
 	}
-	
 
 	private int calculateTotalPrice() {
-		Room[] roomInfo = HotelList.ALLHOTEL[hotelId].getRoomInfo();
+		Room[] roomInfo = Hotel.ALLHOTEL[hotelId].getRoomInfo();
 		int priceToReturn = 0;
 		priceToReturn += nights * roomInfo[0].getPrice() * roomCombination[0];
 		priceToReturn += nights * roomInfo[1].getPrice() * roomCombination[1];
