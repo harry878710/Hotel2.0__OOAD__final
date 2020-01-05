@@ -1,14 +1,37 @@
 package member;
 
+import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-interface MemberOperation {
 
+
+
+interface MemberOperation {
+	
+	public static String url = "jdbc:postgresql://140.112.151.227/";
+	public static String user = "postgres";
+	public static String passwords = "harry8787";
+	
+	public static Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url, user, passwords);
+            System.out.println("Connected to the PostgreSQL server successfully.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+ 
+        return conn;
+    }
+	
 	public static int addUser(String id, String password, String checkPass, String member) {
+		
+		String tmp = url + member;
+		
 		if (!password.equals(checkPass)) {
 			return 1;
 		}
@@ -18,8 +41,8 @@ interface MemberOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + member + ".db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(tmp, user, passwords);
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
@@ -31,7 +54,7 @@ interface MemberOperation {
 			c.commit();
 			c.close();
 
-		} catch (org.sqlite.SQLiteException e) {
+		} catch (SQLException e) {
 			return 2;
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -42,6 +65,9 @@ interface MemberOperation {
 	}
 
 	public static int userLogin(String userId, String password, String member) {
+		
+//		role = member;
+		
 		switch (member) {
 		case "user":
 			if (!userId.equals("") && !password.equals("")) {
@@ -97,11 +123,14 @@ interface MemberOperation {
 	}
 
 	public static void showAllUser(String member) {
+		
+		String tmp = url + member;
+		
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + member + ".db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(tmp, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -130,6 +159,9 @@ interface MemberOperation {
 	// If the user Id is not exist, it would print a msg.
 	// If the old password is wrong, it would print a msg, too.
 	public static int changePassword(String id, String oldPass, String newPass, String repeat, String member) {
+		
+		String tmp = url + member;
+		
 		if (!hasUser(id, member)) {
 			System.out.println("The user id is not exist.");
 			return -1;
@@ -147,8 +179,8 @@ interface MemberOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + member + ".db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(tmp, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -185,6 +217,9 @@ interface MemberOperation {
 	// If the id is not exist or the password is wrong, it would return false.
 	// Only if the password is right would it return true.
 	public static boolean checkPassword(String id, String password, String member) {
+		
+		String tmp = url + member;
+		
 		if (!hasUser(id, member)) {
 			return false;
 		}
@@ -192,8 +227,8 @@ interface MemberOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + member + ".db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(tmp, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -223,12 +258,15 @@ interface MemberOperation {
 	}
 
 	public static boolean hasUser(String id, String member) {
+		
+		String tmp = url + member;
+		
 		boolean get = false;
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + member + ".db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(tmp, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -252,6 +290,7 @@ interface MemberOperation {
 	}
 
 	public static boolean anyoneLoggedin(String member) {
+		
 		switch (member) {
 		case "user":
 			for (int i = 0; i < Tourist.userList.size(); i++) {
@@ -273,6 +312,7 @@ interface MemberOperation {
 	}
 
 	public static void everyOneloggedOut(String member) {
+		
 		switch (member) {
 		case "user":
 			for (int i = 0; i < Tourist.userList.size(); i++) {
@@ -289,6 +329,9 @@ interface MemberOperation {
 	}
 
 	public static String whoIsLoggedin(String member) {
+		
+		
+		
 		switch (member) {
 		case "user":
 			for (int i = 0; i < Tourist.userList.size(); i++) {
@@ -310,6 +353,9 @@ interface MemberOperation {
 	}
 
 	public static ArrayList uploadUserList(String member) {
+		
+		String tmp = url + member;
+		
 		ArrayList list = new ArrayList();
 		switch (member) {
 		case "user":
@@ -321,16 +367,16 @@ interface MemberOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + member + ".db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(tmp, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + member + ";");
 			while (rs.next()) {
-				String name = rs.getString("Id");
-				String password = rs.getString("Password");
+				String name = rs.getString("ID");
+				String password = rs.getString("PASSWORD");
 				switch (member) {
 				case "user":
 					Tourist user = new Tourist(name, password);

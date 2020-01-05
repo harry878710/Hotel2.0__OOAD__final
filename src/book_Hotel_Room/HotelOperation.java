@@ -1,5 +1,6 @@
 package book_Hotel_Room;
 
+import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -49,6 +50,22 @@ public class HotelOperation {
 //	public static void main(String[] args) {
 //
 //	}
+	
+	private static final String url = "jdbc:postgresql://140.112.151.227/hotel";
+	private static final String user = "postgres";
+	private static final String passwords = "harry8787";
+	
+	public Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url, user, passwords);
+            System.out.println("Connected to the PostgreSQL server successfully.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+ 
+        return conn;
+    }
 
 	public static int addHotelToDB(int star, String locality, String address, int[] roomCombination, String[] roomPrice,
 			String landlordID) {
@@ -83,8 +100,8 @@ public class HotelOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
@@ -133,13 +150,41 @@ public class HotelOperation {
 //		}
 //		System.out.println("Records created successfully");
 //	}
+	
+	public static int editHotelRoomAndPrice(int hotelId, int[] roomCombination, String[] roomPrice) {
+		if (roomPrice[0].equals("") || roomPrice[1].equals("") || roomPrice[2].equals("")) {
+			// Please fill all blanks
+			return 1;
+		}
+		int[] price = new int[3];
+		try {
+			price[0] = Integer.parseInt(roomPrice[0]);
+			price[1] = Integer.parseInt(roomPrice[1]);
+			price[2] = Integer.parseInt(roomPrice[2]);
+		} catch (NumberFormatException e) {
+			// price is not number
+			return 5;
+		}
 
-	public static void editHotelRoomAndPrice(int hotelId, int[] roomCombination, int[] roomPrice) {
+		if (roomCombination[0] == 0 && roomCombination[1] == 0 && roomCombination[2] == 0) {
+			// You has no rooms?
+			return 2;
+		}
+		for (int i = 0; i < 3; i++) {
+			if (roomCombination[i] != 0 && price[i] == 0) {
+				// your room's price cannot be zero
+				return 3;
+			}
+			if (roomCombination[i] == 0 && price[i] != 0) {
+				// your don't have room then you cannot have price
+				return 4;
+			}
+		}
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -158,13 +203,13 @@ public class HotelOperation {
 					sql = "UPDATE HOTEL set Number4 = '" + roomCombination[2] + "' where ID='" + hotelId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
-					sql = "UPDATE HOTEL set Price1 = '" + roomPrice[0] + "' where ID='" + hotelId + "';";
+					sql = "UPDATE HOTEL set Price1 = '" + price[0] + "' where ID='" + hotelId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
-					sql = "UPDATE HOTEL set Price2 = '" + roomPrice[1] + "' where ID='" + hotelId + "';";
+					sql = "UPDATE HOTEL set Price2 = '" + price[1] + "' where ID='" + hotelId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
-					sql = "UPDATE HOTEL set Price4 = '" + roomPrice[2] + "' where ID='" + hotelId + "';";
+					sql = "UPDATE HOTEL set Price4 = '" + price[2] + "' where ID='" + hotelId + "';";
 					stmt.executeUpdate(sql);
 					c.commit();
 					System.out.println("Change hotel successfully.");
@@ -179,15 +224,20 @@ public class HotelOperation {
 			System.exit(0);
 		}
 		Hotel.ALLHOTEL = uploadHotelList();
+		return 0;
 		// System.out.println("Operation done successfully");
 	}
 
-	public static void editHotelInformation(int hotelId, int star, String locality, String address) {
+	public static int editHotelInformation(int hotelId, int star, String locality, String address) {
+		if (address.equals("") ) {
+			// Please fill all blanks
+			return 1;
+		}
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -219,15 +269,17 @@ public class HotelOperation {
 		}
 		Hotel.ALLHOTEL = uploadHotelList();
 		// System.out.println("Operation done successfully");
+		return 0;
 	}
+	
 
 	public static String showThisHotel(int hotelId) {
 		String toReturn = "The book ID is not existed.";
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -262,8 +314,8 @@ public class HotelOperation {
 		Statement stmt = null;
 		int size = 0;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -288,17 +340,17 @@ public class HotelOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM hotel;");
 			while (rs.next()) {
-				single = (rs.getInt("number1") > single) ? rs.getInt("number1") : single;
-				doub = (rs.getInt("number2") > doub) ? rs.getInt("number2") : doub;
-				quad = (rs.getInt("number4") > quad) ? rs.getInt("number4") : quad;
+				single = (rs.getInt("NUMBER1") > single) ? rs.getInt("NUMBER1") : single;
+				doub = (rs.getInt("NUMBER2") > doub) ? rs.getInt("NUMBER2") : doub;
+				quad = (rs.getInt("NUMBER4") > quad) ? rs.getInt("NUMBER4") : quad;
 			}
 			rs.close();
 			stmt.close();
@@ -316,8 +368,8 @@ public class HotelOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
@@ -344,8 +396,8 @@ public class HotelOperation {
 		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
+			Class.forName("org.postgresql.Driver");
+			c = DriverManager.getConnection(url, user, passwords);
 			c.setAutoCommit(false);
 			// System.out.println("Opened database successfully");
 
