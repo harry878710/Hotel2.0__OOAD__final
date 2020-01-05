@@ -85,12 +85,16 @@ public class LandlordOperation implements MemberOperation {
 
 	public static String showThisHotelOrder(int hotelId) {
 		ArrayList<String> bookIdList = BookOperation.listBookIdOfHotel(hotelId);
-		StringBuffer tmp = new StringBuffer("");
-		for (int i = 0; i < bookIdList.size(); i++) {
-			tmp.append(BookOperation.showBook(bookIdList.get(i)));
+		if (bookIdList.size() == 0) {
+			return "No order yet.\nLandlord should work harder...";
+		} else {
+			StringBuffer tmp = new StringBuffer("");
+			for (int i = 0; i < bookIdList.size(); i++) {
+				tmp.append(BookOperation.showBook(bookIdList.get(i)));
+			}
+			String toReturn = new String(tmp);
+			return toReturn;
 		}
-		String toReturn = new String(tmp);
-		return toReturn;
 	}
 
 	public static String showAllMyHotel(String landlord) {

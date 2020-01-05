@@ -166,8 +166,8 @@ public class BookOperation {
 				int stayNight = rs.getInt("Night");
 				int price = rs.getInt("Price");
 				System.out.println(
-						"Book ID: " + bookId + ", User ID: " + userId + "\n" + Hotel.ALLHOTEL[hotelId].toString()
-								+ "\n" + "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
+						"Book ID: " + bookId + ", User ID: " + userId + "\n" + Hotel.ALLHOTEL[hotelId].toString() + "\n"
+								+ "Check-in date: " + checkInDate + ", Check-out date: " + checkOutDate + "\n"
 								+ "Stay nights: " + stayNight + " nights, Total price: " + price + "\n"
 								+ "Room:\n	Single: " + single + "\n	Double: " + doub + "\n	Quad: " + quad);
 				System.out.println();
@@ -213,7 +213,7 @@ public class BookOperation {
 							+ Hotel.ALLHOTEL[hotelId].toString() + "\n" + "Check-in date: " + checkInDate
 							+ ", Check-out date: " + checkOutDate + "\n" + "Stay nights: " + stayNight
 							+ " nights, Total price: " + price + "\n" + "Room:\n	Single: " + single
-							+ "\n	Double: " + doub + "\n	Quad: " + quad+"\n");
+							+ "\n	Double: " + doub + "\n	Quad: " + quad + "\n");
 					break;
 				}
 			}
@@ -426,7 +426,7 @@ public class BookOperation {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		return null;
+		return toReturn;
 	}
 
 	public static ArrayList<Book> uploadBookList() {
