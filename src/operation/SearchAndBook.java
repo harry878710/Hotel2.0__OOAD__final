@@ -13,10 +13,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import bookAndUser.BookList;
-import bookAndUser.BookOperation;
-import hotelAndRoom.HotelList;
-import hotelAndRoom.Room;
+import book_Hotel_Room.Book;
+import book_Hotel_Room.BookOperation;
+import book_Hotel_Room.Hotel;
+import book_Hotel_Room.HotelOperation;
+import book_Hotel_Room.Room;
 
 public class SearchAndBook {
 	// default constructor
@@ -56,9 +57,9 @@ public class SearchAndBook {
 			int hotelId = qualifiedHotelId.get(i);
 			int price = 0;
 			for (int j = 0; j < 3; j++) {
-				price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+				price += Hotel.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 			}
-			toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price
+			toReturn[i + 1] = ("\n" + Hotel.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price
 					+ "\nRoom combination : " + roomCombination[0] + " single room, " + roomCombination[1]
 					+ " double room, " + roomCombination[2] + " quad room.\n");
 		}
@@ -81,8 +82,6 @@ public class SearchAndBook {
 			error[0] = validDateInput(checkIn, checkOut);
 			return error;
 		}
-//		Date checkOut = calculateCheckOutDate(checkIn, night);
-//		String checkOutDate = dateToString(checkOut);
 		int night = calculateNight(checkIn, checkOut);
 		System.out.println(night);
 		// check if the room number of every hotel in array is enough for new book
@@ -103,36 +102,40 @@ public class SearchAndBook {
 		case "Sorted by Price(large to small)":
 			// Sorted by Price(large to small)
 			ArrayList<Integer> sortList1 = sortByPrice(qualifiedHotelId, roomCombination);
+			int a = 1;
 			for (int i = sortList1.size() - 1; i >= 0; i--) {
-				int hotelId = qualifiedHotelId.get(i);
+				int hotelId = sortList1.get(i);
 				int price = 0;
 				for (int j = 0; j < 3; j++) {
-					price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+					price += Hotel.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 				}
-				toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				toReturn[a] = ("\n" + Hotel.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				a++;
 			}
 			break;
 		case "Sorted by Price(small to large)":
 			// Sorted by Price(small to large)
 			ArrayList<Integer> sortList2 = sortByPrice(qualifiedHotelId, roomCombination);
 			for (int i = 0; i < sortList2.size(); i++) {
-				int hotelId = qualifiedHotelId.get(i);
+				int hotelId = sortList2.get(i);
 				int price = 0;
 				for (int j = 0; j < 3; j++) {
-					price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+					price += Hotel.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 				}
-				toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				toReturn[i + 1] = ("\n" + Hotel.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
 			}
 			break;
 		case "Sorted by Hotel ID(large to small)":
 			// Sorted by Hotel ID(large to small)
+			int b = 1;
 			for (int i = qualifiedHotelId.size() - 1; i >= 0; i--) {
 				int hotelId = qualifiedHotelId.get(i);
 				int price = 0;
 				for (int j = 0; j < 3; j++) {
-					price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+					price += Hotel.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 				}
-				toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				toReturn[b] = ("\n" + Hotel.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				b++;
 			}
 			break;
 		case "Sorted by Hotel ID(small to large)":
@@ -142,9 +145,9 @@ public class SearchAndBook {
 				int hotelId = qualifiedHotelId.get(i);
 				int price = 0;
 				for (int j = 0; j < 3; j++) {
-					price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+					price += Hotel.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 				}
-				toReturn[i + 1] = ("\n" + HotelList.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
+				toReturn[i + 1] = ("\n" + Hotel.ALLHOTEL[hotelId].toString() + "\nTotal price : " + price + "\n");
 			}
 			break;
 
@@ -203,9 +206,9 @@ public class SearchAndBook {
 		if (remainRoomNumber[hotelId][0] < singleRoom || remainRoomNumber[hotelId][1] < doubleRoom
 				|| remainRoomNumber[hotelId][2] < quadroRoom) {
 			// Room number is not enough.
-			if (singleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[0]
-					|| doubleRoom > HotelList.ALLHOTEL[hotelId].getRoomCombination()[1]
-					|| quadroRoom >= HotelList.ALLHOTEL[hotelId].getRoomCombination()[2]) {
+			if (singleRoom > Hotel.ALLHOTEL[hotelId].getRoomCombination()[0]
+					|| doubleRoom > Hotel.ALLHOTEL[hotelId].getRoomCombination()[1]
+					|| quadroRoom >= Hotel.ALLHOTEL[hotelId].getRoomCombination()[2]) {
 				System.out.println("Room number is never enough.");
 				return null;
 			} else {
@@ -215,13 +218,13 @@ public class SearchAndBook {
 		}
 
 		DecimalFormat decimal = new DecimalFormat("00000");
-		String bookId = decimal.format(BookList.bookedNumber);
+		String bookId = decimal.format(Book.bookedNumber);
 		int price = calculateTotalPrice(hotelId, night, roomCombination);
 		BookOperation.addBook(bookId, hotelId, singleRoom, doubleRoom, quadroRoom, price, night, checkInDate,
 				checkOutDate, userId);
 
-		BookList.bookList = BookOperation.uploadBookList();
-		BookList.bookedNumber += 1;
+		Book.bookList = BookOperation.uploadBookList();
+		Book.bookedNumber += 1;
 		return bookId;
 	}
 
@@ -329,26 +332,26 @@ public class SearchAndBook {
 	 */
 	private int[][] roomOfThatDate(Date theDate) {
 		// initialize the array as all initial room number.
-		int[][] totalRoom = new int[HotelList.TOTAL_NUMBER_OF_HOTEL][3];
+		int[][] totalRoom = new int[Hotel.TOTAL_NUMBER_OF_HOTEL][3];
 		for (int i = 0; i < totalRoom.length; i++) {
 			for (int j = 0; j < totalRoom[i].length; j++) {
-				totalRoom[i][j] = HotelList.ALLHOTEL[i].getRoomCombination()[j];
+				totalRoom[i][j] = Hotel.ALLHOTEL[i].getRoomCombination()[j];
 			}
 		}
 		// Traverse the whole booklist
-		for (int i = 0; i < BookList.bookList.size(); i++) {
-			int myHotelId = BookList.bookList.get(i).getHotelId();
+		for (int i = 0; i < Book.bookList.size(); i++) {
+			int myHotelId = Book.bookList.get(i).getHotelId();
 			// check if the books in bookList is same date of theDate, too.
-			Date currentDatePointer = new Date(BookList.bookList.get(i).getCheckInDate().getTime());
-			int thisBookNights = BookList.bookList.get(i).getNights();
+			Date currentDatePointer = new Date(Book.bookList.get(i).getCheckInDate().getTime());
+			int thisBookNights = Book.bookList.get(i).getNights();
 			// Traverse every dates occupied by the current Book(for "nights" times)
 			for (int j = 0; j < thisBookNights; j++) {
 				// For the date that matches with parameter(theDate) we subtract the number of
 				// each type of room
 				if (theDate.equals(currentDatePointer)) {
-					totalRoom[myHotelId][0] -= BookList.bookList.get(i).getRoomCombination()[0];
-					totalRoom[myHotelId][1] -= BookList.bookList.get(i).getRoomCombination()[1];
-					totalRoom[myHotelId][2] -= BookList.bookList.get(i).getRoomCombination()[2];
+					totalRoom[myHotelId][0] -= Book.bookList.get(i).getRoomCombination()[0];
+					totalRoom[myHotelId][1] -= Book.bookList.get(i).getRoomCombination()[1];
+					totalRoom[myHotelId][2] -= Book.bookList.get(i).getRoomCombination()[2];
 
 				}
 				currentDatePointer = nextDate(currentDatePointer);
@@ -382,10 +385,11 @@ public class SearchAndBook {
 	// 31 should be changed to the possible maximum in database
 	public int[] possibleRoomNumber(int arg_numOfPeople) {
 		int s, d, q;
+		int[] maxRoomCombination = HotelOperation.maxRoomCombination();
 		Set<Integer> possibleRoomNumber = new HashSet<Integer>();
-		for (s = 0; s < 31; s++) {
-			for (d = 0; d < 31; d++) {
-				for (q = 0; q < 31; q++) {
+		for (s = 0; s < maxRoomCombination[0]; s++) {
+			for (d = 0; d < maxRoomCombination[1]; d++) {
+				for (q = 0; q < maxRoomCombination[2]; q++) {
 					if ((s + 2 * d + 4 * q) == arg_numOfPeople) {
 						possibleRoomNumber.add(s + d + q);
 					}
@@ -415,10 +419,11 @@ public class SearchAndBook {
 	// 31 should be modified
 	public ArrayList<Integer[]> possibleRoomCombination(int arg_numOfPeople, int arg_numOfRoom) {
 		int s, d, q;
+		int[] maxRoomCombination = HotelOperation.maxRoomCombination();
 		ArrayList<Integer[]> combination = new ArrayList<Integer[]>();
-		for (s = 0; s < 31; s++) {
-			for (d = 0; d < 31; d++) {
-				for (q = 0; q < 31; q++) {
+		for (s = 0; s < maxRoomCombination[0]; s++) {
+			for (d = 0; d < maxRoomCombination[1]; d++) {
+				for (q = 0; q < maxRoomCombination[2]; q++) {
 					if ((s + 2 * d + 4 * q) == arg_numOfPeople && (s + d + q) == arg_numOfRoom) {
 						Integer[] tmp = { s, d, q };
 						combination.add(tmp);
@@ -440,7 +445,7 @@ public class SearchAndBook {
 	private ArrayList<Integer> hotelsWithEnoughRoom(int[] arg_roomCombination, Date checkIn, Date checkOut) {
 		// the whole remain room number of all hotel and room type
 		int[][] remainRoomNumber = remainingRoomNumber(checkIn, checkOut);
-		ArrayList<Integer> hotelsWithEnoughRoom = new ArrayList<Integer>(1500);
+		ArrayList<Integer> hotelsWithEnoughRoom = new ArrayList<Integer>();
 		for (int i = 0; i < remainRoomNumber.length; i++) {
 			if (remainRoomNumber[i][0] >= arg_roomCombination[0] && remainRoomNumber[i][1] >= arg_roomCombination[1]
 					&& remainRoomNumber[i][2] >= arg_roomCombination[2]) {
@@ -467,7 +472,7 @@ public class SearchAndBook {
 		case "Taipei":
 			// only Taipei
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				String locality = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getLocality();
+				String locality = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getLocality();
 				if (locality.equals("台北")) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -476,7 +481,7 @@ public class SearchAndBook {
 		case "Taichung":
 			// only Taichung
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				String locality = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getLocality();
+				String locality = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getLocality();
 				if (locality.equals("台中")) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -485,7 +490,7 @@ public class SearchAndBook {
 		case "Kaohsiung":
 			// only Kaohsiung
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				String locality = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getLocality();
+				String locality = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getLocality();
 				if (locality.equals("高雄")) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -501,7 +506,7 @@ public class SearchAndBook {
 		case 1:
 			// only 1 star
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				int thisHotelStar = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
+				int thisHotelStar = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
 				if (thisHotelStar == 1) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -510,7 +515,7 @@ public class SearchAndBook {
 		case 2:
 			// only 2 star
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				int thisHotelStar = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
+				int thisHotelStar = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
 				if (thisHotelStar == 2) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -519,7 +524,7 @@ public class SearchAndBook {
 		case 3:
 			// only 3 star
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				int thisHotelStar = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
+				int thisHotelStar = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
 				if (thisHotelStar == 3) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -528,7 +533,7 @@ public class SearchAndBook {
 		case 4:
 			// only 4 star
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				int thisHotelStar = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
+				int thisHotelStar = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
 				if (thisHotelStar == 4) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -537,7 +542,7 @@ public class SearchAndBook {
 		case 5:
 			// only 5 star
 			for (int i = 0; i < hotelsWithEnoughRoom.size(); i++) {
-				int thisHotelStar = HotelList.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
+				int thisHotelStar = Hotel.ALLHOTEL[hotelsWithEnoughRoom.get(i)].getStar();
 				if (thisHotelStar == 5) {
 					hotelsInSpecificCity.add(hotelsWithEnoughRoom.get(i));
 				}
@@ -558,7 +563,7 @@ public class SearchAndBook {
 			int hotelId = qualifiedHotelId.get(i);
 			int price = 0;
 			for (int j = 0; j < 3; j++) {
-				price += HotelList.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
+				price += Hotel.ALLHOTEL[hotelId].getRoomInfo()[j].getPrice() * roomCombination[j];
 			}
 			sortMap.put(hotelId, price);
 		}
@@ -587,7 +592,7 @@ public class SearchAndBook {
 	}
 
 	private int calculateTotalPrice(int hotelId, int nights, int[] newCombination) {
-		Room[] roomInfo = HotelList.ALLHOTEL[hotelId].getRoomInfo();
+		Room[] roomInfo = Hotel.ALLHOTEL[hotelId].getRoomInfo();
 		int priceToReturn = 0;
 		priceToReturn += nights * roomInfo[0].getPrice() * newCombination[0];
 		priceToReturn += nights * roomInfo[1].getPrice() * newCombination[1];

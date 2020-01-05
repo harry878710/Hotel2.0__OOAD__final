@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,13 +22,14 @@ import javax.swing.SwingConstants;
 
 import com.eltima.components.ui.DatePicker;
 
-import bookAndUser.BookOperation;
-import bookAndUser.UserList;
-import bookAndUser.UserOperation;
+import book_Hotel_Room.BookOperation;
+import gui.PopFrame;
+ 
+import member.TouristOperation;
 
 import javax.swing.JComboBox;
 
-public class EditOrderDate extends JPanel {
+public class TouristEditDate extends JPanel {
 	JButton btnConfirm;
 	String bookId;
 	final DatePicker datepick;
@@ -78,7 +79,7 @@ public class EditOrderDate extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public EditOrderDate() {
+	public TouristEditDate() {
 		setBackground(new Color(95, 158, 160));
 		setSize(600, 900);
 		setLayout(null);
@@ -94,7 +95,7 @@ public class EditOrderDate extends JPanel {
 		comboBox_ID.setBackground(new Color(240, 255, 240));
 		comboBox_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_ID.setBounds(14, 119, 498, 73);
-		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(UserOperation.whoIsLoggedin());
+		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(TouristOperation.whoIsLoggedin());
 		ArrayList<String> idListsort = new ArrayList<String>();
 		int x = idListUnsort.size();
 		for (int i = 0; i < x; i++) {
@@ -103,10 +104,10 @@ public class EditOrderDate extends JPanel {
 			Iterator<String> iter = idListUnsort.iterator();
 			if (iter.hasNext()) {
 				minId = (String) iter.next();
-				min = new Integer(minId);
+				min = Integer.parseInt(minId);
 				while (iter.hasNext()) {
 					String valId = (String) iter.next();
-					int val = new Integer(valId);
+					int val = Integer.parseInt(valId);
 					minId = (val < min) ? valId : minId;
 					min = (val < min) ? val : min;
 				}
@@ -119,14 +120,6 @@ public class EditOrderDate extends JPanel {
 		for (int i = 0; i < idListsort.size(); i++) {
 			comboBox_ID.addItem(idListsort.get(i));
 		}
-		comboBox_ID.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					bookId = (String) e.getItem();
-					System.out.println("Select " + bookId);
-				}
-			}
-		});
 		add(comboBox_ID);
 
 		btnConfirm = new JButton("Confirm");
@@ -145,15 +138,17 @@ public class EditOrderDate extends JPanel {
 		lblNewCheckIn.setBounds(14, 219, 498, 73);
 		add(lblNewCheckIn);
 
-		JComboBox<Integer> comboBox_Date = new JComboBox<Integer>();
-		comboBox_Date.setForeground(new Color(102, 205, 170));
-		comboBox_Date.setBackground(new Color(240, 255, 240));
-		comboBox_Date.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		comboBox_Date.setBounds(14, 482, 498, 73);
+		JComboBox<Integer> comboBox_Night = new JComboBox<Integer>();
+		comboBox_Night.setForeground(new Color(102, 205, 170));
+		comboBox_Night.setBackground(new Color(240, 255, 240));
+		comboBox_Night.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		comboBox_Night.setBounds(14, 482, 498, 73);
 		for (int i = 0; i < 100; i++) {
-			comboBox_Date.addItem(i + 1);
+			comboBox_Night.addItem(i + 1);
 		}
-		comboBox_Date.addItemListener(new ItemListener() {
+		night = BookOperation.getBook(bookId).getNights();
+		comboBox_Night.setSelectedItem(night);
+		comboBox_Night.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					night = (Integer) e.getItem();
@@ -161,13 +156,24 @@ public class EditOrderDate extends JPanel {
 				}
 			}
 		});
-		add(comboBox_Date);
+		add(comboBox_Night);
 
 		JLabel lblNewNights = new JLabel("New Nights");
 		lblNewNights.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		lblNewNights.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewNights.setBounds(14, 396, 498, 73);
 		add(lblNewNights);
+		
+		comboBox_ID.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					bookId = (String) e.getItem();
+					night = BookOperation.getBook(bookId).getNights();
+					comboBox_Night.setSelectedItem(night);
+					System.out.println("Select " + bookId);
+				}
+			}
+		});
 	}
 
 	private static DatePicker getDatePicker() {

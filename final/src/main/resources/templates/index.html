@@ -41,8 +41,10 @@
 					<nav class="main_nav">
 						<ul
 							class="d-flex flex-row align-items-start justify-content-start">
-							<li class="active"><a
+							<li class="active" th:if="${index.id}!=null"><a
 								th:href="@{/index.html?id={id}(id=${index.id})}">Home</a></li>
+							<li class="active" th:if="${index.id}==null"><a
+								href="/index.html">Home</a></li>
 							<li><a href="about.html">About us</a></li>
 							<li><a href="#">Rooms</a></li>
 							<li><a href="blog.html">Blog</a></li>
@@ -59,7 +61,7 @@
 						<a id="demo" href="register.html">Register</a>
 					</div>
 					<div th:if="${index.id}!=null" class="book_button">
-						<a id="demo" href="register.html">My Account</a>
+						<a id="demo" th:href="@{account(id=${index.id})}">My Account</a>
 					</div>
 
 					<!-- Hamburger Menu -->
@@ -163,27 +165,35 @@
 														function(){
 															var arg_numOfPeople = $(this).val();
 															var s,d,q;
-															var possibleRoomNumber = [];
+															var possibleRoomNumber = new Set([]);
 															var html = '<option disabled selected th:value="0" style="background-color: black;">Room</option>';
-															
 															for (s = 0; s < 31; s++) {
 																for (d = 0; d < 31; d++) {
 																	for (q = 0; q < 31; q++) {
 																		if ((s + 2 * d + 4 * q) == arg_numOfPeople) {
-																			possibleRoomNumber[possibleRoomNumber.length] =( s + d + q);
+																			possibleRoomNumber.add(s + d + q);
 																		}
 																	}
 																}
 															}
-															for ( var i = 0; i < possibleRoomNumber.length; i++) {
-											                    html += '<option th:value="' + possibleRoomNumber[i] +'" th:text="'+possibleRoomNumber[i]+ '" style="background-color: black;">'
-											                           + possibleRoomNumber[i] + '</option>';
+															var t = possibleRoomNumber.size;
+															var iterator = possibleRoomNumber.values()
+															for ( var i = 0; i < t; i++) {
+																var y=iterator.next().value;
+											                    html += '<option th:value="' + y +'" th:text="'+y+ '" style="background-color: black;">'
+											                           + y + '</option>';
 											                }
 											                html += '</option>';
 															 $('#room').html(html);
 														}
 													);
 												</script>
+												<div style="display: none">
+													<select id="id" name="id"
+														th:with="id=*{id}">
+														<option th:value="${index.id}"></option>
+													</select>
+												</div>
 											</div>
 											<div>
 												<button class="booking_button trans_200">Book Now</button>

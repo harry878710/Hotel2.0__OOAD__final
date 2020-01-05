@@ -1,5 +1,4 @@
-package gui;
-
+package gui.tourist;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
@@ -9,6 +8,8 @@ import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import gui.MainFrame;
+import gui.PopFrame;
 import operation.EditBook;
 
 import javax.swing.JButton;
@@ -30,9 +31,9 @@ public class EditOrderPanel extends JPanel {
 	JButton btnBackToMenu;
 	JPanel OperationalPane;
 	JPanel defaultPanel;
-	EditOrderDate mod;
-	EditOrderRoom mor;
-	EditOrderDelete del;
+	TouristEditDate mod;
+	TouristEditRoom mor;
+	TouristEditDelete del;
 
 	/**
 	 * Create the panel.
@@ -94,9 +95,9 @@ public class EditOrderPanel extends JPanel {
 		label.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		defaultPanel.add(label);
 		OperationalPane.add(defaultPanel, "name_220055604692901");
-		mor = new EditOrderRoom();
-		del = new EditOrderDelete();
-		mod = new EditOrderDate();
+		mor = new TouristEditRoom();
+		del = new TouristEditDelete();
+		mod = new TouristEditDate();
 		OperationalPane.add(mod, "name_220055604692900");
 		OperationalPane.add(mor, "name_219659037387500");
 		OperationalPane.add(del, "name_219659090034700");

@@ -6,11 +6,13 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import bookAndUser.UserList;
-import bookAndUser.UserOperation;
+import member.LandlordOperation;
+ 
+import member.TouristOperation;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,12 +23,19 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 import java.awt.SystemColor;
 import java.awt.Color;
+import javax.swing.JRadioButton;
 
 public class LoginPanel extends JPanel {
+	private String identity = "no_identity";
 	private JTextField textFieldName;
 	private JPasswordField textFieldPassword;
+
 	private JButton btnLogIn;
 	private JButton btnBackToMenu;
+
+	private ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton rdbtn_Tourist;
+	private JRadioButton rdbtn_Landlord;
 
 	public String getName() {
 		return textFieldName.getText();
@@ -119,6 +128,28 @@ public class LoginPanel extends JPanel {
 		btnBackToMenu.setBackground(new Color(95, 158, 160));
 		btnBackToMenu.setBounds(105, 13, 194, 59);
 		add(btnBackToMenu);
+
+		rdbtn_Tourist = new JRadioButton("I'm Tourist");
+		rdbtn_Tourist.setBounds(916, 88, 105, 23);
+		add(rdbtn_Tourist);
+		buttonGroup.add(rdbtn_Tourist);
+		rdbtn_Tourist.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				identity = rdbtn_Tourist.getText();
+			}
+		});
+
+		rdbtn_Landlord = new JRadioButton("I'm Landlord");
+		rdbtn_Landlord.setBounds(916, 156, 105, 23);
+		add(rdbtn_Landlord);
+		buttonGroup.add(rdbtn_Landlord);
+		rdbtn_Landlord.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				identity = rdbtn_Landlord.getText();
+			}
+		});
 	}
 
 	public void activateLoginPanel(MainFrame mainframe) {
@@ -126,25 +157,54 @@ public class LoginPanel extends JPanel {
 		// click the Log in button
 		getBtnLogIn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int op = UserOperation.userLogin(getName(), getPassword());
-				switch(op) {
-				case 0:
-					mainframe.activateUserMenuPanel();
-					setVisible(false);
+				System.out.println(identity);
+				switch (identity) {
+				case "I'm Tourist":
+					int op = TouristOperation.userLogin(getName(), getPassword());
+					switch (op) {
+					case 0:
+						mainframe.activateUserMenuPanel();
+						setVisible(false);
+						break;
+					case 1:
+						new PopFrame("error: Incorrect password.");
+						break;
+					case 2:
+						new PopFrame("error: Unable to find this. Please check your user name.");
+						break;
+					case 3:
+						new PopFrame("error: Please fill all the blanks.");
+						break;
+					default:
+						new PopFrame("error: Fatal error.");
+
+					}
 					break;
-				case 1:
-					new PopFrame("error: Incorrect password.");
-					break;
-				case 2:
-					new PopFrame("error: Unable to find this. Please check your user name.");
-					break;
-				case 3:
-					new PopFrame("error: Please fill all the blanks.");
+				case "I'm Landlord":
+					int op_land = LandlordOperation.userLogin(getName(), getPassword());
+					switch (op_land) {
+					case 0:
+						mainframe.activateLandlordMenuPanel();
+						setVisible(false);
+						break;
+					case 1:
+						new PopFrame("error: Incorrect password.");
+						break;
+					case 2:
+						new PopFrame("error: Unable to find this. Please check your user name.");
+						break;
+					case 3:
+						new PopFrame("error: Please fill all the blanks.");
+						break;
+					default:
+						new PopFrame("error: Fatal error.");
+
+					}
 					break;
 				default:
-					new PopFrame("error: Fatal error.");
-					
+					new PopFrame("error: Identity must be chosen");
 				}
+
 			}
 		});
 		// click the Back to Menu button

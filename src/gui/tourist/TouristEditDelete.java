@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -10,9 +10,9 @@ import java.util.Iterator;
 
 import javax.swing.SwingConstants;
 
-import bookAndUser.BookOperation;
-import bookAndUser.UserList;
-import bookAndUser.UserOperation;
+import book_Hotel_Room.BookOperation;
+ 
+import member.TouristOperation;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -20,14 +20,14 @@ import javax.swing.JComboBox;
 
 import java.awt.Color;
 
-public class EditOrderDelete extends JPanel {
+public class TouristEditDelete extends JPanel {
 	JButton btnConfirm;
 	String bookId;
 
 	/**
 	 * Create the panel.
 	 */
-	public EditOrderDelete() {
+	public TouristEditDelete() {
 		setBackground(new Color(95, 158, 160));
 		setSize(540, 720);
 		setLayout(null);
@@ -43,7 +43,7 @@ public class EditOrderDelete extends JPanel {
 		comboBox_ID.setBackground(new Color(240, 255, 240));
 		comboBox_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		comboBox_ID.setBounds(14, 159, 498, 73);
-		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(UserOperation.whoIsLoggedin());
+		ArrayList<String> idListUnsort = BookOperation.bookIdListOfUser(TouristOperation.whoIsLoggedin());
 		  ArrayList<String> idListsort = new ArrayList<String>();
 		  int x = idListUnsort.size();
 		  for (int i = 0; i < x; i++) {
@@ -52,10 +52,10 @@ public class EditOrderDelete extends JPanel {
 		   Iterator<String> iter = idListUnsort.iterator();
 		   if (iter.hasNext()) {
 		    minId = (String) iter.next();
-		    min = new Integer(minId);
+		    min = Integer.parseInt(minId);
 		    while (iter.hasNext()) {
 		     String valId = (String) iter.next();
-		     int val = new Integer(valId);
+		     int val = Integer.parseInt(valId);
 		     minId = (val < min) ? valId : minId;
 		     min = (val < min) ? val : min;
 		    }

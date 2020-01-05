@@ -1,4 +1,4 @@
-package gui;
+package gui.tourist;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,13 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Set;
 import java.util.StringTokenizer;
 
-import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -33,8 +29,8 @@ import javax.swing.SwingConstants;
 
 import com.eltima.components.ui.DatePicker;
 
-import bookAndUser.UserOperation;
-import gui.BookDeposit;
+import member.TouristOperation;
+import gui.MainFrame;
 import gui.PopFrame;
 
 import operation.SearchAndBook;
@@ -131,7 +127,7 @@ public class SearchPanel extends JPanel {
 		/*
 		 * Choose hotel star to look for
 		 */
-		
+
 		JLabel lblStar = new JLabel("Hotel Star");
 		lblStar.setFont(new Font("Agency FB", Font.PLAIN, 24));
 		lblStar.setBounds(24, 94, 140, 27);
@@ -209,9 +205,11 @@ public class SearchPanel extends JPanel {
 		lblRoomCombination.setFont(new Font("Agency FB", Font.PLAIN, 24));
 		lblRoomCombination.setBounds(364, 94, 99, 28);
 		add(lblRoomCombination);
-		
+
 		JComboBox<String> comboBox_RoomCombination = new JComboBox<String>();
 		comboBox_RoomCombination.setBounds(507, 94, 99, 29);
+		comboBox_RoomCombination.setFont(new Font("Agency FB", Font.PLAIN, 18));
+		comboBox_RoomCombination.setBackground(SystemColor.inactiveCaptionBorder);
 		comboBox_RoomCombination.addItem("1,0,0");
 		comboBox_RoomCombination.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -390,7 +388,7 @@ public class SearchPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String checkOutDate = dateToString(calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
 				String[] msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination, city,
-						sort,hotelStar);
+						sort, hotelStar);
 				switch (msg[0]) {
 				case "error: The format of date input should be \"MM/dd/yyyy\"":
 					new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
@@ -406,7 +404,7 @@ public class SearchPanel extends JPanel {
 							roomCombination, city);
 					if (valid.size() > 0) {
 						StringBuffer buf = new StringBuffer("");
-						for(int i = 0;i<msg.length;i++) {
+						for (int i = 0; i < msg.length; i++) {
 							buf.append(msg[i]);
 						}
 						String text = new String(buf);
@@ -453,8 +451,8 @@ public class SearchPanel extends JPanel {
 					if (hasSearch) {
 						String checkOutDate = dateToString(
 								calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
-						String[] msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate, roomCombination,
-								city, sort,hotelStar);
+						String[] msg = new SearchAndBook().checkVacancy(datepick.getText(), checkOutDate,
+								roomCombination, city, sort, hotelStar);
 						switch (msg[0]) {
 						case "error: The format of date input should be \"MM/dd/yyyy\"":
 							new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
@@ -470,7 +468,7 @@ public class SearchPanel extends JPanel {
 									checkOutDate, roomCombination, city);
 							if (valid.size() > 0) {
 								StringBuffer buf = new StringBuffer("");
-								for(int i = 0;i<msg.length;i++) {
+								for (int i = 0; i < msg.length; i++) {
 									buf.append(msg[i]);
 								}
 								String text = new String(buf);
@@ -520,7 +518,7 @@ public class SearchPanel extends JPanel {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 		btnBackToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (UserOperation.anyoneLoggedin()) {
+				if (TouristOperation.anyoneLoggedin()) {
 					mainframe.activateUserMenuPanel();
 				} else {
 					mainframe.initialize();

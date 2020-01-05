@@ -1,12 +1,12 @@
 package testing;
 
-import hotelAndRoom.*;
+import book_Hotel_Room.*;
 
 public class TestListHotelAndRoom {
 
 //	public static void main(String[] args) {
 //		System.out.println(RoomList.ALLROOM[0][0].toString());
-//		System.out.println(HotelList.ALLHOTEL[0].toString());
+//		System.out.println(Hotel.ALLHOTEL[0].toString());
 //
 //		int max = 0;
 //		for (int i = 0; i < 1500; i++) {

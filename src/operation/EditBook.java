@@ -5,11 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import bookAndUser.Book;
-import bookAndUser.BookList;
-import bookAndUser.BookOperation;
-import hotelAndRoom.HotelList;
-import hotelAndRoom.Room;
+import book_Hotel_Room.Book;
+import book_Hotel_Room.BookOperation;
+import book_Hotel_Room.Hotel;
+import book_Hotel_Room.Room;
 
 public class EditBook {
 
@@ -38,9 +37,9 @@ public class EditBook {
 		remainRoomNumber[2] += myBook.getRoomCombination()[2];
 		if (remainRoomNumber[0] < newRoomCombination[0] || remainRoomNumber[1] < newRoomCombination[1]
 				|| remainRoomNumber[2] < newRoomCombination[2]) {
-			if (newRoomCombination[0] > HotelList.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[0]
-					|| newRoomCombination[1] > HotelList.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[1]
-					|| newRoomCombination[2] > HotelList.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[2]) {
+			if (newRoomCombination[0] > Hotel.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[0]
+					|| newRoomCombination[1] > Hotel.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[1]
+					|| newRoomCombination[2] > Hotel.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[2]) {
 				System.out.println("Room number is never enough.");
 				return 1;
 			} else {
@@ -51,7 +50,7 @@ public class EditBook {
 		int price = calculateTotalPrice(myBook.getHotelId(), myBook.getNights(), newRoomCombination);
 		// The order is valid, change the book.
 		BookOperation.changeBook(bookId, newRoomCombination[0], newRoomCombination[1], newRoomCombination[2], price);
-		BookList.bookList = BookOperation.uploadBookList();
+		Book.bookList = BookOperation.uploadBookList();
 		System.out.println("\nChange Succeeded");
 		return 0;
 	}
@@ -83,9 +82,9 @@ public class EditBook {
 		if (remainRoomNumber[0] < myBook.getRoomCombination()[0] || remainRoomNumber[1] < myBook.getRoomCombination()[1]
 				|| remainRoomNumber[2] < myBook.getRoomCombination()[2]) {
 
-			if (myBook.getRoomCombination()[0] > HotelList.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[0]
-					|| myBook.getRoomCombination()[1] > HotelList.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[1]
-					|| myBook.getRoomCombination()[2] > HotelList.ALLHOTEL[myBook.getHotelId()]
+			if (myBook.getRoomCombination()[0] > Hotel.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[0]
+					|| myBook.getRoomCombination()[1] > Hotel.ALLHOTEL[myBook.getHotelId()].getRoomCombination()[1]
+					|| myBook.getRoomCombination()[2] > Hotel.ALLHOTEL[myBook.getHotelId()]
 							.getRoomCombination()[2]) {
 				System.out.println("Room number is never enough.");
 				return 4;
@@ -97,7 +96,7 @@ public class EditBook {
 		// the order is valid, change the order.
 		int price = calculateTotalPrice(myBook.getHotelId(), night, myBook.getRoomCombination());
 		BookOperation.changeBook(bookId, night, newCheckInDate, dateToString(newCheckOut), price);
-		BookList.bookList = BookOperation.uploadBookList();
+		Book.bookList = BookOperation.uploadBookList();
 		System.out.println("\nChanging success");
 		return 0;
 	}
@@ -110,7 +109,7 @@ public class EditBook {
 	 */
 	public int deleteBook(String bookId) {
 		BookOperation.deleteBook(bookId);
-		BookList.bookList = BookOperation.uploadBookList();
+		Book.bookList = BookOperation.uploadBookList();
 		System.out.println("\nDeleting success");
 		return 0;
 	}
@@ -145,22 +144,22 @@ public class EditBook {
 		// initialize the array as all initial room number.
 		int[] totalRoom = new int[3];
 		for (int i = 0; i < 3; i++) {
-			totalRoom[i] = HotelList.ALLHOTEL[hotelId].getRoomCombination()[i];
+			totalRoom[i] = Hotel.ALLHOTEL[hotelId].getRoomCombination()[i];
 		}
 		// Traverse the whole booklist
-		for (int i = 0; i < BookList.bookList.size(); i++) {
-			if (BookList.bookList.get(i).getHotelId() == hotelId) {
+		for (int i = 0; i < Book.bookList.size(); i++) {
+			if (Book.bookList.get(i).getHotelId() == hotelId) {
 				// check if the books in bookList is same date of theDate, too.
-				Date currentDatePointer = new Date(BookList.bookList.get(i).getCheckInDate().getTime());
-				int thisBookNights = BookList.bookList.get(i).getNights();
+				Date currentDatePointer = new Date(Book.bookList.get(i).getCheckInDate().getTime());
+				int thisBookNights = Book.bookList.get(i).getNights();
 				// Traverse every dates occupied by the current Book(for "nights" times)
 				for (int j = 0; j < thisBookNights; j++) {
 					// For the date that matches with parameter(theDate) we subtract the number of
 					// each type of room
 					if (theDate.equals(currentDatePointer)) {
-						totalRoom[0] -= BookList.bookList.get(i).getRoomCombination()[0];
-						totalRoom[1] -= BookList.bookList.get(i).getRoomCombination()[1];
-						totalRoom[2] -= BookList.bookList.get(i).getRoomCombination()[2];
+						totalRoom[0] -= Book.bookList.get(i).getRoomCombination()[0];
+						totalRoom[1] -= Book.bookList.get(i).getRoomCombination()[1];
+						totalRoom[2] -= Book.bookList.get(i).getRoomCombination()[2];
 					}
 					currentDatePointer = nextDate(currentDatePointer);
 				}
@@ -217,7 +216,7 @@ public class EditBook {
 	}
 
 	private int calculateTotalPrice(int hotelId, int nights, int[] newCombination) {
-		Room[] roomInfo = HotelList.ALLHOTEL[hotelId].getRoomInfo();
+		Room[] roomInfo = Hotel.ALLHOTEL[hotelId].getRoomInfo();
 		int priceToReturn = 0;
 		priceToReturn += nights * roomInfo[0].getPrice() * newCombination[0];
 		priceToReturn += nights * roomInfo[1].getPrice() * newCombination[1];
