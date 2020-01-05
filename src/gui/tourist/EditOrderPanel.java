@@ -1,10 +1,8 @@
 package gui.tourist;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
-import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -51,11 +49,11 @@ public class EditOrderPanel extends JPanel {
 		OperationalPane = new JPanel();
 		add(OperationalPane);
 
-		JLabel lblWhatUWant = new JLabel("What U want ?");
-		lblWhatUWant.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		lblWhatUWant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWhatUWant.setBounds(14, 13, 499, 120);
-		selectionPane.add(lblWhatUWant);
+		JLabel lblToDo = new JLabel("What to Do ?");
+		lblToDo.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblToDo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblToDo.setBounds(14, 13, 499, 120);
+		selectionPane.add(lblToDo);
 
 		btnRoomNumber = new JButton("Change Room Number");
 		btnRoomNumber.setFont(new Font("Agency FB", Font.PLAIN, 48));
@@ -112,7 +110,7 @@ public class EditOrderPanel extends JPanel {
 
 		btnBackToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainframe.activateUserMenuPanel();
+				mainframe.activateTouristOrderPanel();
 				setVisible(false);
 			}
 		});
@@ -151,7 +149,7 @@ public class EditOrderPanel extends JPanel {
 				// Operation.changeReservation(mor.bookId, mor.single, mor.dual, mor.quad);
 				if (op == 0) {
 					new PopFrame("Successfully Edited !");
-					mainframe.activateMyOrderPanel();
+					mainframe.activateTouristOrderPanel();
 					setVisible(false);
 				} else if (op == 1) {
 					new PopFrame("Room never enough !");
@@ -168,13 +166,13 @@ public class EditOrderPanel extends JPanel {
 				int op = (new EditBook()).editCheckInDateAndNight(mod.bookId, mod.getCheckInDate(), checkOutDate);
 				if (op == 0) {
 					new PopFrame("Successfully Edited !");
-					mainframe.activateMyOrderPanel();
+					mainframe.activateTouristOrderPanel();
 					setVisible(false);
-				} else if(op==1) {
+				} else if (op == 1) {
 					new PopFrame("error: The format of date input should be \"MM/dd/yyyy\"");
-				}else if(op==2) {
+				} else if (op == 2) {
 					new PopFrame("error: The check in date should not be in the past.");
-				}else if(op==3) {
+				} else if (op == 3) {
 					new PopFrame("error: The check out date should be after check in date.");
 				} else if (op == 4) {
 					new PopFrame("Room never enough !");
@@ -190,7 +188,7 @@ public class EditOrderPanel extends JPanel {
 				// Operation.changeReservation(del.bookId);
 				if (op == 0) {
 					new PopFrame("Successfully deleted !");
-					mainframe.activateMyOrderPanel();
+					mainframe.activateTouristOrderPanel();
 					setVisible(false);
 				} else {
 					new PopFrame("Error ! Something is wrong !");

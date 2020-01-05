@@ -58,7 +58,8 @@ public class BookDeposit {
 		}
 		return Hotel.ALLHOTEL[hotelId].toString() + "\nCheck-in date : " + checkInDate + "\nCheck-out date : "
 				+ checkOutDate + "\n" + "Stay nights : " + night + " nights\nTotal price : " + price + "\nRoom : \n"
-				+ " Single : " + roomCombination[0] + "\n Double : " + roomCombination[1] + "\n Quad : " + roomCombination[2] + "\n";
+				+ " Single : " + roomCombination[0] + "\n Double : " + roomCombination[1] + "\n Quad : "
+				+ roomCombination[2] + "\n";
 	}
 
 	private Date nextDate(Date thisDate) {
@@ -71,7 +72,7 @@ public class BookDeposit {
 	}
 
 	public int[] numOfPeopleAndRoom(int numOfPeople, int numOfRoom) {
-		int[] roomType = new int[3];// {number of �@�H��, �G�H��, �|�H��}
+		int[] roomType = new int[3];
 		if (numOfPeople == 4 * numOfRoom - 1) {
 			numOfPeople += 1;
 		}

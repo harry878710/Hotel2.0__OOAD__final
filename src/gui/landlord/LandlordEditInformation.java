@@ -45,28 +45,28 @@ public class LandlordEditInformation extends JPanel {
 		lblNewLabel.setBounds(14, 13, 498, 73);
 		add(lblNewLabel);
 
-		JLabel lblNewRoomNumber = new JLabel(" New Hotel Star");
+		JLabel lblNewRoomNumber = new JLabel("Star");
 		lblNewRoomNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewRoomNumber.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		lblNewRoomNumber.setBounds(14, 185, 498, 73);
+		lblNewRoomNumber.setBounds(14, 182, 133, 73);
 		add(lblNewRoomNumber);
 
-		JLabel lblSingle = new JLabel(" New Locality");
+		JLabel lblSingle = new JLabel("City");
 		lblSingle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSingle.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		lblSingle.setBounds(14, 271, 133, 73);
+		lblSingle.setBounds(14, 265, 133, 73);
 		add(lblSingle);
 
-		JLabel lblQuad = new JLabel(" New Address");
+		JLabel lblQuad = new JLabel("Add.");
 		lblQuad.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuad.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		lblQuad.setBounds(14, 443, 133, 73);
+		lblQuad.setBounds(14, 348, 133, 73);
 		add(lblQuad);
 
 		btnConfirm = new JButton("CONFIRM");
 		btnConfirm.setBackground(new Color(32, 178, 170));
 		btnConfirm.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		btnConfirm.setBounds(147, 357, 218, 73);
+		btnConfirm.setBounds(24, 431, 488, 73);
 		btnConfirm.setOpaque(true);
 		add(btnConfirm);
 
@@ -84,7 +84,7 @@ public class LandlordEditInformation extends JPanel {
 		comboBox_Star.setBackground(new Color(240, 255, 240));
 		comboBox_Star.setForeground(new Color(102, 205, 170));
 		comboBox_Star.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		comboBox_Star.setBounds(147, 271, 365, 73);
+		comboBox_Star.setBounds(147, 182, 365, 73);
 		for (int i = 5; i > 0; i--) {
 			comboBox_Star.addItem(i);
 		}
@@ -101,8 +101,8 @@ public class LandlordEditInformation extends JPanel {
 		JComboBox<String> comboBox_Locality = new JComboBox<String>();
 		comboBox_Locality.setBackground(new Color(240, 255, 240));
 		comboBox_Locality.setForeground(new Color(102, 205, 170));
-		comboBox_Locality.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		comboBox_Locality.setBounds(147, 358, 365, 73);
+		comboBox_Locality.setFont(new Font("微軟正黑體", Font.PLAIN, 32));
+		comboBox_Locality.setBounds(147, 265, 365, 73);
 		comboBox_Locality.addItem("台北");
 		comboBox_Locality.addItem("台中");
 		comboBox_Locality.addItem("高雄");
@@ -117,7 +117,8 @@ public class LandlordEditInformation extends JPanel {
 		add(comboBox_Locality);
 
 		textField_Address = new JTextField();
-		textField_Address.setBounds(147, 443, 365, 73);
+		textField_Address.setFont(new Font("微軟正黑體", Font.PLAIN, 32));
+		textField_Address.setBounds(147, 348, 365, 73);
 		add(textField_Address);
 		textField_Address.setColumns(10);
 

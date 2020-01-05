@@ -100,7 +100,7 @@ public class MainFrame {
 		tbp.activateToBookPanel(this, bd);
 	}
 
-	public void activateMyOrderPanel() {
+	public void activateTouristOrderPanel() {
 		mop = new TouristOrderPanel();
 		mop.activateMyOrderPanel(this);
 	}

@@ -13,7 +13,7 @@ import gui.LoginPanel;
 import gui.MainFrame;
 import gui.PopFrame;
 import member.Tourist;
- 
+
 import member.TouristOperation;
 
 import operation.SearchAndBook;
@@ -94,32 +94,30 @@ public class ToBookPanel extends JPanel {
 					mainframe.activateUserMenuPanel();
 					setVisible(false);
 				} else {
-					new PopFrame("Log in FIRST !");
-					LoginPanel loginpane = new LoginPanel();
+					new PopFrame("Log in as tourist first!");
+					LoginPanel loginpane = new LoginPanel(1);
 					mainframe.getContentPane().add(loginpane, BorderLayout.CENTER);
 					// click the Log in button
 					loginpane.getBtnLogIn().addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							if (!loginpane.getName().equals("") && !loginpane.getPassword().equals("")) {
-								if (TouristOperation.hasUser(loginpane.getName())) {
-									if (TouristOperation.checkPassword(loginpane.getName(), loginpane.getPassword())) {
-										for (int i = 0; i < Tourist.userList.size(); i++) {
-											if (loginpane.getName().equals(Tourist.userList.get(i).getName())) {
-												Tourist.userList.get(i).setLogin(true);
-											} else {
-												Tourist.userList.get(i).setLogin(false);
-											}
-										}
-										setVisible(true);
-										loginpane.setVisible(false);
-									} else {
-										new PopFrame("Wrong password!");
-									}
-								} else {
-									new PopFrame("U do not exist!");
-								}
-							} else {
-								new PopFrame("Fill all the blanks dude!");
+							int op = TouristOperation.userLogin(loginpane.getName(), loginpane.getPassword());
+							switch (op) {
+							case 0:
+								setVisible(true);
+								loginpane.setVisible(false);
+								break;
+							case 1:
+								new PopFrame("error: Incorrect password.");
+								break;
+							case 2:
+								new PopFrame("error: Unable to find this. Please check your user name.");
+								break;
+							case 3:
+								new PopFrame("error: Please fill all the blanks.");
+								break;
+							default:
+								new PopFrame("error: Fatal error.");
+
 							}
 						}
 					});
@@ -159,7 +157,7 @@ public class ToBookPanel extends JPanel {
 		Date nextDate = c.getTime();
 		return nextDate;
 	}
-	
+
 	private Date stringToDate(String str) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		return sdf.parse(str, new ParsePosition(0));

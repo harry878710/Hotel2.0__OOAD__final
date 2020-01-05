@@ -165,8 +165,8 @@ public class SearchAndBook {
 	 * @return a arrayList of all vacancy hotel's id. Return null if there is some
 	 *         input error.
 	 */
-	public ArrayList<Integer> vacancyHotels(String checkInDate, String checkOutDate, int[] roomCombination,
-			String city) {
+	public ArrayList<Integer> vacancyHotels(String checkInDate, String checkOutDate, int[] roomCombination, String city,
+			int star) {
 		// turn the String object of date to a Date object
 		Date checkIn = stringToDate(checkInDate);
 		Date checkOut = stringToDate(checkOutDate);
@@ -181,8 +181,8 @@ public class SearchAndBook {
 		// check if the room number of every hotel in array is enough for new book
 		// if the hotel has enough number, store its Id into the arrayList
 		// assign city
-		ArrayList<Integer> qualifiedHotelId = cityFilter(city,
-				hotelsWithEnoughRoom(roomCombination, checkIn, checkOut));
+		ArrayList<Integer> qualifiedHotelId = starFilter(star,
+				cityFilter(city, hotelsWithEnoughRoom(roomCombination, checkIn, checkOut)));
 
 		return qualifiedHotelId;
 	}
@@ -240,17 +240,17 @@ public class SearchAndBook {
 		return sdf.parse(str, new ParsePosition(0));
 	}
 
-	/**
-	 * Turn a Date object into String form
-	 * 
-	 * @param date
-	 * 
-	 * @return
-	 */
-	private String dateToString(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		return sdf.format(date);
-	}
+//	/**
+//	 * Turn a Date object into String form
+//	 * 
+//	 * @param date
+//	 * 
+//	 * @return
+//	 */
+//	private String dateToString(Date date) {
+//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+//		return sdf.format(date);
+//	}
 
 	/**
 	 * Find the next date of thisDate
@@ -360,20 +360,20 @@ public class SearchAndBook {
 		return totalRoom;
 	}
 
-	/**
-	 * Calculate the check out date of specified check in date & staying nights
-	 * 
-	 * @param checkInDate
-	 * @param night
-	 * @return
-	 */
-	private Date calculateCheckOutDate(Date checkInDate, int night) {
-		Date toReturn = new Date(checkInDate.getTime());
-		for (int i = 0; i < night; i++) {
-			toReturn = nextDate(toReturn);
-		}
-		return toReturn;
-	}
+//	/**
+//	 * Calculate the check out date of specified check in date & staying nights
+//	 * 
+//	 * @param checkInDate
+//	 * @param night
+//	 * @return
+//	 */
+//	private Date calculateCheckOutDate(Date checkInDate, int night) {
+//		Date toReturn = new Date(checkInDate.getTime());
+//		for (int i = 0; i < night; i++) {
+//			toReturn = nextDate(toReturn);
+//		}
+//		return toReturn;
+//	}
 
 	/**
 	 * under the specific number of people, list all the possibility of room

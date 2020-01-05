@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import member.LandlordOperation;
- 
+
 import member.TouristOperation;
 
 import java.awt.event.ActionListener;
@@ -129,8 +129,11 @@ public class LoginPanel extends JPanel {
 		btnBackToMenu.setBounds(105, 13, 194, 59);
 		add(btnBackToMenu);
 
-		rdbtn_Tourist = new JRadioButton("I'm Tourist");
-		rdbtn_Tourist.setBounds(916, 88, 105, 23);
+		rdbtn_Tourist = new JRadioButton("  I'm Tourist");
+		rdbtn_Tourist.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtn_Tourist.setFont(new Font("Agency FB", Font.PLAIN, 32));
+		rdbtn_Tourist.setBounds(876, 76, 183, 59);
+		rdbtn_Tourist.setBackground(new Color(95, 158, 160));
 		add(rdbtn_Tourist);
 		buttonGroup.add(rdbtn_Tourist);
 		rdbtn_Tourist.addActionListener(new ActionListener() {
@@ -140,8 +143,10 @@ public class LoginPanel extends JPanel {
 			}
 		});
 
-		rdbtn_Landlord = new JRadioButton("I'm Landlord");
-		rdbtn_Landlord.setBounds(916, 156, 105, 23);
+		rdbtn_Landlord = new JRadioButton("  I'm Landlord");
+		rdbtn_Landlord.setFont(new Font("Agency FB", Font.PLAIN, 32));
+		rdbtn_Landlord.setBounds(876, 167, 167, 59);
+		rdbtn_Landlord.setBackground(new Color(95, 158, 160));
 		add(rdbtn_Landlord);
 		buttonGroup.add(rdbtn_Landlord);
 		rdbtn_Landlord.addActionListener(new ActionListener() {
@@ -152,6 +157,81 @@ public class LoginPanel extends JPanel {
 		});
 	}
 
+	// Constructor for ToBookPanel to let tourist login
+	public LoginPanel(int arg) {
+		setBackground(new Color(95, 158, 160));
+		setSize(1200, 900);
+		setLayout(null);
+
+		textFieldName = new JTextField();
+		textFieldName.setFont(new Font("Arial Black", Font.PLAIN, 48));
+		textFieldName.setBackground(new Color(240, 255, 240));
+		textFieldName.setBounds(370, 76, 500, 150);
+		textFieldName.addKeyListener(new KeyAdapter() {
+
+			public void keyTyped(KeyEvent arg0) {
+				if ((int) arg0.getKeyChar() == 10) {
+					btnLogIn.doClick();
+				}
+
+			}
+
+		});
+		add(textFieldName);
+		textFieldName.setColumns(10);
+
+		textFieldPassword = new JPasswordField();
+		textFieldPassword.setFont(new Font("Arial Black", Font.PLAIN, 48));
+		textFieldPassword.setBackground(new Color(240, 255, 240));
+		textFieldPassword.setBounds(370, 248, 500, 150);
+		textFieldPassword.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent arg0) {
+				if ((int) arg0.getKeyChar() == 10) {
+					btnLogIn.doClick();
+				}
+			}
+		});
+		add(textFieldPassword);
+		textFieldPassword.setColumns(10);
+
+		JLabel userName = new JLabel("Name");
+		userName.setFont(new Font("Agency FB", Font.PLAIN, 60));
+		userName.setHorizontalAlignment(SwingConstants.CENTER);
+		userName.setBounds(103, 76, 263, 150);
+		add(userName);
+		JLabel lblNewLabel_1 = new JLabel("Password");
+		lblNewLabel_1.setFont(new Font("Agency FB", Font.PLAIN, 60));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(103, 248, 263, 150);
+		add(lblNewLabel_1);
+
+		JButton btnJoin = new JButton("JOIN");
+		btnJoin.setFont(new Font("Agency FB", Font.PLAIN, 60));
+		btnJoin.setBackground(new Color(32, 178, 170));
+		btnJoin.setBounds(103, 544, 767, 120);
+		btnJoin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new JoinFrame().setVisible(true);
+			}
+		});
+		btnLogIn = new JButton("LOG IN");
+		btnLogIn.setFont(new Font("Agency FB", Font.PLAIN, 60));
+		btnLogIn.setBackground(new Color(32, 178, 170));
+		btnLogIn.setBounds(103, 411, 767, 120);
+		add(btnLogIn);
+		add(btnJoin);
+
+		btnBackToMenu = new JButton("BACK");
+		btnBackToMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnBackToMenu.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		btnBackToMenu.setBackground(new Color(95, 158, 160));
+		btnBackToMenu.setBounds(105, 13, 194, 59);
+		add(btnBackToMenu);
+	}
+
 	public void activateLoginPanel(MainFrame mainframe) {
 		mainframe.getContentPane().add(this, BorderLayout.CENTER);
 		// click the Log in button
@@ -159,7 +239,7 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(identity);
 				switch (identity) {
-				case "I'm Tourist":
+				case "  I'm Tourist":
 					int op = TouristOperation.userLogin(getName(), getPassword());
 					switch (op) {
 					case 0:
@@ -180,7 +260,7 @@ public class LoginPanel extends JPanel {
 
 					}
 					break;
-				case "I'm Landlord":
+				case "  I'm Landlord":
 					int op_land = LandlordOperation.userLogin(getName(), getPassword());
 					switch (op_land) {
 					case 0:

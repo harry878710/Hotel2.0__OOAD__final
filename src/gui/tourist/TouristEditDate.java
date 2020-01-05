@@ -24,7 +24,7 @@ import com.eltima.components.ui.DatePicker;
 
 import book_Hotel_Room.BookOperation;
 import gui.PopFrame;
- 
+
 import member.TouristOperation;
 
 import javax.swing.JComboBox;
@@ -163,7 +163,7 @@ public class TouristEditDate extends JPanel {
 		lblNewNights.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewNights.setBounds(14, 396, 498, 73);
 		add(lblNewNights);
-		
+
 		comboBox_ID.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -184,7 +184,7 @@ public class TouristEditDate extends JPanel {
 		c.setTime(date);
 		c.add(Calendar.DATE, 1);
 		date = c.getTime();
-		Font font = new Font("Times New Roman", Font.BOLD, 14);
+		Font font = new Font("Agent FB", Font.BOLD, 48);
 		Dimension dimension = new Dimension(200, 50);
 		datepick = new DatePicker(date, DefaultFormat, font, dimension);
 		datepick.setBounds(14, 314, 498, 73);

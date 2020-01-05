@@ -52,29 +52,6 @@ public class SearchPanel extends JPanel {
 	JTextPane textHotelDetail;
 	final DatePicker datepick;
 
-	private String getDate() {
-		if (!checkInput(datepick.getText())) {
-			new PopFrame("error: check in date should not be in the past.");
-			return "error: check in date should not be in the past.";
-		}
-		return datepick.getText();
-
-	}
-
-	private static boolean checkInput(String checkIn) {
-		// check check-in and check-out date are not null
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		Date checkInDate = sdf.parse(checkIn, new ParsePosition(0));
-		// check check-in date is later than today
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_MONTH, -1);
-		Date today = calendar.getTime();
-		if (today.after(checkInDate)) {
-			return false;
-		}
-		return true;
-	}
-
 	/**
 	 * Create the panel.
 	 */
@@ -88,13 +65,13 @@ public class SearchPanel extends JPanel {
 		btnBackToMenu.setBackground(new Color(153, 204, 255));
 		btnBackToMenu.setOpaque(true);
 		btnBackToMenu.setFont(new Font("Agency FB", Font.PLAIN, 24));
-		btnBackToMenu.setBounds(803, 13, 220, 29);
+		btnBackToMenu.setBounds(783, 13, 220, 29);
 		add(btnBackToMenu);
 
 		btnSearch = new JButton("SEARCH");
 		btnSearch.setBackground(new Color(153, 204, 255));
 		btnSearch.setFont(new Font("Agency FB", Font.PLAIN, 24));
-		btnSearch.setBounds(803, 53, 220, 29);
+		btnSearch.setBounds(783, 53, 220, 29);
 		add(btnSearch);
 
 		/*
@@ -130,13 +107,13 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblStar = new JLabel("Hotel Star");
 		lblStar.setFont(new Font("Agency FB", Font.PLAIN, 24));
-		lblStar.setBounds(24, 94, 140, 27);
+		lblStar.setBounds(24, 94, 85, 27);
 		add(lblStar);
 
 		JComboBox<String> comboBox_Star = new JComboBox<String>();
 		comboBox_Star.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		comboBox_Star.setBackground(SystemColor.inactiveCaptionBorder);
-		comboBox_Star.setBounds(203, 94, 117, 27);
+		comboBox_Star.setBounds(119, 97, 201, 27);
 		comboBox_Star.addItem("Every star");
 		comboBox_Star.addItem("5");
 		comboBox_Star.addItem("4");
@@ -203,11 +180,11 @@ public class SearchPanel extends JPanel {
 
 		JLabel lblRoomCombination = new JLabel("Room combination");
 		lblRoomCombination.setFont(new Font("Agency FB", Font.PLAIN, 24));
-		lblRoomCombination.setBounds(364, 94, 99, 28);
+		lblRoomCombination.setBounds(364, 93, 157, 28);
 		add(lblRoomCombination);
 
 		JComboBox<String> comboBox_RoomCombination = new JComboBox<String>();
-		comboBox_RoomCombination.setBounds(507, 94, 99, 29);
+		comboBox_RoomCombination.setBounds(531, 96, 232, 29);
 		comboBox_RoomCombination.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		comboBox_RoomCombination.setBackground(SystemColor.inactiveCaptionBorder);
 		comboBox_RoomCombination.addItem("1,0,0");
@@ -401,7 +378,7 @@ public class SearchPanel extends JPanel {
 					break;
 				default:
 					ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(), checkOutDate,
-							roomCombination, city);
+							roomCombination, city, hotelStar);
 					if (valid.size() > 0) {
 						StringBuffer buf = new StringBuffer("");
 						for (int i = 0; i < msg.length; i++) {
@@ -465,7 +442,7 @@ public class SearchPanel extends JPanel {
 							break;
 						default:
 							ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(datepick.getText(),
-									checkOutDate, roomCombination, city);
+									checkOutDate, roomCombination, city, hotelStar);
 							if (valid.size() > 0) {
 								StringBuffer buf = new StringBuffer("");
 								for (int i = 0; i < msg.length; i++) {
@@ -504,7 +481,7 @@ public class SearchPanel extends JPanel {
 		c.setTime(date);
 		c.add(Calendar.DATE, 1);
 		date = c.getTime();
-		Font font = new Font("Times New Roman", Font.BOLD, 14);
+		Font font = new Font("Agency FB", Font.BOLD, 14);
 		Dimension dimension = new Dimension(177, 24);
 		datepick = new DatePicker(date, DefaultFormat, font, dimension);
 		datepick.setBounds(507, 54, 140, 30);
@@ -531,9 +508,9 @@ public class SearchPanel extends JPanel {
 				if (hotelId != -1) {
 					String checkOutDate = dateToString(
 							calculateCheckOutDate(stringToDate(datepick.getText()), numOfNight));
-					if (!getDate().equals("error: check in date should not be in the past.")) {
+					if (!getDate().equals("Check in date should not be in the past.")) {
 						ArrayList<Integer> valid = new SearchAndBook().vacancyHotels(getDate(), checkOutDate,
-								roomCombination, city);
+								roomCombination, city, hotelStar);
 						boolean hasRoom = false;
 						for (int i = 0; i < valid.size(); i++) {
 							if (valid.get(i) == hotelId) {
@@ -545,11 +522,11 @@ public class SearchPanel extends JPanel {
 									new BookDeposit(city, roomCombination, getDate(), numOfNight, hotelId));
 							setVisible(false);
 						} else {
-							new PopFrame("There's NO room");
+							new PopFrame("There's No room");
 						}
 					}
 				} else {
-					new PopFrame("Make your choice = = ");
+					new PopFrame("Tourist should make decision");
 				}
 			}
 		});
@@ -581,4 +558,28 @@ public class SearchPanel extends JPanel {
 		Date nextDate = c.getTime();
 		return nextDate;
 	}
+
+	private String getDate() {
+		if (!checkInput(datepick.getText())) {
+			new PopFrame("error: check in date should not be in the past.");
+			return "error: check in date should not be in the past.";
+		}
+		return datepick.getText();
+
+	}
+
+	private static boolean checkInput(String checkIn) {
+		// check check-in and check-out date are not null
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date checkInDate = sdf.parse(checkIn, new ParsePosition(0));
+		// check check-in date is later than today
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		Date today = calendar.getTime();
+		if (today.after(checkInDate)) {
+			return false;
+		}
+		return true;
+	}
+
 }

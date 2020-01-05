@@ -53,7 +53,7 @@ public class TouristMenuPanel extends JPanel {
 
 		btnMyOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainframe.activateMyOrderPanel();
+				mainframe.activateTouristOrderPanel();
 				setVisible(false);
 			}
 		});

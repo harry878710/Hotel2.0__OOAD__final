@@ -16,6 +16,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class LandlordAddHotelPanel extends JPanel {
 	JButton btnBack;
@@ -46,9 +47,9 @@ public class LandlordAddHotelPanel extends JPanel {
 			comboBox_Star.addItem(i);
 		}
 		// Add options of hotel locality
-		comboBox_City.addItem("ï¿½xï¿½_");
-		comboBox_City.addItem("ï¿½xï¿½ï¿½");
-		comboBox_City.addItem("ï¿½ï¿½ï¿½ï¿½");
+		comboBox_City.addItem("¥x¥_");
+		comboBox_City.addItem("¥x¤¤");
+		comboBox_City.addItem("°ª¶¯");
 
 		// Add options of single room number
 		for (int i = 0; i < 31; i++) {
@@ -69,100 +70,126 @@ public class LandlordAddHotelPanel extends JPanel {
 		btnBack.setOpaque(true);
 		btnBack.setBackground(new Color(32, 178, 170));
 		btnBack.setFont(new Font("Agency FB", Font.PLAIN, 48));
-		btnBack.setBounds(25, 14, 150, 60);
+		btnBack.setBounds(25, 14, 130, 78);
 		add(btnBack);
 
 		btnOk = new JButton("OK");
-		btnOk.setBounds(965, 499, 85, 23);
+		btnOk.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		btnOk.setBounds(896, 444, 130, 75);
 		add(btnOk);
+		
+		JLabel lblNumber = new JLabel("Number");
+		lblNumber.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNumber.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblNumber.setBounds(543, 18, 150, 75);
+		add(lblNumber);
 
 	}
 
 	private void initializeLabels() {
 		JLabel lblHotelId = new JLabel("Hotel ID will be");
-		lblHotelId.setBounds(25, 98, 96, 60);
+		lblHotelId.setFont(new Font("Agency FB", Font.PLAIN, 32));
+		lblHotelId.setBounds(25, 103, 150, 75);
 		add(lblHotelId);
 
 		JLabel lblStar = new JLabel("Star");
-		lblStar.setBounds(25, 180, 96, 60);
+		lblStar.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblStar.setBounds(25, 204, 150, 75);
 		add(lblStar);
 
 		JLabel lblCity = new JLabel("City");
-		lblCity.setBounds(25, 304, 96, 60);
+		lblCity.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblCity.setBounds(25, 306, 150, 75);
 		add(lblCity);
 
 		JLabel lblAddress = new JLabel("Address");
-		lblAddress.setBounds(25, 424, 96, 60);
+		lblAddress.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblAddress.setBounds(25, 444, 150, 75);
 		add(lblAddress);
 
 		JLabel lblSingle = new JLabel("Single");
-		lblSingle.setBounds(417, 89, 150, 60);
+		lblSingle.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblSingle.setBounds(383, 103, 150, 75);
 		add(lblSingle);
 
 		JLabel lblDouble = new JLabel("Double");
-		lblDouble.setBounds(417, 196, 150, 60);
+		lblDouble.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblDouble.setBounds(383, 204, 150, 75);
 		add(lblDouble);
 
 		JLabel lblQuadro = new JLabel("Quadro");
-		lblQuadro.setBounds(417, 299, 150, 60);
+		lblQuadro.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblQuadro.setBounds(383, 306, 150, 75);
 		add(lblQuadro);
 
 		JLabel lblPrice = new JLabel("Price");
-		lblPrice.setBounds(816, 70, 47, 15);
+		lblPrice.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrice.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		lblPrice.setBounds(719, 18, 150, 75);
 		add(lblPrice);
 
 	}
 
 	private void initializeComboBoxes() {
 		comboBox_Star = new JComboBox<Integer>();
-		comboBox_Star.setBounds(131, 180, 150, 91);
+		comboBox_Star.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		comboBox_Star.setBounds(185, 204, 150, 75);
 		add(comboBox_Star);
 
 		comboBox_City = new JComboBox<String>();
-		comboBox_City.setBounds(131, 304, 150, 91);
+		comboBox_City.setFont(new Font("·L³n¥¿¶ÂÅé", Font.PLAIN, 32));
+		comboBox_City.setBounds(185, 306, 150, 75);
 		add(comboBox_City);
 
 		comboBox_Single = new JComboBox<Integer>();
-		comboBox_Single.setBounds(539, 74, 150, 91);
+		comboBox_Single.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		comboBox_Single.setBounds(543, 104, 150, 75);
 		add(comboBox_Single);
 
 		comboBox_Double = new JComboBox<Integer>();
-		comboBox_Double.setBounds(539, 198, 150, 91);
+		comboBox_Double.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		comboBox_Double.setBounds(543, 204, 150, 75);
 		add(comboBox_Double);
 
 		comboBox_Quadro = new JComboBox<Integer>();
-		comboBox_Quadro.setBounds(539, 318, 150, 91);
+		comboBox_Quadro.setFont(new Font("Agency FB", Font.PLAIN, 48));
+		comboBox_Quadro.setBounds(543, 306, 150, 75);
 		add(comboBox_Quadro);
 	}
 
 	private void initializeTextAreas() {
 		textField_S_price = new JTextField();
+		textField_S_price.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		textField_S_price.setText("0");
-		textField_S_price.setBounds(796, 109, 96, 21);
+		textField_S_price.setBounds(719, 103, 150, 75);
 		add(textField_S_price);
 		textField_S_price.setColumns(10);
 
 		textField_D_price = new JTextField();
+		textField_D_price.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		textField_D_price.setText("0");
-		textField_D_price.setBounds(796, 233, 96, 21);
+		textField_D_price.setBounds(719, 204, 150, 75);
 		add(textField_D_price);
 		textField_D_price.setColumns(10);
 
 		textField_Q_price = new JTextField();
+		textField_Q_price.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		textField_Q_price.setText("0");
-		textField_Q_price.setBounds(796, 353, 96, 21);
+		textField_Q_price.setBounds(719, 306, 150, 75);
 		add(textField_Q_price);
 		textField_Q_price.setColumns(10);
 
 		textField_Hotel_ID = new JTextField();
+		textField_Hotel_ID.setFont(new Font("Agency FB", Font.PLAIN, 48));
 		textField_Hotel_ID.setText(Integer.toString(HotelOperation.nextHotelId()));
 		textField_Hotel_ID.setEditable(false);
-		textField_Hotel_ID.setBounds(131, 98, 150, 60);
+		textField_Hotel_ID.setBounds(185, 103, 150, 75);
 		add(textField_Hotel_ID);
 		textField_Hotel_ID.setColumns(10);
 
 		textField_Address = new JTextField();
-		textField_Address.setBounds(131, 444, 761, 78);
+		textField_Address.setFont(new Font("·L³n¥¿¶ÂÅé", Font.PLAIN, 32));
+		textField_Address.setBounds(177, 444, 692, 75);
 		add(textField_Address);
 		textField_Address.setColumns(10);
 	}
