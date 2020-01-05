@@ -1,19 +1,103 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PassObject {
 	public int people;
 	public int[] possibleRoom;
 	public int room;
 	public int n;
-	public int[] roomCombination;
+	public String roomCombin;
 	public String city;
 	public String sorting;
-	public String[] re;
+	public List<String> re;
 	public String id;
 	public String password;
 	public String confirm;
 	public String checkin;
 	public String checkout;
+	public ArrayList<String> roomcombination;
+	public int stars = 0;
+	public String sort;
+	public String title;
+	public String info;
+	public int hotelid;
+	public String address;
+	public String price;
+	
+	
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getHotelid() {
+		return hotelid;
+	}
+
+	public void setHotelid(int hotelid) {
+		this.hotelid = hotelid;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public ArrayList<String> getRoomcombination() {
+		return roomcombination;
+	}
+
+	public void setRoomcombination(ArrayList<String> roomcombination) {
+		this.roomcombination = roomcombination;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public int getStars() {
+		return stars;
+	}
+
+	public void setStars(int stars) {
+		this.stars = stars;
+	}
+
+	public ArrayList<String> getRoomcomination() {
+		return roomcombination;
+	}
+
+	public void setRoomcomination(ArrayList<String> roomcomination) {
+		this.roomcombination = roomcomination;
+	}
 
 	public int getRoom() {
 		return room;
@@ -71,12 +155,12 @@ public class PassObject {
 		this.people = night;
 	}
 
-	public int[] getRoomCombination() {
-		return roomCombination;
+	public String getRoomCombin() {
+		return roomCombin;
 	}
 
-	public void setRoomCombination(int[] roomCombination) {
-		this.roomCombination = roomCombination;
+	public void setRoomCombin(String roomCombin) {
+		this.roomCombin = roomCombin;
 	}
 
 	public String getCity() {
@@ -95,11 +179,11 @@ public class PassObject {
 		this.sorting = sorting;
 	}
 
-	public String[] getRe() {
+	public List<String> getRe() {
 		return re;
 	}
 
-	public void setRe(String[] re) {
+	public void setRe(List<String> re) {
 		this.re = re;
 	}
 
