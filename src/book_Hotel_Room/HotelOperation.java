@@ -211,7 +211,11 @@ public class HotelOperation {
 		// System.out.println("Operation done successfully");
 	}
 
-	public static void editHotelInformation(int hotelId, int star, String locality, String address) {
+	public static int editHotelInformation(int hotelId, int star, String locality, String address) {
+		if (address.equals("") ) {
+			// Please fill all blanks
+			return 1;
+		}
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -248,6 +252,7 @@ public class HotelOperation {
 		}
 		Hotel.ALLHOTEL = uploadHotelList();
 		// System.out.println("Operation done successfully");
+		return 0;
 	}
 
 	public static String showThisHotel(int hotelId) {
