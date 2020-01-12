@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import member.Landlord;
 import member.LandlordOperation;
 import member.Tourist;
- 
+
 import member.TouristOperation;
 import java.awt.GridLayout;
 import java.awt.Font;
@@ -66,7 +66,7 @@ public class JoinFrame extends JFrame {
 		lblNewLabel.setBackground(new Color(95, 158, 160));
 		lblNewLabel.setOpaque(true);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
+		lblNewLabel.setFont(new Font("Agency FB", Font.BOLD, 32));
 		lblNewLabel.setBounds(5, 6, 289, 88);
 		contentPane.add(lblNewLabel);
 
@@ -81,7 +81,7 @@ public class JoinFrame extends JFrame {
 		lblNewLabel_1.setBackground(new Color(95, 158, 160));
 		lblNewLabel_1.setOpaque(true);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
+		lblNewLabel_1.setFont(new Font("Agency FB", Font.BOLD, 32));
 		lblNewLabel_1.setBounds(5, 94, 289, 88);
 		contentPane.add(lblNewLabel_1);
 
@@ -96,7 +96,7 @@ public class JoinFrame extends JFrame {
 		lblNewLabel_2.setBackground(new Color(95, 158, 160));
 		lblNewLabel_2.setOpaque(true);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_2.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
+		lblNewLabel_2.setFont(new Font("Agency FB", Font.BOLD, 32));
 		lblNewLabel_2.setBounds(5, 182, 289, 88);
 		contentPane.add(lblNewLabel_2);
 
@@ -107,9 +107,9 @@ public class JoinFrame extends JFrame {
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 
-		JButton btnRegisterTourist = new JButton("Register");
+		JButton btnRegisterTourist = new JButton("Register as Tourist");
 		btnRegisterTourist.setBackground(new Color(0, 139, 139));
-		btnRegisterTourist.setFont(new Font("Arial Black", Font.PLAIN, 32));
+		btnRegisterTourist.setFont(new Font("Agency FB", Font.BOLD, 32));
 		btnRegisterTourist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int op = TouristOperation.addUser(textField.getText(), new String(textField_1.getPassword()),
@@ -171,14 +171,14 @@ public class JoinFrame extends JFrame {
 				dispose();
 			}
 		});
-		btnNo.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		btnNo.setFont(new Font("Agency FB", Font.PLAIN, 12));
 		contentPane.add(btnNo);
 		btnRegisterTourist.setBounds(5, 275, 289, 88);
 		contentPane.add(btnRegisterTourist);
 
 		JButton btnRegisterLandlord = new JButton("Register as Landlord");
 
-		btnRegisterLandlord.setFont(new Font("Arial Black", Font.PLAIN, 32));
+		btnRegisterLandlord.setFont(new Font("Agency FB", Font.BOLD, 32));
 		btnRegisterLandlord.setBackground(new Color(0, 139, 139));
 		btnRegisterLandlord.setBounds(294, 275, 289, 88);
 		btnRegisterLandlord.addActionListener(new ActionListener() {

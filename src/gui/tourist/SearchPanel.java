@@ -165,7 +165,7 @@ public class SearchPanel extends JPanel {
 		comboBox_People.setFont(new Font("Agency FB", Font.PLAIN, 18));
 		comboBox_People.setBackground(SystemColor.inactiveCaptionBorder);
 		comboBox_People.setBounds(203, 54, 117, 27);
-		for (int i = 0; i < 210; i++) {
+		for (int i = 0; i < 50; i++) {
 			comboBox_People.addItem(i + 1);
 		}
 		add(comboBox_People);
