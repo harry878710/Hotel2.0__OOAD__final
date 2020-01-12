@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Contact</title>
+<title>AGUARE</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="The River template project">
@@ -32,7 +32,7 @@
 			<div
 				class="header_content d-flex flex-row align-items-center justify-content-start">
 				<div class="logo">
-					<a href="#">The River</a>
+					<a href="#">AGUARE</a>
 				</div>
 				<div
 					class="ml-auto d-flex flex-row align-items-center justify-content-start">
@@ -41,8 +41,7 @@
 							class="d-flex flex-row align-items-start justify-content-start">
 							<li th:if="${tobook.id}!=null"><a
 								th:href="@{/index.html?id={id}(id=${tobook.id})}">Home</a></li>
-							<li th:if="${tobook.id}==null"><a
-								href="/index.html">Home</a></li>
+							<li th:if="${tobook.id}==null"><a href="/index.html">Home</a></li>
 							<li><a href="about.html">About us</a></li>
 							<li><a href="#">Rooms</a></li>
 							<li><a href="blog.html">Blog</a></li>
@@ -87,19 +86,19 @@
 						<li><a href="contact.html">Contact</a></li>
 					</ul>
 				</nav>
-					<div th:if="${tobook.id}==null" class="book_button">
-						<a id="demo" href="login.html">Login</a>
-					</div>
-					<div th:if="${tobook.id}!=null" class="book_button">
-						<a id="demo" href="index.html">Logout</a>
-					</div>
-					<div th:if="${tobook.id}==null" class="book_button">
-						<a id="demo" href="register.html">Register</a>
-					</div>
-					<div th:if="${tobook.id}!=null" class="book_button">
-						<a id="demo" href="account">My Account</a>
-					</div>
-			</div>		
+				<div th:if="${tobook.id}==null" class="book_button">
+					<a id="demo" href="login.html">Login</a>
+				</div>
+				<div th:if="${tobook.id}!=null" class="book_button">
+					<a id="demo" href="index.html">Logout</a>
+				</div>
+				<div th:if="${tobook.id}==null" class="book_button">
+					<a id="demo" href="register.html">Register</a>
+				</div>
+				<div th:if="${tobook.id}!=null" class="book_button">
+					<a id="demo" href="account">My Account</a>
+				</div>
+			</div>
 		</div>
 
 		<!-- Home -->
@@ -112,35 +111,12 @@
 					<div class="row">
 						<div class="col">
 							<div class="home_content text-center">
-								<div class="home_title">Contact</div>
+								<div class="home_title">Booking Details</div>
 								<div class="booking_form_container">
 									<form action="#" class="booking_form" id="booking_form">
 										<div
-											class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
-											<div
-												class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
-												<div>
-													<input type="text"
-														class="datepicker booking_input booking_input_a booking_in"
-														placeholder="Check in" required="required">
-												</div>
-												<div>
-													<input type="text"
-														class="datepicker booking_input booking_input_a booking_out"
-														placeholder="Check out" required="required">
-												</div>
-												<div>
-													<input type="number" class="booking_input booking_input_b"
-														placeholder="Children" required="required">
-												</div>
-												<div>
-													<input type="number" class="booking_input booking_input_b"
-														placeholder="Room" required="required">
-												</div>
-											</div>
-											<div>
-												<button class="booking_button trans_200">Book Now</button>
-											</div>
+											class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
+
 										</div>
 									</form>
 								</div>
@@ -159,38 +135,41 @@
 
 					<!-- Contact Content -->
 					<div class="col-lg-6">
-					<form action="/commit">
-						<div class="contact_content">
-							<div class="contact_title">
-								<h2>Details</h2>
+						<form action="/commit">
+							<div class="contact_content">
+								<div class="contact_title">
+									<h2>Details</h2>
+								</div>
+								<div class="contact_list">
+									<ul>
+										<li th:text="'Hotel ID '+${tobook.hotelid}"></li>
+										<li id="address" th:value="${tobook.address}"
+											th:text="'Address : '+${tobook.address}"></li>
+										<li th:text="'Total Price : '+${tobook.price}"></li>
+										<li
+											th:text="'Checkin : '+${tobook.checkin}+' Checkout : '+${tobook.checkout}"></li>
+										<li th:text="'Single,Double,Quad : '+${tobook.roomCombin}"></li>
+									</ul>
+								</div>
+								<div style="display: none">
+									<select id="checkin" name="checkin"
+										th:with="checkin=*{checkin}">
+										<option th:value="${tobook.checkin}"></option>
+									</select> <select id="checkout" name="checkout"
+										th:with="checkout=*{checkout}">
+										<option th:value="${tobook.checkout}"></option>
+									</select> <select id="roomCombin" name="roomCombin"
+										th:with="roomCombin=*{roomCombin}">
+										<option th:value="${tobook.roomCombin}"></option>
+									</select> <select id="hotelid" name="hotelid"
+										th:with="hotelid=*{hotelid}">
+										<option th:value="${tobook.hotelid}"></option>
+									</select> <select id="id" name="id" th:with="id=*{id}">
+										<option th:value="${tobook.id}"></option>
+									</select>
+								</div>
+								<button class="contact_button">Send</button>
 							</div>
-							<div class="contact_list">
-								<ul>
-									<li th:text="'Hotel ID '+${tobook.hotelid}"></li>
-									<li id="address" th:value="${tobook.address}" th:text="'Address : '+${tobook.address}"></li>
-									<li th:text="'Total Price : '+${tobook.price}"></li>
-									<li	th:text="'Checkin : '+${tobook.checkin}+' Checkout : '+${tobook.checkout}"></li>
-									<li th:text="'Single,Double,Quad : '+${tobook.roomCombin}"></li>
-								</ul>
-							</div>
-							<div style="display: none">
-													<select id="checkin" name="checkin"
-														th:with="checkin=*{checkin}">
-														<option th:value="${tobook.checkin}"></option>
-													</select> <select id="checkout" name="checkout"
-														th:with="checkout=*{checkout}">
-														<option th:value="${tobook.checkout}"></option>
-													</select> <select id="roomCombin" name="roomCombin" th:with="roomCombin=*{roomCombin}">
-														<option th:value="${tobook.roomCombin}"></option>
-													</select> <select id="hotelid" name="hotelid"
-														th:with="hotelid=*{hotelid}">
-														<option th:value="${tobook.hotelid}"></option>
-													</select> <select id="id" name="id" th:with="id=*{id}">
-														<option th:value="${tobook.id}"></option>
-													</select>
-												</div>
-							<button class="contact_button">Send</button>
-						</div>
 						</form>
 					</div>
 
@@ -224,8 +203,8 @@
 							<div class="footer_logo_container text-center">
 								<div class="footer_logo">
 									<a href="#"></a>
-									<div>The River</div>
-									<div>since 1945</div>
+									<div>AGUARE</div>
+									<div>since 1999</div>
 								</div>
 							</div>
 						</div>
@@ -310,8 +289,9 @@
 	<script src="plugins/progressbar/progressbar.min.js"></script>
 	<script src="plugins/parallax-js-master/parallax.min.js"></script>
 	<script src="plugins/jquery-datepicker/jquery-ui.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
 	<script src="js/tobook.js"></script>
-	
+
 </body>
 </html>

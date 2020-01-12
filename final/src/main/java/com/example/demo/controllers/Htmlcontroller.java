@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import bookAndUser.BookOperation;
-import bookAndUser.UserOperation;
+import book_Hotel_Room.BookOperation;
+import member.TouristOperation;
 import operation.EditBook;
 import operation.SearchAndBook;
 
@@ -147,7 +147,7 @@ public class Htmlcontroller {
 
 	@PostMapping("/login")
 	public String postlogin(@ModelAttribute PassObject passObject) {
-		passObject.n = UserOperation.userLogin(passObject.id, passObject.password);
+		passObject.n = TouristOperation.userLogin(passObject.id, passObject.password);
 		return "loginpop";
 	}
 
@@ -164,7 +164,7 @@ public class Htmlcontroller {
 
 	@PostMapping("/register")
 	public String postregister(@ModelAttribute PassObject passObject) {
-		passObject.n = UserOperation.addUser(passObject.id, passObject.password, passObject.confirm);
+		passObject.n = TouristOperation.addUser(passObject.id, passObject.password, passObject.confirm);
 		return "popup";
 	}
 
