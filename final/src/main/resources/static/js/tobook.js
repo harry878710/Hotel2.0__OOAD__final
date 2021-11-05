@@ -183,7 +183,6 @@ $(document).ready(function() {
 //
 //		// Initialize a map with options
 //		map = new google.maps.Map(document.getElementById('map'), mapOptions);
-//		//src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkB4w9wdryP__K0J0w_nqE01UDgyM5aNM&callback=initMap"
 //		// Re-center map after window resize
 //		google.maps.event.addDomListener(window, 'resize', function() {
 //			setTimeout(function() {
